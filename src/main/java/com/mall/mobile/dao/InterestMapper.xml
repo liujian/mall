@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.mobile.dao.InterestMapper">
+    <resultMap id="BaseResultMap" type="com.mall.mobile.domen.Interest">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="custid" jdbcType="INTEGER" property="custid" />
+        <result column="trandid" property="trandid" jdbcType="INTEGER" />
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,custid, trandid, createtime
+    </sql>
+
+    <select id="getInterestList"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+         * from table_trade_interest
+         where
+          custid=#{custid}
+    </select>
+
+    <select id="getInterest"  parameterType="com.mall.mobile.domen.Interest" resultMap="BaseResultMap">
+        select
+        * from table_trade_interest
+        where
+        custid=#{custid}
+        AND
+        trandid=#{trandid}
+    </select>
+
+    <insert id="addInterest" parameterType="com.mall.mobile.domen.Interest">
+        insert into
+        table_trade_interest (
+        custid,
+        trandid,
+        createtime
+        )
+        values (
+        #{custid,jdbcType=INTEGER},
+        #{trandid,jdbcType=INTEGER},
+        #{createtime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+
+
+    <delete id="delInterest" parameterType="com.mall.mobile.domen.Interest">
+        delete from table_trade_interest
+        where
+        custid=#{custid}
+        AND
+        trandid=#{trandid}
+    </delete>
+
+
+</mapper>

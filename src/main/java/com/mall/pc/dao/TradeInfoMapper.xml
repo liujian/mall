@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.pc.dao.TradeInfoMapper">
+    <resultMap id="BaseResultMap" type="com.mall.pc.domen.TradeInfo">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="barcode" property="barcode" jdbcType="VARCHAR" />
+        <result column="tradename_zw" property="tradename_zw" jdbcType="VARCHAR" />
+        <result column="tradename_yw" property="tradename_yw" jdbcType="VARCHAR" />
+        <result column="tradename_jt" property="tradename_jt" jdbcType="VARCHAR" />
+        <result column="tradeimage" property="tradeimage" jdbcType="VARCHAR" />
+        <result column="tradevideo" property="tradevideo" jdbcType="VARCHAR" />
+        <result column="introduce_zw" property="introduce_zw" jdbcType="VARCHAR" />
+        <result column="introduce_yw" property="introduce_yw" jdbcType="VARCHAR" />
+        <result column="introduce_jt" property="introduce_jt" jdbcType="VARCHAR" />
+        <result column="isparam" property="isparam" jdbcType="VARCHAR" />
+        <result column="param_zw" property="param_zw" jdbcType="VARCHAR" />
+        <result column="param_yw" property="param_yw" jdbcType="VARCHAR" />
+        <result column="param_jt" property="param_jt" jdbcType="VARCHAR" />
+        <result column="tradenum" property="tradenum" jdbcType="INTEGER" />
+        <result column="salesvolume" property="salesvolume" jdbcType="INTEGER" />
+        <result column="tradebright_zw" property="tradebright_zw" jdbcType="VARCHAR" />
+        <result column="tradebright_yw" property="tradebright_yw" jdbcType="VARCHAR" />
+        <result column="tradebright_jt" property="tradebright_jt" jdbcType="VARCHAR" />
+        <result column="moreinfo_zw" property="moreinfo_zw" jdbcType="VARCHAR" />
+        <result column="moreinfo_yw" property="moreinfo_yw" jdbcType="VARCHAR" />
+        <result column="moreinfo_jt" property="moreinfo_jt" jdbcType="VARCHAR" />
+        <result column="classify" property="classify" jdbcType="INTEGER" />
+        <result column="cad_price" property="cad_price" jdbcType="NUMERIC" />
+        <result column="usd_price" property="usd_price" jdbcType="NUMERIC" />
+        <result column="giveintegral" property="giveintegral" jdbcType="INTEGER" />
+        <result column="ishome" property="ishome" jdbcType="VARCHAR" />
+        <result column="brandid" property="brandid" jdbcType="INTEGER" />
+        <result column="invalid" property="invalid" jdbcType="VARCHAR" />
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       id,barcode,tradename_zw,tradename_yw,tradename_jt,tradeimage,tradevideo,introduce_zw,introduce_yw,introduce_jt,isparam,param_zw,param_yw,param_jt,tradenum,
+       salesvolume,tradebright_zw,tradebright_yw,tradebright_jt,moreinfo_zw,moreinfo_yw,moreinfo_jt,classify,cad_price,usd_price,giveintegral,ishome,brandid,invalid
+    </sql>
+
+    <select id="Querytrades"  parameterType="com.mall.pc.domen.TradeInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_trade_info WHERE 1=1
+        <if test="tradename_zw != null and  tradename_zw != ''">
+            AND tradename_zw like concat('%',#{tradename_zw},'%')
+        </if>
+        <if test="barcode != null and  barcode != ''">
+            AND barcode =#{barcode}
+        </if>
+        <if test="classify != null and  classify != ''">
+            AND classify =#{classify}
+        </if>
+        <if test="brandid != null">
+            AND brandid =#{brandid}
+        </if>
+        <if test="invalid != null and  invalid != ''">
+            AND invalid =#{invalid}
+        </if>
+
+    </select>
+
+    <select id="queryAlltradelist"  parameterType="Integer" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        table_trade_info a
+        WHERE
+        a.classify IN (
+        SELECT
+        id
+        FROM
+        table_trade_category
+        WHERE
+        fatherid = #{classify}
+        )
+    </select>
+
+    <select id="querytradelistByClassify"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_trade_info a
+        where
+        a.classify IN (
+        SELECT
+        id
+        FROM
+        table_trade_category
+        where id=#{classify}
+        )
+    </select>
+
+    <select id="QuerytradeById"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_trade_info
+        where
+        id =#{id}
+    </select>
+
+    <select id="QuerytradeByBarcode"  parameterType="String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_trade_info
+        where
+        barcode =#{barcode}
+    </select>
+
+    <select id="QuerytradeBysearchname"  parameterType="String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_trade_info
+        <if test=" _parameter != null and   _parameter != ''">
+            WHERE tradename_zw like concat('%',#{ _parameter},'%')
+            or tradename_yw like concat('%',#{ _parameter},'%')
+            or tradename_jt like concat('%',#{ _parameter},'%')
+            or introduce_zw like concat('%',#{ _parameter},'%')
+            or introduce_yw like concat('%',#{ _parameter},'%')
+            or introduce_jt like concat('%',#{ _parameter},'%')
+            or tradebright_zw like concat('%',#{ _parameter},'%')
+            or tradebright_yw like concat('%',#{ _parameter},'%')
+            or tradebright_jt like concat('%',#{ _parameter},'%')
+            or moreinfo_zw like concat('%',#{ _parameter},'%')
+            or moreinfo_yw like concat('%',#{ _parameter},'%')
+            or moreinfo_jt like concat('%',#{ _parameter},'%')
+        </if>
+    </select>
+
+    <insert id="insertTradeInfo" parameterType="com.mall.pc.domen.TradeInfo">
+        insert into
+        table_trade_info (
+        barcode,
+        tradename_zw,
+        tradename_yw,
+        tradename_jt,
+        tradeimage,
+        tradevideo,
+        introduce_zw,
+        introduce_yw,
+        introduce_jt,
+        isparam,
+        param_zw,
+        param_yw,
+        param_jt,
+        tradenum,
+        salesvolume,
+        tradebright_zw,
+        tradebright_yw,
+        tradebright_jt,
+        moreinfo_zw,
+        moreinfo_yw,
+        moreinfo_jt,
+        classify,
+        cad_price,
+        usd_price,
+        giveintegral,
+        ishome,
+        brandid,
+        invalid
+        )
+        values (
+        #{barcode},
+        #{tradename_zw},
+        #{tradename_yw},
+        #{tradename_jt},
+        #{tradeimage},
+        #{tradevideo},
+        #{introduce_zw},
+        #{introduce_yw},
+        #{introduce_jt},
+        #{isparam},
+        #{param_zw},
+        #{param_yw},
+        #{param_jt},
+        #{tradenum},
+        #{salesvolume},
+        #{tradebright_zw},
+        #{tradebright_yw},
+        #{tradebright_jt},
+        #{moreinfo_zw},
+        #{moreinfo_yw},
+        #{moreinfo_jt},
+        #{classify},
+        #{cad_price},
+        #{usd_price},
+        #{giveintegral},
+        #{ishome},
+        #{brandid},
+        #{invalid}
+        )
+    </insert>
+
+    <update id="updateTradeInfo" parameterType="com.mall.pc.domen.TradeInfo">
+        UPDATE
+        table_trade_info
+        SET
+        barcode=#{barcode},
+        tradename_zw=#{tradename_zw},
+        tradename_yw=#{tradename_yw},
+        tradename_jt=#{tradename_jt},
+        tradeimage=#{tradeimage},
+        tradevideo=#{tradevideo},
+        introduce_zw=#{introduce_zw},
+        introduce_yw=#{introduce_yw},
+        introduce_jt=#{introduce_jt},
+        isparam=#{isparam},
+        param_zw=#{param_zw},
+        param_yw=#{param_yw},
+        param_jt=#{param_jt},
+        tradenum=#{tradenum},
+        salesvolume=#{salesvolume},
+        tradebright_zw=#{tradebright_zw},
+        tradebright_yw=#{tradebright_yw},
+        tradebright_jt=#{tradebright_jt},
+        moreinfo_zw=#{moreinfo_zw},
+        moreinfo_yw=#{moreinfo_yw},
+        moreinfo_jt=#{moreinfo_jt},
+        classify=#{classify},
+        cad_price=#{cad_price},
+        usd_price=#{usd_price},
+        giveintegral=#{giveintegral},
+        ishome=#{ishome},
+        brandid=#{brandid},
+        invalid=#{invalid}
+        where
+        id=#{id}
+    </update>
+
+
+    <delete id="delTradeInfo" parameterType="java.lang.Integer">
+         UPDATE
+        table_trade_info
+        SET
+        invalid='1'
+        where
+        id=#{id}
+    </delete>
+
+
+</mapper>

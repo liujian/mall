@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.pc.dao.TradeCategoryMapper">
+    <resultMap id="BaseResultMap" type="com.mall.pc.domen.TradeCategory">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="classify_zw" property="classify_zw" jdbcType="VARCHAR" />
+        <result column="classify_yw" property="classify_yw" jdbcType="VARCHAR" />
+        <result column="classify_jt" property="classify_jt" jdbcType="VARCHAR" />
+        <result column="classifyimage" property="classifyimage" jdbcType="VARCHAR" />
+        <result column="fatherid" property="fatherid" jdbcType="INTEGER" />
+        <result column="ishomeicon" property="ishomeicon" jdbcType="VARCHAR" />
+        <result column="icons" property="icons" jdbcType="VARCHAR" />
+        <result column="ishome" property="ishome" jdbcType="VARCHAR" />
+        <result column="homeimage" property="homeimage" jdbcType="VARCHAR" />
+        <result column="sort" property="sort" jdbcType="INTEGER" />
+
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       id,classify_zw,classify_yw,classify_jt,classifyimage,fatherid,ishomeicon,icons,ishome,homeimage,sort
+    </sql>
+
+    <select id="QueryGoodCategorys"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_trade_category WHERE 1=1
+        <if test="fatherid != null">
+           AND fatherid=#{fatherid}
+        </if>
+
+        <if test="fatherid == null">
+            AND fatherid is null
+        </if>
+    </select>
+
+    <select id="QueryGoodCategoryById"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_trade_category
+        where
+        id =#{id}
+    </select>
+
+    <insert id="insertcategory" parameterType="com.mall.pc.domen.TradeCategory">
+        insert into
+        table_trade_category (
+        classify_zw,
+        classify_yw,
+        classify_jt,
+        classifyimage,
+        fatherid,
+        ishomeicon,
+        icons,
+        ishome,
+        homeimage,
+        sort
+        )
+        values (
+        #{classify_zw},
+        #{classify_yw},
+        #{classify_jt},
+        #{classifyimage},
+        #{fatherid},
+        #{ishomeicon},
+        #{icons},
+        #{ishome},
+        #{homeimage},
+        #{sort}
+        )
+    </insert>
+
+    <update id="updatecategory" parameterType="com.mall.pc.domen.TradeCategory">
+        UPDATE
+        table_trade_category
+        SET
+        classify_zw=#{classify_zw},
+        classify_yw=#{classify_yw},
+        classify_jt=#{classify_jt},
+        classifyimage=#{classifyimage},
+        fatherid=#{fatherid},
+        ishomeicon=#{ishomeicon},
+        icons=#{icons},
+        ishome=#{ishome},
+        homeimage=#{homeimage},
+        sort=#{sort}
+        where
+        id=#{id}
+    </update>
+
+
+    <delete id="delcategory" parameterType="java.lang.Integer">
+        delete from table_trade_category
+        where
+        id=#{id}
+    </delete>
+
+
+</mapper>

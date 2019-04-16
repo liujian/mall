@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.pc.dao.BrandMapper">
+    <resultMap id="BaseResultMap" type="com.mall.pc.domen.Brand">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="brandname" property="brandname" jdbcType="VARCHAR" />
+        <result column="brandicon" property="brandicon" jdbcType="VARCHAR" />
+        <result column="ishome" property="ishome" jdbcType="VARCHAR" />
+        <result column="brandinfo" property="brandinfo" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       id,brandname,brandicon,ishome,brandinfo
+    </sql>
+    <select id="queryBrandlist"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_brand_management
+    </select>
+
+
+    <select id="queryBrandrById"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_brand_management
+        where
+        id =#{id}
+    </select>
+
+
+    <insert id="insertBrand" parameterType="com.mall.pc.domen.Brand">
+        insert into
+        table_brand_management (
+         brandname,
+         brandicon,
+         ishome,
+         brandinfo
+        )
+        values (
+        #{brandname},
+        #{brandicon},
+        #{ishome},
+        #{brandinfo}
+        )
+    </insert>
+
+    <update id="updateBrand" parameterType="com.mall.pc.domen.Brand">
+        UPDATE
+        table_brand_management
+        SET
+        brandname=#{brandname},
+        brandicon=#{brandicon},
+        ishome=#{ishome},
+        brandinfo=#{brandinfo}
+        where
+        id=#{id}
+    </update>
+
+
+    <delete id="delBrand" parameterType="java.lang.Integer">
+         delete from
+         table_brand_management
+        where
+        id=#{id}
+    </delete>
+
+
+</mapper>

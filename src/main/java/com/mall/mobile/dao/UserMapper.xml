@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.mobile.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.mall.mobile.domen.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="emailAddress" jdbcType="VARCHAR" property="emailAddress"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="firstName" jdbcType="VARCHAR" property="firstName"/>
+        <result column="lastName" jdbcType="VARCHAR" property="lastName"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="birthday" jdbcType="VARCHAR" property="birthday"/>
+        <result column="token" jdbcType="VARCHAR" property="token"/>
+        <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="updateDate" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="fireBaseToken" jdbcType="VARCHAR" property="fireBaseToken"/>
+        <result column="verified" jdbcType="VARCHAR" property="verified"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id,emailAddress, password, firstName, lastName, phone,birthday,token,createDate, updateDate,fireBaseToken,verified
+  </sql>
+
+    <select id="selectByEmailAddress" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from Table_login_user
+        where emailAddress = #{emailAddress,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByToken" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from Table_login_user
+        where token = #{token,jdbcType=VARCHAR}
+    </select>
+
+
+    <insert id="insertUser" parameterType="com.mall.mobile.domen.User">
+      insert into 
+        Table_login_user (
+          emailAddress,
+          password,
+          firstName,
+          lastName,
+          phone,
+          birthday,
+          createDate,
+          updateDate,
+          fireBaseToken,
+          token,
+          verified
+          )
+      values (
+      #{emailAddress,jdbcType=VARCHAR},
+      #{password,jdbcType=VARCHAR},
+      #{firstName,jdbcType=VARCHAR},
+      #{lastName,jdbcType=VARCHAR},
+      #{phone,jdbcType=VARCHAR},
+      #{birthday,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP},
+      #{updateDate,jdbcType=TIMESTAMP},
+      #{fireBaseToken,jdbcType=VARCHAR},
+      #{token,jdbcType=VARCHAR},
+      #{verified,jdbcType=VARCHAR}
+      )
+  </insert>
+
+    <update id="updateToken" parameterType="com.mall.mobile.domen.User">
+    UPDATE
+    Table_login_user
+    SET
+    token=#{token},
+    fireBaseToken=#{fireBaseToken}
+    where
+    emailAddress=#{emailAddress}
+  </update>
+
+
+
+    <update id="updatePassword" parameterType="com.mall.mobile.domen.User">
+       UPDATE
+        Table_login_user
+        SET
+        password=#{password},
+        updateDate=#{updateDate}
+        where
+        id=#{id}
+  </update>
+
+    <update id="updateUserInfo" parameterType="com.mall.mobile.domen.User">
+       UPDATE
+        Table_login_user
+        SET
+        firstName=#{firstName},
+        lastName=#{lastName},
+        phone=#{phone},
+        birthday=#{birthday},
+        token=#{token},
+        fireBaseToken=#{fireBaseToken},
+        updateDate=#{updateDate},
+        verified=#{verified}
+        where
+        id=#{id}
+  </update>
+
+
+
+    <update id="updateFireBaseToken" parameterType="com.mall.mobile.domen.User">
+       UPDATE
+        Table_login_user
+        SET
+        fireBaseToken=#{fireBaseToken}
+        where
+        id=#{id}
+  </update>
+
+
+</mapper>

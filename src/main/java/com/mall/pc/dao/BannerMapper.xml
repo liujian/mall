@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.pc.dao.BannerMapper">
+    <resultMap id="BaseResultMap" type="com.mall.pc.domen.Banner">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="image" property="image" jdbcType="VARCHAR" />
+        <result column="addway" property="addway" jdbcType="VARCHAR" />
+        <result column="addid" property="addid" jdbcType="INTEGER" />
+        <result column="sort" property="sort" jdbcType="INTEGER" />
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       id,image,addway,addid,sort,createtime
+    </sql>
+    <select id="queryBannerlist"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_banner
+    </select>
+
+
+    <select id="queryBannerById"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_banner
+        where
+        id =#{id}
+    </select>
+
+
+    <insert id="insertBanner" parameterType="com.mall.pc.domen.Banner">
+        insert into
+        table_banner (
+         image,
+         addway,
+         addid,
+         sort,
+         createtime
+        )
+        values (
+        #{image},
+        #{addway},
+        #{addid},
+        #{sort},
+        #{createtime}
+        )
+    </insert>
+
+    <update id="updateBanner" parameterType="com.mall.pc.domen.Banner">
+        UPDATE
+        table_banner
+        SET
+        image=#{image},
+        addway=#{addway},
+        addid=#{addid},
+        sort=#{sort},
+        createtime=#{createtime}
+        where
+        id=#{id}
+    </update>
+
+
+    <delete id="delBanner" parameterType="java.lang.Integer">
+         delete from
+         table_banner
+        where
+        id=#{id}
+    </delete>
+
+
+</mapper>

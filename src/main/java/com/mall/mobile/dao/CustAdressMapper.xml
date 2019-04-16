@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.mobile.dao.CustAdressMapper">
+    <resultMap id="BaseResultMap" type="com.mall.mobile.domen.CustAdress">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="custid" jdbcType="INTEGER" property="custid" />
+        <result column="contacts" property="contacts" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="doornumber" property="doornumber" jdbcType="VARCHAR" />
+        <result column="tab" property="tab" jdbcType="VARCHAR" />
+
+    </resultMap>
+
+
+    <select id="getCustAddressList"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+         * from table_user_adress
+         where
+          custid=#{custid}
+    </select>
+
+    <select id="getcustadressByid"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+        * from table_user_adress
+        where
+        id=#{id}
+    </select>
+
+    <insert id="addcustadress" parameterType="com.mall.mobile.domen.CustAdress">
+        insert into
+        table_user_adress (
+        custid,
+        contacts,
+        phone,
+        address,
+        doornumber,
+        tab
+        )
+        values (
+        #{custid,jdbcType=INTEGER},
+        #{contacts,jdbcType=VARCHAR},
+        #{phone,jdbcType=VARCHAR},
+        #{address,jdbcType=VARCHAR},
+        #{doornumber,jdbcType=VARCHAR},
+        #{tab,jdbcType=VARCHAR}
+
+        )
+    </insert>
+
+    <update id="updatecustadress" parameterType="com.mall.mobile.domen.CustAdress">
+        UPDATE
+        table_user_adress
+        SET
+        contacts=#{contacts},
+        phone=#{phone},
+        address=#{address},
+        doornumber=#{doornumber},
+        tab=#{tab}
+        where
+        id=#{id}
+    </update>
+
+    <delete id="delcustadress" parameterType="java.lang.Integer">
+        delete from table_user_adress
+        where
+        id=#{id}
+    </delete>
+
+
+</mapper>
