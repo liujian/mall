@@ -12,10 +12,6 @@
         <result column="introduce_zw" property="introduce_zw" jdbcType="VARCHAR" />
         <result column="introduce_yw" property="introduce_yw" jdbcType="VARCHAR" />
         <result column="introduce_jt" property="introduce_jt" jdbcType="VARCHAR" />
-        <result column="isparam" property="isparam" jdbcType="VARCHAR" />
-        <result column="param_zw" property="param_zw" jdbcType="VARCHAR" />
-        <result column="param_yw" property="param_yw" jdbcType="VARCHAR" />
-        <result column="param_jt" property="param_jt" jdbcType="VARCHAR" />
         <result column="tradenum" property="tradenum" jdbcType="INTEGER" />
         <result column="salesvolume" property="salesvolume" jdbcType="INTEGER" />
         <result column="tradebright_zw" property="tradebright_zw" jdbcType="VARCHAR" />
@@ -42,12 +38,16 @@
         <result column="boutique" property="boutique" jdbcType="VARCHAR" />
         <result column="newin" property="newin" jdbcType="VARCHAR" />
         <result column="well" property="well" jdbcType="VARCHAR" />
+        <result column="coupway" property="coupway" jdbcType="VARCHAR" />
+        <result column="fullpiece" property="fullpiece" jdbcType="INTEGER" />
+        <result column="fullprice" property="fullprice" jdbcType="NUMERIC" />
+        <result column="ratio" property="ratio" jdbcType="NUMERIC" />
     </resultMap>
 
     <sql id="Base_Column_List">
-       id,barcode,tradename_zw,tradename_yw,tradename_jt,tradeimage,tradevideo,introduce_zw,introduce_yw,introduce_jt,isparam,param_zw,param_yw,param_jt,tradenum,
+       id,barcode,tradename_zw,tradename_yw,tradename_jt,tradeimage,tradevideo,introduce_zw,introduce_yw,introduce_jt,tradenum,
        salesvolume,tradebright_zw,tradebright_yw,tradebright_jt,moreinfo_zw,moreinfo_yw,moreinfo_jt,classify,cad_price,usd_price,giveintegral,ishome,brandid,invalid,createdate,
-       tradewarnnum,tradeclass,tradecode,tradeweight,cad_promoteprice,usd_promoteprice,promotedate,boutique,newin,well
+       tradewarnnum,tradeclass,tradecode,tradeweight,cad_promoteprice,usd_promoteprice,promotedate,boutique,newin,well,coupway,fullpiece,fullprice,ratio
 
     </sql>
 
@@ -82,14 +82,7 @@
         FROM
         table_trade_info a
         WHERE
-        a.classify IN (
-        SELECT
-        id
-        FROM
-        table_trade_category
-        WHERE
-        fatherid = #{classify}
-        )
+        a.tradeclass =#{tradeclass}
 
         <if test='search == "1" '>
             ORDER by createdate desc
@@ -102,18 +95,24 @@
         </if>
     </select>
 
+    <select id="queryAllisHometradelist"  parameterType="Integer" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        table_trade_info a
+        WHERE
+        a.tradeclass =#{tradeclass}
+        AND
+        a.ishome='0'
+
+    </select>
+
     <select id="querytradelistByClassify"  parameterType="Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from table_trade_info a
         where
-        a.classify IN (
-        SELECT
-        id
-        FROM
-        table_trade_category
-        where id=#{classify}
-        )
+        a.classify =#{classify}
 
         <if test='search == "1" '>
             ORDER by createdate desc
@@ -174,10 +173,6 @@
         introduce_zw,
         introduce_yw,
         introduce_jt,
-        isparam,
-        param_zw,
-        param_yw,
-        param_jt,
         tradenum,
         salesvolume,
         tradebright_zw,
@@ -203,7 +198,11 @@
         promotedate,
         boutique,
         newin,
-        well
+        well,
+        coupway,
+        fullpiece,
+        fullprice,
+        ratio
         )
         values (
         #{barcode},
@@ -215,10 +214,6 @@
         #{introduce_zw},
         #{introduce_yw},
         #{introduce_jt},
-        #{isparam},
-        #{param_zw},
-        #{param_yw},
-        #{param_jt},
         #{tradenum},
         #{salesvolume},
         #{tradebright_zw},
@@ -244,7 +239,11 @@
         #{promotedate},
         #{boutique},
         #{newin},
-        #{well}
+        #{well},
+        #{coupway},
+        #{fullpiece},
+        #{fullprice},
+        #{ratio}
         )
     </insert>
 
@@ -261,10 +260,6 @@
         introduce_zw=#{introduce_zw},
         introduce_yw=#{introduce_yw},
         introduce_jt=#{introduce_jt},
-        isparam=#{isparam},
-        param_zw=#{param_zw},
-        param_yw=#{param_yw},
-        param_jt=#{param_jt},
         tradenum=#{tradenum},
         salesvolume=#{salesvolume},
         tradebright_zw=#{tradebright_zw},
@@ -289,7 +284,11 @@
         promotedate=#{promotedate},
         boutique=#{boutique},
         newin=#{newin},
-        well=#{well}
+        well=#{well},
+        coupway= #{coupway},
+        fullpiece=#{fullpiece},
+        fullprice= #{fullprice},
+        ratio=#{ratio}
         where
         id=#{id}
     </update>

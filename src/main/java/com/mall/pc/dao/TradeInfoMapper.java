@@ -11,9 +11,11 @@ public interface TradeInfoMapper {
 
     List<TradeInfo> Querytrades(TradeInfo tradeInfo);
 
-    List<TradeInfo> queryAlltradelist(@Param("classify") Integer classify, @Param("search")String search);
+    List<TradeInfo> queryAlltradelist(@Param("classify") Integer tradeclass, @Param("search")String search);
 
     List<TradeInfo> querytradelistByClassify(@Param("classify") Integer classify, @Param("search")String search);
+
+    List<TradeInfo> queryAllisHometradelist(@Param("classify") Integer tradeclass);
 
     List<TradeInfo> QuerytradeBysearchname(String searchname);
 

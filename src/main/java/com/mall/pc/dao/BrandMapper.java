@@ -10,6 +10,8 @@ public interface BrandMapper {
 
     List<Brand> queryBrandlist();
 
+    List<Brand> queryisHomeBrandlist();
+
     Brand queryBrandrById(Integer id);
 
     void insertBrand(Brand brand);

@@ -63,25 +63,6 @@ public class TradeInfo  implements Serializable {
      */
     private String introduce_jt;
 
-    /**
-     *是否含有参数
-     */
-    private String isparam;
-
-    /**
-     *商品参数名称（中文）
-     */
-    private String param_zw;
-
-    /**
-     *商品参数名称（英文）
-     */
-    private String param_yw;
-
-    /**
-     *商品参数名称（简体）
-     */
-    private String param_jt;
 
     /**
      *商品数量
@@ -214,6 +195,58 @@ public class TradeInfo  implements Serializable {
      */
     private String well;
 
+    /**
+     *优惠方式
+     */
+    private String coupway;
+
+    /**
+     *满件条件
+     */
+    private Integer fullpiece;
+
+    /**
+     *满金额条件
+     */
+    private BigDecimal fullprice;
+
+    /**
+     * 折扣比
+     */
+    private BigDecimal ratio;
+
+    public String getCoupway() {
+        return coupway;
+    }
+
+    public void setCoupway(String coupway) {
+        this.coupway = coupway;
+    }
+
+    public Integer getFullpiece() {
+        return fullpiece;
+    }
+
+    public void setFullpiece(Integer fullpiece) {
+        this.fullpiece = fullpiece;
+    }
+
+    public BigDecimal getFullprice() {
+        return fullprice;
+    }
+
+    public void setFullprice(BigDecimal fullprice) {
+        this.fullprice = fullprice;
+    }
+
+    public BigDecimal getRatio() {
+        return ratio;
+    }
+
+    public void setRatio(BigDecimal ratio) {
+        this.ratio = ratio;
+    }
+
     public Date getCreatedate() {
         return createdate;
     }
@@ -294,37 +327,6 @@ public class TradeInfo  implements Serializable {
         this.introduce_jt = introduce_jt;
     }
 
-    public String getIsparam() {
-        return isparam;
-    }
-
-    public void setIsparam(String isparam) {
-        this.isparam = isparam;
-    }
-
-    public String getParam_zw() {
-        return param_zw;
-    }
-
-    public void setParam_zw(String param_zw) {
-        this.param_zw = param_zw;
-    }
-
-    public String getParam_yw() {
-        return param_yw;
-    }
-
-    public void setParam_yw(String param_yw) {
-        this.param_yw = param_yw;
-    }
-
-    public String getParam_jt() {
-        return param_jt;
-    }
-
-    public void setParam_jt(String param_jt) {
-        this.param_jt = param_jt;
-    }
 
     public Integer getTradenum() {
         return tradenum;

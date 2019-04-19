@@ -1,14 +1,8 @@
 package com.mall.pc.service.Impl;
 
 import com.mall.common.param.BasicData;
-import com.mall.pc.dao.TradeComposeMapper;
-import com.mall.pc.dao.TradeInfoMapper;
-import com.mall.pc.dao.TradeParamMapper;
-import com.mall.pc.dao.TradePhotoMapper;
-import com.mall.pc.domen.TradeCompose;
-import com.mall.pc.domen.TradeInfo;
-import com.mall.pc.domen.TradeParam;
-import com.mall.pc.domen.TradePhoto;
+import com.mall.pc.dao.*;
+import com.mall.pc.domen.*;
 import com.mall.pc.in.TradeParamIn;
 import com.mall.pc.out.TradeParamOut;
 import com.mall.pc.service.TradeInfoService;
@@ -41,6 +35,8 @@ public class TradeInfoServiceImpl implements TradeInfoService {
     @Autowired
     private TradeComposeMapper tradeComposeMapper;
 
+    @Autowired
+    private TradeGiveMapper tradeGiveMapper;
 
     @Override
     public BasicData Querytrades(TradeInfo tradeInfo) {
@@ -57,10 +53,12 @@ public class TradeInfoServiceImpl implements TradeInfoService {
         List<TradeParam> tradeParams = tradeParamMapper.querytradeparam(id);
         List<TradePhoto> tradePhotos = tradePhotoMapper.queryTradePhotolistByTradeid(id);
         List<TradeCompose> tradeComposes = tradeComposeMapper.queryTradeComposelistByMaintrade(id);
+        List<TradeGive> tradeGives = tradeGiveMapper.queryTradeGivelistByTradeid(id);
         tradeParamOut.setTradeInfo(tradeInfo);
         tradeParamOut.setTradeParams(tradeParams);
         tradeParamOut.setTradePhotos(tradePhotos);
         tradeParamOut.setTradeComposes(tradeComposes);
+        tradeParamOut.setTradeGives(tradeGives);
         return BasicData.CreateSucess(tradeParamOut);
     }
 
@@ -98,6 +96,13 @@ public class TradeInfoServiceImpl implements TradeInfoService {
             tradeComposeMapper.insertTradeCompose(tradeCompose);
         }
 
+        //新增赠送商品
+        List<TradeGive> tradeGives = tradeParamIn.getTradeGives();
+        for(TradeGive tradeGive : tradeGives){
+            tradeGive.setTradeid(tradeid);
+            tradeGiveMapper.insertTradeGive(tradeGive);
+        }
+
         return BasicData.CreateSucess();
     }
 
@@ -122,6 +127,11 @@ public class TradeInfoServiceImpl implements TradeInfoService {
         List<TradeCompose> tradeComposes = tradeParamIn.getTradeComposes();
         for(TradeCompose tradeCompose : tradeComposes){
             tradeComposeMapper.updateTradeCompose(tradeCompose);
+        }
+        //更新赠送商品
+        List<TradeGive> tradeGives = tradeParamIn.getTradeGives();
+        for(TradeGive tradeGive : tradeGives){
+            tradeGiveMapper.updateTradeGive(tradeGive);
         }
 
 

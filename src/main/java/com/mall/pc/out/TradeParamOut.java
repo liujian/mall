@@ -1,9 +1,6 @@
 package com.mall.pc.out;
 
-import com.mall.pc.domen.TradeCompose;
-import com.mall.pc.domen.TradeInfo;
-import com.mall.pc.domen.TradeParam;
-import com.mall.pc.domen.TradePhoto;
+import com.mall.pc.domen.*;
 
 import java.util.List;
 
@@ -23,6 +20,8 @@ public class TradeParamOut {
     private List<TradePhoto> tradePhotos;
 
     private List<TradeCompose> tradeComposes;
+
+    private List<TradeGive> tradeGives;
 
     public TradeInfo getTradeInfo() {
         return tradeInfo;
@@ -54,6 +53,14 @@ public class TradeParamOut {
 
     public void setTradeComposes(List<TradeCompose> tradeComposes) {
         this.tradeComposes = tradeComposes;
+    }
+
+    public List<TradeGive> getTradeGives() {
+        return tradeGives;
+    }
+
+    public void setTradeGives(List<TradeGive> tradeGives) {
+        this.tradeGives = tradeGives;
     }
 }
 

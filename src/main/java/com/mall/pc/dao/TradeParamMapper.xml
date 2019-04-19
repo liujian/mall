@@ -4,11 +4,15 @@
     <resultMap id="BaseResultMap" type="com.mall.pc.domen.TradeParam">
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="tradeid" property="tradeid" jdbcType="INTEGER" />
+        <result column="param_zw" property="param_zw" jdbcType="VARCHAR" />
+        <result column="param_yw" property="param_yw" jdbcType="VARCHAR" />
+        <result column="param_jt" property="param_jt" jdbcType="VARCHAR" />
         <result column="param" property="param" jdbcType="VARCHAR" />
+        <result column="tradenum" property="tradenum" jdbcType="INTEGER" />
     </resultMap>
 
     <sql id="Base_Column_List">
-       id,tradeid,param
+       id,tradeid,param_zw,param_yw,param_jt,param,tradenum
     </sql>
 
     <select id="querytradeparam"  parameterType="Integer" resultMap="BaseResultMap">
@@ -17,7 +21,7 @@
         from table_trade_param
         WHERE
         tradeid=#{tradeid}
-        Order by id
+        Order by param_zw
     </select>
 
     <select id="querytradeparamByparam"  parameterType="com.mall.pc.domen.TradeParam" resultMap="BaseResultMap">
@@ -35,11 +39,19 @@
         insert into
         table_trade_param (
         tradeid,
-        param
+        param,
+        param_zw,
+        param_yw,
+        param_jt,
+        tradenum
         )
         values (
         #{tradeid},
-        #{param}
+        #{param},
+        #{param_zw},
+        #{param_yw},
+        #{param_jt},
+        #{tradenum}
         )
     </insert>
 
@@ -47,7 +59,11 @@
         UPDATE
         table_trade_param
         SET
-        param=#{param}
+        param=#{param},
+        param_zw= #{param_zw},
+        param_yw=#{param_yw},
+        param_jt=#{param_jt},
+        tradenum= #{tradenum}
         where
         id=#{id}
     </update>

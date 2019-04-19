@@ -28,6 +28,14 @@
         id =#{id}
     </select>
 
+    <select id="queryisHomeBrandlist"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_brand_management
+        where
+        ishome ='0'
+    </select>
+
 
     <insert id="insertBrand" parameterType="com.mall.pc.domen.Brand">
         insert into

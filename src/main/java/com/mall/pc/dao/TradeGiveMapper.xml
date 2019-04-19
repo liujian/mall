@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.pc.dao.TradeGiveMapper">
+    <resultMap id="BaseResultMap" type="com.mall.pc.domen.TradeGive">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="tradeid" property="tradeid" jdbcType="INTEGER" />
+        <result column="givetradeid" property="givetradeid" jdbcType="INTEGER" />
+        <result column="cate" property="cate" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       id,tradeid,givetradeid,cate
+    </sql>
+    <select id="queryTradeGivelistByTradeid"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_trade_give
+        where
+        tradeid =#{tradeid}
+    </select>
+
+
+    <select id="queryTradeGiveById"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_trade_give
+        where
+        id =#{id}
+    </select>
+
+
+    <insert id="insertTradeGive" parameterType="com.mall.pc.domen.TradePhoto">
+        insert into
+        table_trade_give (
+         tradeid,
+         givetradeid,
+         cate
+        )
+        values (
+        #{tradeid},
+        #{givetradeid},
+        #{cate}
+        )
+    </insert>
+
+    <update id="updateTradeGive" parameterType="com.mall.pc.domen.TradePhoto">
+        UPDATE
+        table_trade_give
+        SET
+        tradeid=#{tradeid},
+        givetradeid=#{givetradeid},
+        cate=#{cate}
+        where
+        id=#{id}
+    </update>
+
+
+    <delete id="delTradeGive" parameterType="java.lang.Integer">
+         delete from
+         table_trade_give
+        where
+        id=#{id}
+    </delete>
+
+
+</mapper>

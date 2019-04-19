@@ -42,6 +42,22 @@
         id =#{id}
     </select>
 
+    <select id="QueryGoodCategorysByishomeicon" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_trade_category
+        where
+        ishomeicon ='0'
+    </select>
+
+    <select id="QueryGoodCategorysByishome" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_trade_category
+        where
+        ishome ='0'
+    </select>
+
     <insert id="insertcategory" parameterType="com.mall.pc.domen.TradeCategory">
         insert into
         table_trade_category (

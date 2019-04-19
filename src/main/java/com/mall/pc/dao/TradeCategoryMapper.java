@@ -11,6 +11,10 @@ public interface TradeCategoryMapper {
 
     List<TradeCategory> QueryGoodCategorys(@Param("fatherid")Integer fatherid);
 
+    List<TradeCategory> QueryGoodCategorysByishomeicon();
+
+    List<TradeCategory> QueryGoodCategorysByishome();
+
     TradeCategory QueryGoodCategoryById(Integer id);
 
     void insertcategory(TradeCategory goodCategory);

@@ -22,7 +22,22 @@ public class TradeParam implements Serializable {
     private Integer tradeid;
 
     /**
-     *参数名称
+     *参数名称（中文）
+     */
+    private String param_zw;
+
+    /**
+     *参数名称（英文）
+     */
+    private String param_yw;
+
+    /**
+     *参数名称（繁体）
+     */
+    private String param_jt;
+
+    /**
+     *参数
      */
     private String param;
 
@@ -62,6 +77,30 @@ public class TradeParam implements Serializable {
 
     public void setTradenum(Integer tradenum) {
         this.tradenum = tradenum;
+    }
+
+    public String getParam_zw() {
+        return param_zw;
+    }
+
+    public void setParam_zw(String param_zw) {
+        this.param_zw = param_zw;
+    }
+
+    public String getParam_yw() {
+        return param_yw;
+    }
+
+    public void setParam_yw(String param_yw) {
+        this.param_yw = param_yw;
+    }
+
+    public String getParam_jt() {
+        return param_jt;
+    }
+
+    public void setParam_jt(String param_jt) {
+        this.param_jt = param_jt;
     }
 }
 
