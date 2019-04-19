@@ -2,6 +2,7 @@ package com.mall.pc.service;
 
 import com.mall.common.param.BasicData;
 import com.mall.pc.domen.TradeInfo;
+import com.mall.pc.in.TradeParamIn;
 
 public interface TradeInfoService {
 
@@ -10,15 +11,15 @@ public interface TradeInfoService {
 
     BasicData QuerytradeById(Integer id);
 
-    BasicData insertTradeInfo(TradeInfo tradeInfo);
+    BasicData insertTradeInfo(TradeParamIn tradeParamIn);
 
-    BasicData updateTradeInfo(TradeInfo tradeInfo);
+    BasicData updateTradeInfo(TradeParamIn tradeParamIn);
 
     BasicData delTradeInfo(Integer id);
 
-    BasicData queryAlltradelist(Integer classify);
+    BasicData queryAlltradelist(Integer classify,String search);
 
-    BasicData querytradelistByClassify(Integer classify);
+    BasicData querytradelistByClassify(Integer classify,String search);
 
     BasicData QuerytradeBysearchname(String searchname);
 

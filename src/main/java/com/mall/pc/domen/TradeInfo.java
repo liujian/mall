@@ -2,6 +2,7 @@ package com.mall.pc.domen;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @program: mall
@@ -88,6 +89,11 @@ public class TradeInfo  implements Serializable {
     private Integer tradenum;
 
     /**
+     *商品警告数量
+     */
+    private Integer tradewarnnum;
+
+    /**
      *商品销量
      */
     private Integer salesvolume;
@@ -123,9 +129,14 @@ public class TradeInfo  implements Serializable {
     private String moreinfo_jt;
 
     /**
+     *分类
+     */
+    private Integer tradeclass;
+
+    /**
      * 商品所属分类
      */
-    private String classify;
+    private Integer classify;
 
     /**
      * 商品价格(加拿大)
@@ -156,6 +167,60 @@ public class TradeInfo  implements Serializable {
      * 是否有效
      */
     private String invalid;
+
+    /**
+     * 创建时间
+     */
+    private Date createdate;
+
+    /**
+     *商品编码
+     */
+    private String tradecode;
+
+    /**
+     *商品重量
+     */
+    private BigDecimal tradeweight;
+
+    /**
+     *促销价格-加
+     */
+    private BigDecimal cad_promoteprice;
+
+    /**
+     *促销价格-美
+     */
+    private BigDecimal usd_promoteprice;
+
+    /**
+     * 促销日期
+     */
+    private Date promotedate;
+
+    /**
+     * 是否精品
+     */
+    private String boutique;
+
+    /**
+     * 是否新品
+     */
+    private String newin;
+
+
+    /**
+     *热销
+     */
+    private String well;
+
+    public Date getCreatedate() {
+        return createdate;
+    }
+
+    public void setCreatedate(Date createdate) {
+        this.createdate = createdate;
+    }
 
     public Integer getId() {
         return id;
@@ -325,16 +390,96 @@ public class TradeInfo  implements Serializable {
         this.moreinfo_jt = moreinfo_jt;
     }
 
-    public String getClassify() {
+    public Integer getTradewarnnum() {
+        return tradewarnnum;
+    }
+
+    public void setTradewarnnum(Integer tradewarnnum) {
+        this.tradewarnnum = tradewarnnum;
+    }
+
+    public Integer getTradeclass() {
+        return tradeclass;
+    }
+
+    public void setTradeclass(Integer tradeclass) {
+        this.tradeclass = tradeclass;
+    }
+
+    public Integer getClassify() {
         return classify;
     }
 
-    public void setClassify(String classify) {
+    public void setClassify(Integer classify) {
         this.classify = classify;
     }
 
     public BigDecimal getCad_price() {
         return cad_price;
+    }
+
+    public String getTradecode() {
+        return tradecode;
+    }
+
+    public void setTradecode(String tradecode) {
+        this.tradecode = tradecode;
+    }
+
+    public BigDecimal getTradeweight() {
+        return tradeweight;
+    }
+
+    public void setTradeweight(BigDecimal tradeweight) {
+        this.tradeweight = tradeweight;
+    }
+
+    public BigDecimal getCad_promoteprice() {
+        return cad_promoteprice;
+    }
+
+    public void setCad_promoteprice(BigDecimal cad_promoteprice) {
+        this.cad_promoteprice = cad_promoteprice;
+    }
+
+    public BigDecimal getUsd_promoteprice() {
+        return usd_promoteprice;
+    }
+
+    public void setUsd_promoteprice(BigDecimal usd_promoteprice) {
+        this.usd_promoteprice = usd_promoteprice;
+    }
+
+    public Date getPromotedate() {
+        return promotedate;
+    }
+
+    public void setPromotedate(Date promotedate) {
+        this.promotedate = promotedate;
+    }
+
+    public String getBoutique() {
+        return boutique;
+    }
+
+    public void setBoutique(String boutique) {
+        this.boutique = boutique;
+    }
+
+    public String getNewin() {
+        return newin;
+    }
+
+    public void setNewin(String newin) {
+        this.newin = newin;
+    }
+
+    public String getWell() {
+        return well;
+    }
+
+    public void setWell(String well) {
+        this.well = well;
     }
 
     public void setCad_price(BigDecimal cad_price) {

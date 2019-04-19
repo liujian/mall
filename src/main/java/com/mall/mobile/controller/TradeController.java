@@ -32,9 +32,10 @@ public class TradeController {
     @ResponseBody
     public BasicData queryAlltradelist(
             @RequestParam(required = false) Integer classify,
+            @RequestParam(required = false) String search,
             HttpServletRequest request){
         try{
-            return tradeInfoService.queryAlltradelist(classify);
+            return tradeInfoService.queryAlltradelist(classify,search);
         }catch (Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());
@@ -51,9 +52,10 @@ public class TradeController {
     @ResponseBody
     public BasicData querytradelistByClassify(
             @RequestParam(required = false) Integer classify,
+            @RequestParam(required = false) String search,
             HttpServletRequest request){
         try{
-            return tradeInfoService.querytradelistByClassify(classify);
+            return tradeInfoService.querytradelistByClassify(classify,search);
         }catch (Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());

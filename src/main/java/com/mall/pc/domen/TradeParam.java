@@ -26,6 +26,11 @@ public class TradeParam implements Serializable {
      */
     private String param;
 
+    /**
+     *商品数量
+     */
+    private Integer tradenum;
+
     public Integer getTradeid() {
         return tradeid;
     }
@@ -48,6 +53,15 @@ public class TradeParam implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+
+    public Integer getTradenum() {
+        return tradenum;
+    }
+
+    public void setTradenum(Integer tradenum) {
+        this.tradenum = tradenum;
     }
 }
 

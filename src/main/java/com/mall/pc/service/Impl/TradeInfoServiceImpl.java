@@ -1,14 +1,21 @@
 package com.mall.pc.service.Impl;
 
 import com.mall.common.param.BasicData;
+import com.mall.pc.dao.TradeComposeMapper;
 import com.mall.pc.dao.TradeInfoMapper;
 import com.mall.pc.dao.TradeParamMapper;
+import com.mall.pc.dao.TradePhotoMapper;
+import com.mall.pc.domen.TradeCompose;
 import com.mall.pc.domen.TradeInfo;
 import com.mall.pc.domen.TradeParam;
+import com.mall.pc.domen.TradePhoto;
+import com.mall.pc.in.TradeParamIn;
+import com.mall.pc.out.TradeParamOut;
 import com.mall.pc.service.TradeInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +35,13 @@ public class TradeInfoServiceImpl implements TradeInfoService {
     @Autowired
     private TradeParamMapper tradeParamMapper;
 
+    @Autowired
+    private TradePhotoMapper tradePhotoMapper;
+
+    @Autowired
+    private TradeComposeMapper tradeComposeMapper;
+
+
     @Override
     public BasicData Querytrades(TradeInfo tradeInfo) {
 
@@ -38,30 +52,79 @@ public class TradeInfoServiceImpl implements TradeInfoService {
 
     @Override
     public BasicData QuerytradeById(Integer id) {
-        Map map = new HashMap<>();
+        TradeParamOut tradeParamOut = new TradeParamOut();
         TradeInfo tradeInfo = tradeInfoMapper.QuerytradeById(id);
         List<TradeParam> tradeParams = tradeParamMapper.querytradeparam(id);
-        map.put("tradeInfo",tradeInfo);
-        map.put("tradeParams",tradeParams);
-        return BasicData.CreateSucess(map);
+        List<TradePhoto> tradePhotos = tradePhotoMapper.queryTradePhotolistByTradeid(id);
+        List<TradeCompose> tradeComposes = tradeComposeMapper.queryTradeComposelistByMaintrade(id);
+        tradeParamOut.setTradeInfo(tradeInfo);
+        tradeParamOut.setTradeParams(tradeParams);
+        tradeParamOut.setTradePhotos(tradePhotos);
+        tradeParamOut.setTradeComposes(tradeComposes);
+        return BasicData.CreateSucess(tradeParamOut);
     }
 
     @Override
-    public BasicData insertTradeInfo(TradeInfo tradeInfo) {
+    public BasicData insertTradeInfo(TradeParamIn tradeParamIn) {
+        TradeInfo tradeInfo = tradeParamIn.getTradeInfo();
 
         TradeInfo trade = tradeInfoMapper.QuerytradeByBarcode(tradeInfo.getBarcode());
         if(trade!=null){
             return BasicData.CreateErrorMsg("This commodity bar code exists!");
         }
-                tradeInfo.setInvalid("0");
+        tradeInfo.setInvalid("0");
+        tradeInfo.setCreatedate(new Date());
         tradeInfoMapper.insertTradeInfo(tradeInfo);
+        TradeInfo trade1 = tradeInfoMapper.QuerytradeByBarcode(tradeInfo.getBarcode());
+        Integer tradeid=trade1.getId();
+        //新增商品参数信息
+        List<TradeParam> tradeParams =tradeParamIn.getTradeParams();
+        for(TradeParam tradeParam :tradeParams){
+            tradeParam.setTradeid(tradeid);
+            tradeParamMapper.insertradeparam(tradeParam);
+        }
+
+        //新增相册信息
+        List<TradePhoto> tradePhotos = tradeParamIn.getTradePhotos();
+        for(TradePhoto tradePhoto : tradePhotos){
+            tradePhoto.setTradeid(tradeid);
+            tradePhotoMapper.insertTradePhoto(tradePhoto);
+        }
+
+        //新增组合套餐信息
+        List<TradeCompose> tradeComposes = tradeParamIn.getTradeComposes();
+        for(TradeCompose tradeCompose : tradeComposes){
+            tradeCompose.setMaintrade(tradeid);
+            tradeComposeMapper.insertTradeCompose(tradeCompose);
+        }
 
         return BasicData.CreateSucess();
     }
 
     @Override
-    public BasicData updateTradeInfo(TradeInfo tradeInfo) {
+    public BasicData updateTradeInfo(TradeParamIn tradeParamIn) {
+        //更新商品信息
+        TradeInfo tradeInfo = tradeParamIn.getTradeInfo();
         tradeInfoMapper.updateTradeInfo(tradeInfo);
+        //更新商品参数信息
+        List<TradeParam> tradeParams =tradeParamIn.getTradeParams();
+        for(TradeParam tradeParam :tradeParams){
+            tradeParamMapper.updatetradeparam(tradeParam);
+        }
+
+        //更新相册信息
+        List<TradePhoto> tradePhotos = tradeParamIn.getTradePhotos();
+        for(TradePhoto tradePhoto : tradePhotos){
+            tradePhotoMapper.updateTradePhoto(tradePhoto);
+        }
+
+        //更新组合套餐信息
+        List<TradeCompose> tradeComposes = tradeParamIn.getTradeComposes();
+        for(TradeCompose tradeCompose : tradeComposes){
+            tradeComposeMapper.updateTradeCompose(tradeCompose);
+        }
+
+
         return BasicData.CreateSucess();
     }
 
@@ -72,15 +135,15 @@ public class TradeInfoServiceImpl implements TradeInfoService {
     }
 
     @Override
-    public BasicData queryAlltradelist(Integer classify) {
-        List<TradeInfo> queryAlltradelist = tradeInfoMapper.queryAlltradelist(classify);
+    public BasicData queryAlltradelist(Integer classify,String search) {
+        List<TradeInfo> queryAlltradelist = tradeInfoMapper.queryAlltradelist(classify,search);
 
         return BasicData.CreateSucess(queryAlltradelist);
     }
 
     @Override
-    public BasicData querytradelistByClassify(Integer classify) {
-        List<TradeInfo> querytradelistByClassify = tradeInfoMapper.querytradelistByClassify(classify);
+    public BasicData querytradelistByClassify(Integer classify,String search) {
+        List<TradeInfo> querytradelistByClassify = tradeInfoMapper.querytradelistByClassify(classify,search);
         return BasicData.CreateSucess(querytradelistByClassify);
     }
 

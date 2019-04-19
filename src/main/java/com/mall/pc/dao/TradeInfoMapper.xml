@@ -31,12 +31,24 @@
         <result column="ishome" property="ishome" jdbcType="VARCHAR" />
         <result column="brandid" property="brandid" jdbcType="INTEGER" />
         <result column="invalid" property="invalid" jdbcType="VARCHAR" />
-
+        <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+        <result column="tradewarnnum" property="tradewarnnum" jdbcType="INTEGER" />
+        <result column="tradeclass" property="tradeclass" jdbcType="INTEGER" />
+        <result column="tradecode" property="tradecode" jdbcType="VARCHAR" />
+        <result column="tradeweight" property="tradeweight" jdbcType="NUMERIC" />
+        <result column="cad_promoteprice" property="cad_promoteprice" jdbcType="NUMERIC" />
+        <result column="usd_promoteprice" property="usd_promoteprice" jdbcType="NUMERIC" />
+        <result column="promotedate" property="promotedate" jdbcType="TIMESTAMP" />
+        <result column="boutique" property="boutique" jdbcType="VARCHAR" />
+        <result column="newin" property="newin" jdbcType="VARCHAR" />
+        <result column="well" property="well" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List">
        id,barcode,tradename_zw,tradename_yw,tradename_jt,tradeimage,tradevideo,introduce_zw,introduce_yw,introduce_jt,isparam,param_zw,param_yw,param_jt,tradenum,
-       salesvolume,tradebright_zw,tradebright_yw,tradebright_jt,moreinfo_zw,moreinfo_yw,moreinfo_jt,classify,cad_price,usd_price,giveintegral,ishome,brandid,invalid
+       salesvolume,tradebright_zw,tradebright_yw,tradebright_jt,moreinfo_zw,moreinfo_yw,moreinfo_jt,classify,cad_price,usd_price,giveintegral,ishome,brandid,invalid,createdate,
+       tradewarnnum,tradeclass,tradecode,tradeweight,cad_promoteprice,usd_promoteprice,promotedate,boutique,newin,well
+
     </sql>
 
     <select id="Querytrades"  parameterType="com.mall.pc.domen.TradeInfo" resultMap="BaseResultMap">
@@ -49,7 +61,10 @@
         <if test="barcode != null and  barcode != ''">
             AND barcode =#{barcode}
         </if>
-        <if test="classify != null and  classify != ''">
+        <if test="tradeclass != null ">
+            AND tradeclass =#{tradeclass}
+        </if>
+        <if test="classify != null">
             AND classify =#{classify}
         </if>
         <if test="brandid != null">
@@ -75,6 +90,16 @@
         WHERE
         fatherid = #{classify}
         )
+
+        <if test='search == "1" '>
+            ORDER by createdate desc
+        </if>
+        <if test='search == "2" '>
+            ORDER by salesvolume desc
+        </if>
+        <if test='search == "3" '>
+            ORDER by usd_price
+        </if>
     </select>
 
     <select id="querytradelistByClassify"  parameterType="Integer" resultMap="BaseResultMap">
@@ -89,6 +114,16 @@
         table_trade_category
         where id=#{classify}
         )
+
+        <if test='search == "1" '>
+            ORDER by createdate desc
+        </if>
+        <if test='search == "2" '>
+            ORDER by salesvolume desc
+        </if>
+        <if test='search == "3" '>
+            ORDER by usd_price
+        </if>
     </select>
 
     <select id="QuerytradeById"  parameterType="Integer" resultMap="BaseResultMap">
@@ -157,7 +192,18 @@
         giveintegral,
         ishome,
         brandid,
-        invalid
+        invalid,
+        createdate,
+        tradewarnnum,
+        tradeclass,
+        tradecode,
+        tradeweight,
+        cad_promoteprice,
+        usd_promoteprice,
+        promotedate,
+        boutique,
+        newin,
+        well
         )
         values (
         #{barcode},
@@ -187,7 +233,18 @@
         #{giveintegral},
         #{ishome},
         #{brandid},
-        #{invalid}
+        #{invalid},
+        #{createdate},
+        #{tradewarnnum},
+        #{tradeclass},
+        #{tradecode},
+        #{tradeweight},
+        #{cad_promoteprice},
+        #{usd_promoteprice},
+        #{promotedate},
+        #{boutique},
+        #{newin},
+        #{well}
         )
     </insert>
 
@@ -222,7 +279,17 @@
         giveintegral=#{giveintegral},
         ishome=#{ishome},
         brandid=#{brandid},
-        invalid=#{invalid}
+        invalid=#{invalid},
+        tradewarnnum= #{tradewarnnum},
+        tradeclass=#{tradeclass},
+        tradecode=#{tradecode},
+        tradeweight=#{tradeweight},
+        cad_promoteprice=#{cad_promoteprice},
+        usd_promoteprice=#{usd_promoteprice},
+        promotedate=#{promotedate},
+        boutique=#{boutique},
+        newin=#{newin},
+        well=#{well}
         where
         id=#{id}
     </update>

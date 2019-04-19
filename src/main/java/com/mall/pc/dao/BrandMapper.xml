@@ -7,10 +7,11 @@
         <result column="brandicon" property="brandicon" jdbcType="VARCHAR" />
         <result column="ishome" property="ishome" jdbcType="VARCHAR" />
         <result column="brandinfo" property="brandinfo" jdbcType="VARCHAR" />
+        <result column="sort" property="sort" jdbcType="INTEGER" />
     </resultMap>
 
     <sql id="Base_Column_List">
-       id,brandname,brandicon,ishome,brandinfo
+       id,brandname,brandicon,ishome,brandinfo,sort
     </sql>
     <select id="queryBrandlist"  resultMap="BaseResultMap">
         select
@@ -34,13 +35,15 @@
          brandname,
          brandicon,
          ishome,
-         brandinfo
+         brandinfo,
+         sort
         )
         values (
         #{brandname},
         #{brandicon},
         #{ishome},
-        #{brandinfo}
+        #{brandinfo},
+        #{sort}
         )
     </insert>
 
@@ -51,7 +54,8 @@
         brandname=#{brandname},
         brandicon=#{brandicon},
         ishome=#{ishome},
-        brandinfo=#{brandinfo}
+        brandinfo=#{brandinfo},
+        sort=#{sort}
         where
         id=#{id}
     </update>

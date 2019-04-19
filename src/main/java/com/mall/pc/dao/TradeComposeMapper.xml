@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.pc.dao.TradeComposeMapper">
+    <resultMap id="BaseResultMap" type="com.mall.pc.domen.TradeCompose">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="maintrade" property="maintrade" jdbcType="INTEGER" />
+        <result column="subtrade" property="subtrade" jdbcType="INTEGER" />
+        <result column="composeprice" property="composeprice" jdbcType="NUMERIC" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       id,maintrade,subtrade,composeprice
+    </sql>
+    <select id="queryTradeComposelistByMaintrade" parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_trade_compose
+        where
+        maintrade =#{maintrade}
+    </select>
+
+
+    <select id="queryTradeComposeById"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_trade_compose
+        where
+        id =#{id}
+    </select>
+
+
+    <insert id="insertTradeCompose" parameterType="com.mall.pc.domen.TradeCompose">
+        insert into
+        table_trade_compose (
+         maintrade,
+         subtrade,
+         composeprice
+        )
+        values (
+        #{maintrade},
+        #{subtrade},
+        #{composeprice}
+        )
+    </insert>
+
+    <update id="updateTradeCompose" parameterType="com.mall.pc.domen.TradeCompose">
+        UPDATE
+        table_trade_compose
+        SET
+        maintrade=#{maintrade},
+        subtrade=#{subtrade},
+        composeprice=#{composeprice}
+        where
+        id=#{id}
+    </update>
+
+
+    <delete id="delTradeCompose" parameterType="java.lang.Integer">
+         delete from
+         table_trade_compose
+        where
+        id=#{id}
+    </delete>
+
+
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.pc.dao.TradePhotoMapper">
+    <resultMap id="BaseResultMap" type="com.mall.pc.domen.TradePhoto">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="tradeid" property="tradeid" jdbcType="INTEGER" />
+        <result column="imagexplain" property="imagexplain" jdbcType="VARCHAR" />
+        <result column="image" property="image" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       id,tradeid,imagexplain,image
+    </sql>
+    <select id="queryTradePhotolistByTradeid"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_trade_photo
+        where
+        tradeid =#{tradeid}
+    </select>
+
+
+    <select id="queryTradePhotoById"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_trade_photo
+        where
+        id =#{id}
+    </select>
+
+
+    <insert id="insertTradePhoto" parameterType="com.mall.pc.domen.TradePhoto">
+        insert into
+        table_trade_photo (
+         tradeid,
+         imagexplain,
+         image
+        )
+        values (
+        #{tradeid},
+        #{imagexplain},
+        #{image}
+        )
+    </insert>
+
+    <update id="updateTradePhoto" parameterType="com.mall.pc.domen.TradePhoto">
+        UPDATE
+        table_trade_photo
+        SET
+        tradeid=#{tradeid},
+        imagexplain=#{imagexplain},
+        image=#{image}
+        where
+        id=#{id}
+    </update>
+
+
+    <delete id="delTradePhoto" parameterType="java.lang.Integer">
+         delete from
+         table_trade_photo
+        where
+        id=#{id}
+    </delete>
+
+
+</mapper>

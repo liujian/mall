@@ -37,6 +37,11 @@ public class Brand implements Serializable {
      */
     private String ishome;
 
+    /**
+     * 排序
+     */
+    private Integer sort;
+
 
     public Integer getId() {
         return id;
@@ -76,6 +81,14 @@ public class Brand implements Serializable {
 
     public void setIshome(String ishome) {
         this.ishome = ishome;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 }
 
