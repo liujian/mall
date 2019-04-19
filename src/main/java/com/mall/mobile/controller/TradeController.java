@@ -122,6 +122,25 @@ public class TradeController {
 
     }
 
+    /**
+     *  商品条形码搜索商品
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/QuerytradeBybrand",method = RequestMethod.GET)
+    @ResponseBody
+    public BasicData QuerytradeBybrand(
+            @RequestParam(required = false) Integer brandid,
+            HttpServletRequest request){
+        try{
+            return tradeInfoService.QuerytradeBybrand(brandid);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+
+    }
+
 
 }
 

@@ -24,4 +24,7 @@ public interface TradeInfoService {
     BasicData QuerytradeBysearchname(String searchname);
 
     BasicData QuerytradeBybarcode(String barcode);
+
+    BasicData QuerytradeBybrand(Integer brandid);
+
 }

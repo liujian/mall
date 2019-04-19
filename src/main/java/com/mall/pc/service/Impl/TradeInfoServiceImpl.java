@@ -172,10 +172,12 @@ public class TradeInfoServiceImpl implements TradeInfoService {
         return BasicData.CreateSucess(tradeInfo);
     }
 
+    @Override
+    public BasicData QuerytradeBybrand(Integer brandid) {
 
-
-
-
+        List<TradeInfo> tradeInfos = tradeInfoMapper.QuerytradeByBrandid(brandid);
+        return BasicData.CreateSucess(tradeInfos);
+    }
 
 
 }

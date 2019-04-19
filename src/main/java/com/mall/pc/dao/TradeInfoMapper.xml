@@ -107,6 +107,16 @@
 
     </select>
 
+    <select id="QuerytradeByBrandid"  parameterType="Integer" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        table_trade_info a
+        WHERE
+        a.brandid=#{brandid}
+
+    </select>
+
     <select id="querytradelistByClassify"  parameterType="Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
