@@ -14,9 +14,14 @@
         <result column="updateDate" property="updateDate" jdbcType="TIMESTAMP"/>
         <result column="fireBaseToken" jdbcType="VARCHAR" property="fireBaseToken"/>
         <result column="verified" jdbcType="VARCHAR" property="verified"/>
+        <result column="skincolour" jdbcType="VARCHAR" property="skincolour"/>
+        <result column="skintexture" jdbcType="VARCHAR" property="skintexture"/>
+        <result column="hairstyle" jdbcType="VARCHAR" property="hairstyle"/>
+        <result column="hairquality" jdbcType="VARCHAR" property="hairquality"/>
+        <result column="eyecolor" jdbcType="VARCHAR" property="eyecolor"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id,emailAddress, password, firstName, lastName, phone,birthday,token,createDate, updateDate,fireBaseToken,verified
+    id,emailAddress, password, firstName, lastName, phone,birthday,token,createDate, updateDate,fireBaseToken,verified,skincolour,skintexture,hairstyle,hairquality,eyecolor
   </sql>
 
     <select id="selectByEmailAddress" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -47,7 +52,12 @@
           updateDate,
           fireBaseToken,
           token,
-          verified
+          verified,
+          skincolour,
+          skintexture,
+          hairstyle,
+          hairquality,
+          eyecolor
           )
       values (
       #{emailAddress,jdbcType=VARCHAR},
@@ -60,7 +70,12 @@
       #{updateDate,jdbcType=TIMESTAMP},
       #{fireBaseToken,jdbcType=VARCHAR},
       #{token,jdbcType=VARCHAR},
-      #{verified,jdbcType=VARCHAR}
+      #{verified,jdbcType=VARCHAR},
+      #{skincolour,jdbcType=VARCHAR},
+      #{skintexture,jdbcType=VARCHAR},
+      #{hairstyle,jdbcType=VARCHAR},
+      #{hairquality,jdbcType=VARCHAR},
+      #{eyecolor,jdbcType=VARCHAR}
       )
   </insert>
 
@@ -97,7 +112,12 @@
         token=#{token},
         fireBaseToken=#{fireBaseToken},
         updateDate=#{updateDate},
-        verified=#{verified}
+        verified=#{verified},
+        skincolour=#{skincolour,jdbcType=VARCHAR},
+        skintexture=#{skintexture,jdbcType=VARCHAR},
+        hairstyle=#{hairstyle,jdbcType=VARCHAR},
+        hairquality=#{hairquality,jdbcType=VARCHAR},
+        eyecolor=#{eyecolor,jdbcType=VARCHAR}
         where
         id=#{id}
   </update>

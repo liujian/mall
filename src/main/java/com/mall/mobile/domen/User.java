@@ -67,6 +67,32 @@ public class User implements Serializable{
 	 */
 	private String verified;
 
+	/**
+	 * 肤色
+	 */
+	private String skincolour;
+
+	/**
+	 * 肤质
+	 */
+	private String skintexture;
+
+
+	/**
+	 * 发型
+	 */
+	private String hairstyle;
+
+
+	/**
+	 * 发质
+	 */
+	private String hairquality;
+
+	/**
+	 * 眼睛颜色
+	 */
+	private String eyecolor;
 
 	
 	public String getToken() {
@@ -163,5 +189,45 @@ public class User implements Serializable{
 
 	public void setVerified(String verified) {
 		this.verified = verified;
+	}
+
+	public String getSkincolour() {
+		return skincolour;
+	}
+
+	public void setSkincolour(String skincolour) {
+		this.skincolour = skincolour;
+	}
+
+	public String getSkintexture() {
+		return skintexture;
+	}
+
+	public void setSkintexture(String skintexture) {
+		this.skintexture = skintexture;
+	}
+
+	public String getHairstyle() {
+		return hairstyle;
+	}
+
+	public void setHairstyle(String hairstyle) {
+		this.hairstyle = hairstyle;
+	}
+
+	public String getHairquality() {
+		return hairquality;
+	}
+
+	public void setHairquality(String hairquality) {
+		this.hairquality = hairquality;
+	}
+
+	public String getEyecolor() {
+		return eyecolor;
+	}
+
+	public void setEyecolor(String eyecolor) {
+		this.eyecolor = eyecolor;
 	}
 }
