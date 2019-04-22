@@ -1,7 +1,11 @@
 package com.mall.mobile.service.Impl;
 
 import com.mall.common.param.BasicData;
+import com.mall.mobile.dao.IntegralMapper;
+import com.mall.mobile.dao.InterestMapper;
 import com.mall.mobile.dao.UserMapper;
+import com.mall.mobile.domen.Integral;
+import com.mall.mobile.domen.Interest;
 import com.mall.mobile.domen.User;
 import com.mall.mobile.in.LoginParam;
 import com.mall.mobile.in.NewPasswordParam;
@@ -15,6 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @program: mall
@@ -27,6 +34,12 @@ public class UserLoginServiceImpl implements UserLoginService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private IntegralMapper integralMapper;
+
+    @Autowired
+    private InterestMapper interestMapper;
 
     @Override
     public BasicData registration(RegistrationParam param) {
@@ -91,11 +104,20 @@ public class UserLoginServiceImpl implements UserLoginService {
         if (!(SafetyUtil.addMD5Salt(param.getEmailAddress(),param.getPassword())).equals(user.getPassword())) {
             return BasicData.CreateErrorMsg("The Email or password you entered is incorrect!");
         }
+        Map map = new HashMap<>();
         String token = LoginUtil.getToken();
         user.setToken(token);
         user.setFireBaseToken(param.getFireBaseToken());
         userMapper.updateToken(user);
-        return BasicData.CreateSucess(user);
+        //获取用户积分信息
+        Integral integral = integralMapper.getIntegralByUserid(user.getId());
+        //获取用户喜爱信息
+        List<Interest> interest = interestMapper.getInterestList(user.getId());
+
+        map.put("user",user);
+        map.put("integral",integral);
+        map.put("interestsize",interest.size());
+        return BasicData.CreateSucess(map);
     }
 
     @Override
