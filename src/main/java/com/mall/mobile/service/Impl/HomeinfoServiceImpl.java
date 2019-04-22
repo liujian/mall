@@ -67,5 +67,11 @@ public class HomeinfoServiceImpl implements HomeinfoService {
 
         return BasicData.CreateSucess(homeParmOut);
     }
+
+    @Override
+    public BasicData gettradeByBrand(Integer brandid) {
+        List<TradeInfo> tradeInfos = tradeInfoMapper.QuerytradeByBrandid(brandid);
+        return BasicData.CreateSucess(tradeInfos);
+    }
 }
 

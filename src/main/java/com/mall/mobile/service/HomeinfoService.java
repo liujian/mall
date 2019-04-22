@@ -5,4 +5,6 @@ import com.mall.common.param.BasicData;
 public interface HomeinfoService {
 
     BasicData gethomeinfo();
+
+    BasicData gettradeByBrand(Integer brandid);
 }

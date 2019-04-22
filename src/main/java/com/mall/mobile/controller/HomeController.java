@@ -36,7 +36,22 @@ public class HomeController {
 
 
     /**
-     * 根据
+     * 根据品牌查找商品
      */
+    @RequestMapping(value="/gettradeByBrand",method = RequestMethod.GET)
+    @ResponseBody
+    public BasicData gettradeByBrand(
+                    @RequestParam(required = false) Integer brandid,
+                                    HttpServletRequest request){
+
+        try{
+            return homeinfoService.gettradeByBrand(brandid);
+        }catch(Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+    }
+
+
 }
 
