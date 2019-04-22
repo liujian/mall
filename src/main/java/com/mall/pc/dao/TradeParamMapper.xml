@@ -31,6 +31,8 @@
         where
         tradeid =#{tradeid}
         AND
+        param_zw=#{param_zw}
+        AND
         param=#{param}
     </select>
 

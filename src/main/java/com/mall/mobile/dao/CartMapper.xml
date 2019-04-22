@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.mobile.dao.CartMapper">
+    <resultMap id="BaseResultMap" type="com.mall.mobile.domen.Cart">
+        <result column="userid" jdbcType="INTEGER" property="userid" />
+        <result column="tradid" property="tradid" jdbcType="INTEGER" />
+        <result column="tradparmname" property="tradparmname" jdbcType="VARCHAR" />
+        <result column="tradparm" property="tradparm" jdbcType="VARCHAR" />
+        <result column="tradenum" property="tradenum" jdbcType="INTEGER" />
+        <result column="tradeclass" property="tradeclass" jdbcType="INTEGER" />
+        <result column="tradetype" property="tradetype" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <select id="getCartList"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+         * from table_shopping_cart
+         where
+          userid=#{userid}
+    </select>
+
+
+    <insert id="addCart" parameterType="com.mall.mobile.domen.Cart">
+        insert into
+        table_shopping_cart (
+        userid,
+        tradid,
+        tradparmname,
+        tradparm,
+        tradenum,
+        tradeclass,
+        tradetype
+        )
+        values (
+        #{userid,jdbcType=INTEGER},
+        #{tradid,jdbcType=INTEGER},
+        #{tradparmname,jdbcType=VARCHAR},
+        #{tradparm,jdbcType=VARCHAR},
+        #{tradenum,jdbcType=INTEGER},
+        #{tradeclass,jdbcType=INTEGER},
+        #{tradetype,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateCart" parameterType="com.mall.mobile.domen.Cart">
+        UPDATE
+        table_shopping_cart
+        SET
+        tradenum=#{tradenum}
+        where
+        userid=#{userid}
+        AND
+        tradid=#{tradid}
+        AND
+        tradparmname=#{tradparmname}
+         AND
+        tradparm=#{tradparm}
+    </update>
+
+    <delete id="delCart" parameterType="java.lang.Integer">
+        delete from table_shopping_cart
+         where
+        userid=#{userid}
+        AND
+        tradid=#{tradid}
+        AND
+        tradparmname=#{tradparmname}
+         AND
+        tradparm=#{tradparm}
+    </delete>
+
+
+</mapper>
