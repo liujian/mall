@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mall.mobile.dao.CartMapper">
     <resultMap id="BaseResultMap" type="com.mall.mobile.domen.Cart">
+        <id column="id" jdbcType="INTEGER" property="id" />
         <result column="userid" jdbcType="INTEGER" property="userid" />
         <result column="tradid" property="tradid" jdbcType="INTEGER" />
         <result column="tradparmname" property="tradparmname" jdbcType="VARCHAR" />
@@ -19,6 +20,27 @@
           userid=#{userid}
     </select>
 
+    <select id="queryCartByid"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+        * from table_shopping_cart
+        where
+        id=#{id}
+    </select>
+
+    <select id="queryCart"  parameterType="com.mall.mobile.domen.Cart" resultMap="BaseResultMap">
+        select
+        * from table_shopping_cart
+        where
+        userid=#{userid}
+        AND
+        tradid=#{tradid}
+        AND
+        tradparmname=#{tradparmname}
+        AND
+        tradparm=#{tradparm}
+        AND
+        tradetype=#{tradetype}
+    </select>
 
     <insert id="addCart" parameterType="com.mall.mobile.domen.Cart">
         insert into
@@ -60,13 +82,7 @@
     <delete id="delCart" parameterType="java.lang.Integer">
         delete from table_shopping_cart
          where
-        userid=#{userid}
-        AND
-        tradid=#{tradid}
-        AND
-        tradparmname=#{tradparmname}
-         AND
-        tradparm=#{tradparm}
+        id=#{id}
     </delete>
 
 

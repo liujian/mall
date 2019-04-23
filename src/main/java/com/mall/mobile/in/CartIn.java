@@ -1,25 +1,20 @@
-package com.mall.mobile.domen;
-
-import java.io.Serializable;
+package com.mall.mobile.in;
 
 /**
  * @program: mall
  * @description:
  * @author: liu.j
- * @create: 2019-04-22 15:57
+ * @create: 2019-04-23 10:44
  **/
 
-public class Cart implements Serializable {
+public class CartIn {
+
+
 
     /**
-     *购物车id
+     *用户token
      */
-    private Integer id;
-
-    /**
-     *用户id
-     */
-    private Integer userid;
+    private String token;
 
     /**
      *商品id
@@ -56,21 +51,12 @@ public class Cart implements Serializable {
      */
     private String tradetype;
 
-
-    public Integer getId() {
-        return id;
+    public String getToken() {
+        return token;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getUserid() {
-        return userid;
-    }
-
-    public void setUserid(Integer userid) {
-        this.userid = userid;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public Integer getTradid() {

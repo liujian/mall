@@ -18,6 +18,36 @@ public class CartOut {
 
     private TradeCategory tradeCategory;
 
+    private Integer cartid;
+
+    private Integer tradenum;
+
+    private String tradetype;
+
+    public Integer getTradenum() {
+        return tradenum;
+    }
+
+    public void setTradenum(Integer tradenum) {
+        this.tradenum = tradenum;
+    }
+
+    public String getTradetype() {
+        return tradetype;
+    }
+
+    public void setTradetype(String tradetype) {
+        this.tradetype = tradetype;
+    }
+
+    public Integer getCartid() {
+        return cartid;
+    }
+
+    public void setCartid(Integer cartid) {
+        this.cartid = cartid;
+    }
+
     public TradeInfoOut getTradeInfoOut() {
         return tradeInfoOut;
     }

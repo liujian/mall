@@ -2,17 +2,18 @@ package com.mall.mobile.service;
 
 import com.mall.common.param.BasicData;
 import com.mall.mobile.domen.Cart;
+import com.mall.mobile.in.CartIn;
 
 import java.util.List;
 
 public interface CartService {
 
-    BasicData getCartList(Integer userid);
+    BasicData getCartList(String token);
 
-    BasicData addCart(Cart cart);
+    BasicData addCart(CartIn cartIn);
 
-    BasicData updateCart(Cart cart);
+    BasicData adddelCart(String token,Integer id,String type);
 
-    BasicData delCart(Cart cart);
+    BasicData delCart(String token,Integer id);
 
 }

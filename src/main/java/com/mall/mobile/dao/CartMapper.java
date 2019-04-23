@@ -11,10 +11,13 @@ public interface CartMapper {
 
     List<Cart> getCartList(Integer userid);
 
+    Cart queryCart(Cart cart);
+    Cart queryCartByid(Integer id);
+
     void addCart(Cart cart);
 
     void updateCart(Cart cart);
 
-    void delCart(Cart cart);
+    void delCart(Integer id);
 
 }
