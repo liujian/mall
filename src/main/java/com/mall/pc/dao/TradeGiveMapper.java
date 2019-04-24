@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface TradeGiveMapper {
 
-    List<TradeGive> queryTradeGivelistByTradeid(Integer tradeid);
+    List<TradeGive> queryTradeGivelistByTradeid(Integer tradeid,String cate);
 
     TradeGive queryTradeGiveById(Integer id);
 
@@ -17,6 +17,8 @@ public interface TradeGiveMapper {
 
     void updateTradeGive(TradeGive tradeGive);
 
-    void delTradeGive(Integer id);
+    void delTradeGiveById(Integer id);
+
+    void delTradeGiveByTradeid(Integer tradeid);
 
 }

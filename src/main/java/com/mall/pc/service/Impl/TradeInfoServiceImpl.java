@@ -4,15 +4,16 @@ import com.mall.common.param.BasicData;
 import com.mall.pc.dao.*;
 import com.mall.pc.domen.*;
 import com.mall.pc.in.TradeParamIn;
+import com.mall.pc.out.TradeParamNameOut;
 import com.mall.pc.out.TradeParamOut;
 import com.mall.pc.service.TradeInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @program: mall
@@ -38,6 +39,10 @@ public class TradeInfoServiceImpl implements TradeInfoService {
     @Autowired
     private TradeGiveMapper tradeGiveMapper;
 
+    @Autowired
+    private TradeParamNameMapper tradeParamNameMapper;
+
+
     @Override
     public BasicData Querytrades(TradeInfo tradeInfo) {
 
@@ -50,15 +55,26 @@ public class TradeInfoServiceImpl implements TradeInfoService {
     public BasicData QuerytradeById(Integer id) {
         TradeParamOut tradeParamOut = new TradeParamOut();
         TradeInfo tradeInfo = tradeInfoMapper.QuerytradeById(id);
-        List<TradeParam> tradeParams = tradeParamMapper.querytradeparam(id);
+
+        List<TradeParamNameOut> tradeParamNameOuts = new ArrayList<>();
+        List<TradeParamName> tradeParamNames= tradeParamNameMapper.querytradeparamName(id);
+        for(TradeParamName tradeParamName :tradeParamNames){
+            TradeParamNameOut tradeParamNameOut = new TradeParamNameOut();
+            tradeParamNameOut.setTradeParamName(tradeParamName);
+            List<TradeParam> tradeParams = tradeParamMapper.querytradeparam(id,tradeParamName.getId());
+            tradeParamNameOut.setTradeParams(tradeParams);
+            tradeParamNameOuts.add(tradeParamNameOut);
+        }
         List<TradePhoto> tradePhotos = tradePhotoMapper.queryTradePhotolistByTradeid(id);
         List<TradeCompose> tradeComposes = tradeComposeMapper.queryTradeComposelistByMaintrade(id);
-        List<TradeGive> tradeGives = tradeGiveMapper.queryTradeGivelistByTradeid(id);
+        List<TradeGive> tradeGives = tradeGiveMapper.queryTradeGivelistByTradeid(id,tradeInfo.getCoupway());
+        List<TradeInfoTranslate> tradeInfoTranslates = tradeInfoMapper.QueryTradeTranslateBytrandid(id);
         tradeParamOut.setTradeInfo(tradeInfo);
-        tradeParamOut.setTradeParams(tradeParams);
+        tradeParamOut.setTradeParamNameOuts(tradeParamNameOuts);
         tradeParamOut.setTradePhotos(tradePhotos);
         tradeParamOut.setTradeComposes(tradeComposes);
         tradeParamOut.setTradeGives(tradeGives);
+        tradeParamOut.setTradeInfoTranslates(tradeInfoTranslates);
         return BasicData.CreateSucess(tradeParamOut);
     }
 
@@ -68,19 +84,19 @@ public class TradeInfoServiceImpl implements TradeInfoService {
 
         TradeInfo trade = tradeInfoMapper.QuerytradeByBarcode(tradeInfo.getBarcode());
         if(trade!=null){
-            return BasicData.CreateErrorMsg("This commodity bar code exists!");
+            return BasicData.CreateErrorMsg("该条形码以存在!");
         }
         tradeInfo.setInvalid("0");
         tradeInfo.setCreatedate(new Date());
         tradeInfoMapper.insertTradeInfo(tradeInfo);
         TradeInfo trade1 = tradeInfoMapper.QuerytradeByBarcode(tradeInfo.getBarcode());
         Integer tradeid=trade1.getId();
-        //新增商品参数信息
-        List<TradeParam> tradeParams =tradeParamIn.getTradeParams();
-        for(TradeParam tradeParam :tradeParams){
-            tradeParam.setTradeid(tradeid);
-            tradeParamMapper.insertradeparam(tradeParam);
-        }
+//        //新增商品参数信息
+//        List<TradeParam> tradeParams =tradeParamIn.getTradeParams();
+//        for(TradeParam tradeParam :tradeParams){
+//            tradeParam.setTradeid(tradeid);
+//            tradeParamMapper.insertradeparam(tradeParam);
+//        }
 
         //新增相册信息
         List<TradePhoto> tradePhotos = tradeParamIn.getTradePhotos();
@@ -96,12 +112,12 @@ public class TradeInfoServiceImpl implements TradeInfoService {
             tradeComposeMapper.insertTradeCompose(tradeCompose);
         }
 
-        //新增赠送商品
-        List<TradeGive> tradeGives = tradeParamIn.getTradeGives();
-        for(TradeGive tradeGive : tradeGives){
-            tradeGive.setTradeid(tradeid);
-            tradeGiveMapper.insertTradeGive(tradeGive);
-        }
+//        //新增赠送商品
+//        List<TradeGive> tradeGives = tradeParamIn.getTradeGives();
+//        for(TradeGive tradeGive : tradeGives){
+//            tradeGive.setTradeid(tradeid);
+//            tradeGiveMapper.insertTradeGive(tradeGive);
+//        }
 
         return BasicData.CreateSucess();
     }
@@ -111,11 +127,11 @@ public class TradeInfoServiceImpl implements TradeInfoService {
         //更新商品信息
         TradeInfo tradeInfo = tradeParamIn.getTradeInfo();
         tradeInfoMapper.updateTradeInfo(tradeInfo);
-        //更新商品参数信息
-        List<TradeParam> tradeParams =tradeParamIn.getTradeParams();
-        for(TradeParam tradeParam :tradeParams){
-            tradeParamMapper.updatetradeparam(tradeParam);
-        }
+//        //更新商品参数信息
+//        List<TradeParam> tradeParams =tradeParamIn.getTradeParams();
+//        for(TradeParam tradeParam :tradeParams){
+//            tradeParamMapper.updatetradeparam(tradeParam);
+//        }
 
         //更新相册信息
         List<TradePhoto> tradePhotos = tradeParamIn.getTradePhotos();
@@ -128,11 +144,11 @@ public class TradeInfoServiceImpl implements TradeInfoService {
         for(TradeCompose tradeCompose : tradeComposes){
             tradeComposeMapper.updateTradeCompose(tradeCompose);
         }
-        //更新赠送商品
-        List<TradeGive> tradeGives = tradeParamIn.getTradeGives();
-        for(TradeGive tradeGive : tradeGives){
-            tradeGiveMapper.updateTradeGive(tradeGive);
-        }
+//        //更新赠送商品
+//        List<TradeGive> tradeGives = tradeParamIn.getTradeGives();
+//        for(TradeGive tradeGive : tradeGives){
+//            tradeGiveMapper.updateTradeGive(tradeGive);
+//        }
 
 
         return BasicData.CreateSucess();
@@ -171,6 +187,45 @@ public class TradeInfoServiceImpl implements TradeInfoService {
         TradeInfo tradeInfo = tradeInfoMapper.QuerytradeByBarcode(barcode);
         return BasicData.CreateSucess(tradeInfo);
     }
+
+    //优惠方式
+
+    @Override
+    public BasicData updatecoupway(String coupway, Integer fullpiece, BigDecimal fullprice, Integer tradeid){
+        TradeInfo tradeInfo = tradeInfoMapper.QuerytradeById(tradeid);
+        tradeInfo.setCoupway(coupway);
+        tradeInfo.setFullpiece(fullpiece);
+        tradeInfo.setFullprice(fullprice);
+        tradeInfoMapper.updateTradeInfo(tradeInfo);
+        return BasicData.CreateSucess();
+    }
+
+    @Override
+    public BasicData insertTradeGive(TradeGive tradeGive) {
+
+         tradeGiveMapper.insertTradeGive(tradeGive);
+
+        return BasicData.CreateSucess();
+    }
+
+    @Override
+    public BasicData delTradeGive(Integer id) {
+        tradeGiveMapper.delTradeGiveById(id);
+        return BasicData.CreateSucess();
+    }
+
+
+    //促销
+
+    @Override
+    public BasicData promote(Integer tradeid, BigDecimal promoteprice, Date promotedate) {
+        TradeInfo tradeInfo = tradeInfoMapper.QuerytradeById(tradeid);
+        tradeInfo.setPromoteprice(promoteprice);
+        tradeInfo.setPromotedate(promotedate);
+        tradeInfoMapper.updateTradeInfo(tradeInfo);
+        return BasicData.CreateSucess();
+    }
+
 
 
 

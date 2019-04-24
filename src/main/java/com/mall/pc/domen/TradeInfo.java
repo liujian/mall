@@ -24,19 +24,10 @@ public class TradeInfo  implements Serializable {
     private String barcode;
 
     /**
-     *商品名称（中文）
+     *商品名称（默认）
      */
-    private String tradename_zw;
+    private String tradename;
 
-    /**
-     *商品名称（英文）
-     */
-    private String tradename_yw;
-
-    /**
-     *商品名称（简体）
-     */
-    private String tradename_jt;
 
     /**
      *商品图片
@@ -49,19 +40,9 @@ public class TradeInfo  implements Serializable {
     private String tradevideo;
 
     /**
-     *商品介绍（中文）
+     *商品介绍（默认）
      */
-    private String introduce_zw;
-
-    /**
-     *商品介绍（英文）
-     */
-    private String introduce_yw;
-
-    /**
-     *商品介绍（简体）
-     */
-    private String introduce_jt;
+    private String introduce;
 
 
     /**
@@ -80,34 +61,15 @@ public class TradeInfo  implements Serializable {
     private Integer salesvolume;
 
     /**
-     *商品亮点（中文）
+     *商品亮点（默认）
      */
-    private String tradebright_zw;
+    private String tradebright;
+
 
     /**
-     *商品亮点（英文）
+     * 更多信息（默认）
      */
-    private String tradebright_yw;
-
-    /**
-     *商品亮点（简体）
-     */
-    private String tradebright_jt;
-
-    /**
-     * 更多信息（中文）
-     */
-    private String moreinfo_zw;
-
-    /**
-     * 更多信息（英文）
-     */
-    private String moreinfo_yw;
-
-    /**
-     * 更多信息（简体）
-     */
-    private String moreinfo_jt;
+    private String moreinfo;
 
     /**
      *分类
@@ -120,14 +82,10 @@ public class TradeInfo  implements Serializable {
     private Integer classify;
 
     /**
-     * 商品价格(加拿大)
+     * 商品价格
      */
-    private BigDecimal cad_price;
+    private BigDecimal price;
 
-    /**
-     * 商品价格(美国)
-     */
-    private BigDecimal usd_price;
 
     /**
      * 赠送积分
@@ -165,14 +123,10 @@ public class TradeInfo  implements Serializable {
     private BigDecimal tradeweight;
 
     /**
-     *促销价格-加
+     *促销价格
      */
-    private BigDecimal cad_promoteprice;
+    private BigDecimal promoteprice;
 
-    /**
-     *促销价格-美
-     */
-    private BigDecimal usd_promoteprice;
 
     /**
      * 促销日期
@@ -215,46 +169,6 @@ public class TradeInfo  implements Serializable {
      */
     private BigDecimal ratio;
 
-    public String getCoupway() {
-        return coupway;
-    }
-
-    public void setCoupway(String coupway) {
-        this.coupway = coupway;
-    }
-
-    public Integer getFullpiece() {
-        return fullpiece;
-    }
-
-    public void setFullpiece(Integer fullpiece) {
-        this.fullpiece = fullpiece;
-    }
-
-    public BigDecimal getFullprice() {
-        return fullprice;
-    }
-
-    public void setFullprice(BigDecimal fullprice) {
-        this.fullprice = fullprice;
-    }
-
-    public BigDecimal getRatio() {
-        return ratio;
-    }
-
-    public void setRatio(BigDecimal ratio) {
-        this.ratio = ratio;
-    }
-
-    public Date getCreatedate() {
-        return createdate;
-    }
-
-    public void setCreatedate(Date createdate) {
-        this.createdate = createdate;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -271,28 +185,12 @@ public class TradeInfo  implements Serializable {
         this.barcode = barcode;
     }
 
-    public String getTradename_zw() {
-        return tradename_zw;
+    public String getTradename() {
+        return tradename;
     }
 
-    public void setTradename_zw(String tradename_zw) {
-        this.tradename_zw = tradename_zw;
-    }
-
-    public String getTradename_yw() {
-        return tradename_yw;
-    }
-
-    public void setTradename_yw(String tradename_yw) {
-        this.tradename_yw = tradename_yw;
-    }
-
-    public String getTradename_jt() {
-        return tradename_jt;
-    }
-
-    public void setTradename_jt(String tradename_jt) {
-        this.tradename_jt = tradename_jt;
+    public void setTradename(String tradename) {
+        this.tradename = tradename;
     }
 
     public String getTradeimage() {
@@ -303,30 +201,21 @@ public class TradeInfo  implements Serializable {
         this.tradeimage = tradeimage;
     }
 
-    public String getIntroduce_zw() {
-        return introduce_zw;
+    public String getTradevideo() {
+        return tradevideo;
     }
 
-    public void setIntroduce_zw(String introduce_zw) {
-        this.introduce_zw = introduce_zw;
+    public void setTradevideo(String tradevideo) {
+        this.tradevideo = tradevideo;
     }
 
-    public String getIntroduce_yw() {
-        return introduce_yw;
+    public String getIntroduce() {
+        return introduce;
     }
 
-    public void setIntroduce_yw(String introduce_yw) {
-        this.introduce_yw = introduce_yw;
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
     }
-
-    public String getIntroduce_jt() {
-        return introduce_jt;
-    }
-
-    public void setIntroduce_jt(String introduce_jt) {
-        this.introduce_jt = introduce_jt;
-    }
-
 
     public Integer getTradenum() {
         return tradenum;
@@ -334,6 +223,14 @@ public class TradeInfo  implements Serializable {
 
     public void setTradenum(Integer tradenum) {
         this.tradenum = tradenum;
+    }
+
+    public Integer getTradewarnnum() {
+        return tradewarnnum;
+    }
+
+    public void setTradewarnnum(Integer tradewarnnum) {
+        this.tradewarnnum = tradewarnnum;
     }
 
     public Integer getSalesvolume() {
@@ -344,60 +241,20 @@ public class TradeInfo  implements Serializable {
         this.salesvolume = salesvolume;
     }
 
-    public String getTradebright_zw() {
-        return tradebright_zw;
+    public String getTradebright() {
+        return tradebright;
     }
 
-    public void setTradebright_zw(String tradebright_zw) {
-        this.tradebright_zw = tradebright_zw;
+    public void setTradebright(String tradebright) {
+        this.tradebright = tradebright;
     }
 
-    public String getTradebright_yw() {
-        return tradebright_yw;
+    public String getMoreinfo() {
+        return moreinfo;
     }
 
-    public void setTradebright_yw(String tradebright_yw) {
-        this.tradebright_yw = tradebright_yw;
-    }
-
-    public String getTradebright_jt() {
-        return tradebright_jt;
-    }
-
-    public void setTradebright_jt(String tradebright_jt) {
-        this.tradebright_jt = tradebright_jt;
-    }
-
-    public String getMoreinfo_zw() {
-        return moreinfo_zw;
-    }
-
-    public void setMoreinfo_zw(String moreinfo_zw) {
-        this.moreinfo_zw = moreinfo_zw;
-    }
-
-    public String getMoreinfo_yw() {
-        return moreinfo_yw;
-    }
-
-    public void setMoreinfo_yw(String moreinfo_yw) {
-        this.moreinfo_yw = moreinfo_yw;
-    }
-
-    public String getMoreinfo_jt() {
-        return moreinfo_jt;
-    }
-
-    public void setMoreinfo_jt(String moreinfo_jt) {
-        this.moreinfo_jt = moreinfo_jt;
-    }
-
-    public Integer getTradewarnnum() {
-        return tradewarnnum;
-    }
-
-    public void setTradewarnnum(Integer tradewarnnum) {
-        this.tradewarnnum = tradewarnnum;
+    public void setMoreinfo(String moreinfo) {
+        this.moreinfo = moreinfo;
     }
 
     public Integer getTradeclass() {
@@ -416,8 +273,52 @@ public class TradeInfo  implements Serializable {
         this.classify = classify;
     }
 
-    public BigDecimal getCad_price() {
-        return cad_price;
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Integer getGiveintegral() {
+        return giveintegral;
+    }
+
+    public void setGiveintegral(Integer giveintegral) {
+        this.giveintegral = giveintegral;
+    }
+
+    public String getIshome() {
+        return ishome;
+    }
+
+    public void setIshome(String ishome) {
+        this.ishome = ishome;
+    }
+
+    public Integer getBrandid() {
+        return brandid;
+    }
+
+    public void setBrandid(Integer brandid) {
+        this.brandid = brandid;
+    }
+
+    public String getInvalid() {
+        return invalid;
+    }
+
+    public void setInvalid(String invalid) {
+        this.invalid = invalid;
+    }
+
+    public Date getCreatedate() {
+        return createdate;
+    }
+
+    public void setCreatedate(Date createdate) {
+        this.createdate = createdate;
     }
 
     public String getTradecode() {
@@ -436,20 +337,12 @@ public class TradeInfo  implements Serializable {
         this.tradeweight = tradeweight;
     }
 
-    public BigDecimal getCad_promoteprice() {
-        return cad_promoteprice;
+    public BigDecimal getPromoteprice() {
+        return promoteprice;
     }
 
-    public void setCad_promoteprice(BigDecimal cad_promoteprice) {
-        this.cad_promoteprice = cad_promoteprice;
-    }
-
-    public BigDecimal getUsd_promoteprice() {
-        return usd_promoteprice;
-    }
-
-    public void setUsd_promoteprice(BigDecimal usd_promoteprice) {
-        this.usd_promoteprice = usd_promoteprice;
+    public void setPromoteprice(BigDecimal promoteprice) {
+        this.promoteprice = promoteprice;
     }
 
     public Date getPromotedate() {
@@ -484,56 +377,36 @@ public class TradeInfo  implements Serializable {
         this.well = well;
     }
 
-    public void setCad_price(BigDecimal cad_price) {
-        this.cad_price = cad_price;
+    public String getCoupway() {
+        return coupway;
     }
 
-    public BigDecimal getUsd_price() {
-        return usd_price;
+    public void setCoupway(String coupway) {
+        this.coupway = coupway;
     }
 
-    public void setUsd_price(BigDecimal usd_price) {
-        this.usd_price = usd_price;
+    public Integer getFullpiece() {
+        return fullpiece;
     }
 
-    public Integer getGiveintegral() {
-        return giveintegral;
+    public void setFullpiece(Integer fullpiece) {
+        this.fullpiece = fullpiece;
     }
 
-    public void setGiveintegral(Integer giveintegral) {
-        this.giveintegral = giveintegral;
+    public BigDecimal getFullprice() {
+        return fullprice;
     }
 
-    public String getIshome() {
-        return ishome;
+    public void setFullprice(BigDecimal fullprice) {
+        this.fullprice = fullprice;
     }
 
-    public void setIshome(String ishome) {
-        this.ishome = ishome;
+    public BigDecimal getRatio() {
+        return ratio;
     }
 
-    public String getTradevideo() {
-        return tradevideo;
-    }
-
-    public void setTradevideo(String tradevideo) {
-        this.tradevideo = tradevideo;
-    }
-
-    public Integer getBrandid() {
-        return brandid;
-    }
-
-    public void setBrandid(Integer brandid) {
-        this.brandid = brandid;
-    }
-
-    public String getInvalid() {
-        return invalid;
-    }
-
-    public void setInvalid(String invalid) {
-        this.invalid = invalid;
+    public void setRatio(BigDecimal ratio) {
+        this.ratio = ratio;
     }
 }
 

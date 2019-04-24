@@ -6,10 +6,10 @@ import java.io.Serializable;
  * @program: mall
  * @description:
  * @author: liu.j
- * @create: 2019-04-19 15:22
+ * @create: 2019-04-24 11:27
  **/
 
-public class TradeGive implements Serializable {
+public class TradeParamName implements Serializable {
 
     /**
      *id
@@ -22,14 +22,9 @@ public class TradeGive implements Serializable {
     private Integer tradeid;
 
     /**
-     *赠送商品id
+     *参数名称
      */
-    private Integer givetradeid;
-
-    /**
-     *优惠类别
-     */
-    private String cate;
+    private String paramname;
 
 
     public Integer getId() {
@@ -48,20 +43,12 @@ public class TradeGive implements Serializable {
         this.tradeid = tradeid;
     }
 
-    public Integer getGivetradeid() {
-        return givetradeid;
+    public String getParamname() {
+        return paramname;
     }
 
-    public void setGivetradeid(Integer givetradeid) {
-        this.givetradeid = givetradeid;
-    }
-
-    public String getCate() {
-        return cate;
-    }
-
-    public void setCate(String cate) {
-        this.cate = cate;
+    public void setParamname(String paramname) {
+        this.paramname = paramname;
     }
 }
 

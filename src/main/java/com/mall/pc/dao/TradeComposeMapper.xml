@@ -3,16 +3,14 @@
 <mapper namespace="com.mall.pc.dao.TradeComposeMapper">
     <resultMap id="BaseResultMap" type="com.mall.pc.domen.TradeCompose">
         <id column="id" property="id" jdbcType="INTEGER" />
-        <result column="composename_zw" property="composename_zw" jdbcType="VARCHAR" />
-        <result column="composename_yw" property="composename_yw" jdbcType="VARCHAR" />
-        <result column="composename_jt" property="composename_jt" jdbcType="VARCHAR" />
+        <result column="composename" property="composename" jdbcType="VARCHAR" />
         <result column="maintrade" property="maintrade" jdbcType="INTEGER" />
         <result column="subtrade" property="subtrade" jdbcType="INTEGER" />
         <result column="composeprice" property="composeprice" jdbcType="NUMERIC" />
     </resultMap>
 
     <sql id="Base_Column_List">
-       id,maintrade,subtrade,composeprice,composename_zw,composename_yw,composename_jt
+       id,maintrade,subtrade,composeprice,composename
     </sql>
     <select id="queryTradeComposelistByMaintrade" parameterType="Integer" resultMap="BaseResultMap">
         select
@@ -38,15 +36,13 @@
          maintrade,
          subtrade,
          composeprice,
-         composename_zw,composename_yw,composename_jt
+         composename
         )
         values (
         #{maintrade},
         #{subtrade},
         #{composeprice},
-        #{composename_zw},
-        #{composename_yw},
-        #{composename_jt}
+        #{composename}
         )
     </insert>
 
@@ -57,9 +53,7 @@
         maintrade=#{maintrade},
         subtrade=#{subtrade},
         composeprice=#{composeprice}
-        composename_zw=#{composename_zw},
-        composename_yw=#{composename_yw},
-        composename_jt=#{composename_jt}
+        composename=#{composename}
         where
         id=#{id}
     </update>

@@ -46,59 +46,59 @@ public class TradeParamController {
 
     }
 
-    /**
-     * 新增商品参数
-     * @param tradeParam
-     * @param request
-     * @return
-     */
-    @RequestMapping(value="/insertradeparam",method = RequestMethod.POST)
-    @ResponseBody
-    public BasicData insertradeparam(@RequestBody(required = false) TradeParam tradeParam, HttpServletRequest request){
-        try{
-            return tradeParamService.insertradeparam(tradeParam);
-        }catch (Exception e){
-            e.printStackTrace();
-            return BasicData.CreateErrorMsg(e.getMessage());
-        }
-
-    }
-
-    /**
-     * 修改商品参数
-     * @param tradeParam
-     * @param request
-     * @return
-     */
-    @RequestMapping(value="/updatetradeparam",method = RequestMethod.POST)
-    @ResponseBody
-    public BasicData updatetradeparam(@RequestBody(required = false)  TradeParam tradeParam, HttpServletRequest request){
-        try{
-            return tradeParamService.updatetradeparam(tradeParam);
-        }catch (Exception e){
-            e.printStackTrace();
-            return BasicData.CreateErrorMsg(e.getMessage());
-        }
-
-    }
-
-
-    /**
-     * 删除商品参数
-     * @param id
-     * @param request
-     * @return
-     */
-    @RequestMapping(value="/deltradeparam",method = RequestMethod.GET)
-    @ResponseBody
-    public BasicData deltradeparam(@RequestParam(required = true) Integer id, HttpServletRequest request){
-        try{
-            return tradeParamService.deltradeparam(id);
-        }catch (Exception e){
-            e.printStackTrace();
-            return BasicData.CreateErrorMsg(e.getMessage());
-        }
-
-    }
+//    /**
+//     * 新增商品参数
+//     * @param tradeParam
+//     * @param request
+//     * @return
+//     */
+//    @RequestMapping(value="/insertradeparam",method = RequestMethod.POST)
+//    @ResponseBody
+//    public BasicData insertradeparam(@RequestBody(required = false) TradeParam tradeParam, HttpServletRequest request){
+//        try{
+//            return tradeParamService.insertradeparam(tradeParam);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return BasicData.CreateErrorMsg(e.getMessage());
+//        }
+//
+//    }
+//
+//    /**
+//     * 修改商品参数
+//     * @param tradeParam
+//     * @param request
+//     * @return
+//     */
+//    @RequestMapping(value="/updatetradeparam",method = RequestMethod.POST)
+//    @ResponseBody
+//    public BasicData updatetradeparam(@RequestBody(required = false)  TradeParam tradeParam, HttpServletRequest request){
+//        try{
+//            return tradeParamService.updatetradeparam(tradeParam);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return BasicData.CreateErrorMsg(e.getMessage());
+//        }
+//
+//    }
+//
+//
+//    /**
+//     * 删除商品参数
+//     * @param id
+//     * @param request
+//     * @return
+//     */
+//    @RequestMapping(value="/deltradeparam",method = RequestMethod.GET)
+//    @ResponseBody
+//    public BasicData deltradeparam(@RequestParam(required = true) Integer id, HttpServletRequest request){
+//        try{
+//            return tradeParamService.deltradeparam(id);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return BasicData.CreateErrorMsg(e.getMessage());
+//        }
+//
+//    }
 }
 

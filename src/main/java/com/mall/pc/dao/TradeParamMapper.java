@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface TradeParamMapper {
 
-    List<TradeParam> querytradeparam(Integer tradeid);
+    List<TradeParam> querytradeparam(Integer tradeid,Integer paramnameid);
 
     TradeParam querytradeparamByparam(TradeParam tradeParam);
 
@@ -18,6 +18,8 @@ public interface TradeParamMapper {
     void updatetradeparam(TradeParam tradeParam);
 
     void deltradeparam(Integer id);
+
+    void deltradeparamByParamnameid(Integer paramnameid);
 
 
 

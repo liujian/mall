@@ -4,15 +4,13 @@
     <resultMap id="BaseResultMap" type="com.mall.pc.domen.TradeParam">
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="tradeid" property="tradeid" jdbcType="INTEGER" />
-        <result column="param_zw" property="param_zw" jdbcType="VARCHAR" />
-        <result column="param_yw" property="param_yw" jdbcType="VARCHAR" />
-        <result column="param_jt" property="param_jt" jdbcType="VARCHAR" />
+        <result column="paramnameid" property="paramnameid" jdbcType="INTEGER" />
         <result column="param" property="param" jdbcType="VARCHAR" />
         <result column="tradenum" property="tradenum" jdbcType="INTEGER" />
     </resultMap>
 
     <sql id="Base_Column_List">
-       id,tradeid,param_zw,param_yw,param_jt,param,tradenum
+       id,tradeid,paramnameid,param,tradenum
     </sql>
 
     <select id="querytradeparam"  parameterType="Integer" resultMap="BaseResultMap">
@@ -21,7 +19,9 @@
         from table_trade_param
         WHERE
         tradeid=#{tradeid}
-        Order by param_zw
+        AND
+        paramnameid=#{paramnameid}
+        Order by param
     </select>
 
     <select id="querytradeparamByparam"  parameterType="com.mall.pc.domen.TradeParam" resultMap="BaseResultMap">
@@ -31,7 +31,7 @@
         where
         tradeid =#{tradeid}
         AND
-        param_zw=#{param_zw}
+        paramnameid=#{paramnameid}
         AND
         param=#{param}
     </select>
@@ -42,17 +42,13 @@
         table_trade_param (
         tradeid,
         param,
-        param_zw,
-        param_yw,
-        param_jt,
+        paramnameid,
         tradenum
         )
         values (
         #{tradeid},
         #{param},
-        #{param_zw},
-        #{param_yw},
-        #{param_jt},
+        #{paramnameid},
         #{tradenum}
         )
     </insert>
@@ -62,9 +58,7 @@
         table_trade_param
         SET
         param=#{param},
-        param_zw= #{param_zw},
-        param_yw=#{param_yw},
-        param_jt=#{param_jt},
+        paramnameid= #{paramnameid},
         tradenum= #{tradenum}
         where
         id=#{id}
@@ -78,5 +72,10 @@
         id=#{id}
     </delete>
 
-
+    <delete id="deltradeparamByParamnameid" parameterType="java.lang.Integer">
+        DELETE from
+        table_trade_param
+        where
+        paramnameid=#{paramnameid}
+    </delete>
 </mapper>

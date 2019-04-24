@@ -15,13 +15,15 @@ public class TradeParamOut {
 
     private TradeInfo tradeInfo;
 
-    private List<TradeParam> tradeParams;
+    private List<TradeParamNameOut> tradeParamNameOuts;
 
     private List<TradePhoto> tradePhotos;
 
     private List<TradeCompose> tradeComposes;
 
     private List<TradeGive> tradeGives;
+
+    private List<TradeInfoTranslate> tradeInfoTranslates;
 
     public TradeInfo getTradeInfo() {
         return tradeInfo;
@@ -31,12 +33,12 @@ public class TradeParamOut {
         this.tradeInfo = tradeInfo;
     }
 
-    public List<TradeParam> getTradeParams() {
-        return tradeParams;
+    public List<TradeParamNameOut> getTradeParamNameOuts() {
+        return tradeParamNameOuts;
     }
 
-    public void setTradeParams(List<TradeParam> tradeParams) {
-        this.tradeParams = tradeParams;
+    public void setTradeParamNameOuts(List<TradeParamNameOut> tradeParamNameOuts) {
+        this.tradeParamNameOuts = tradeParamNameOuts;
     }
 
     public List<TradePhoto> getTradePhotos() {
@@ -61,6 +63,14 @@ public class TradeParamOut {
 
     public void setTradeGives(List<TradeGive> tradeGives) {
         this.tradeGives = tradeGives;
+    }
+
+    public List<TradeInfoTranslate> getTradeInfoTranslates() {
+        return tradeInfoTranslates;
+    }
+
+    public void setTradeInfoTranslates(List<TradeInfoTranslate> tradeInfoTranslates) {
+        this.tradeInfoTranslates = tradeInfoTranslates;
     }
 }
 

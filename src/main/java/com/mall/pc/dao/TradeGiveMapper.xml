@@ -11,12 +11,14 @@
     <sql id="Base_Column_List">
        id,tradeid,givetradeid,cate
     </sql>
-    <select id="queryTradeGivelistByTradeid"  parameterType="Integer" resultMap="BaseResultMap">
+    <select id="queryTradeGivelistByTradeid"  parameterType="String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from table_trade_give
         where
         tradeid =#{tradeid}
+        AND
+        cate=#{cate}
     </select>
 
 
@@ -55,11 +57,18 @@
     </update>
 
 
-    <delete id="delTradeGive" parameterType="java.lang.Integer">
+    <delete id="delTradeGiveById" parameterType="java.lang.Integer">
          delete from
          table_trade_give
         where
         id=#{id}
+    </delete>
+
+    <delete id="delTradeGiveByTradeid" parameterType="java.lang.Integer">
+        delete from
+        table_trade_give
+        where
+        tradeid=#{tradeid}
     </delete>
 
 

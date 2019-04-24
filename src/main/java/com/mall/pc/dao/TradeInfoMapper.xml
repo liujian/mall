@@ -4,25 +4,16 @@
     <resultMap id="BaseResultMap" type="com.mall.pc.domen.TradeInfo">
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="barcode" property="barcode" jdbcType="VARCHAR" />
-        <result column="tradename_zw" property="tradename_zw" jdbcType="VARCHAR" />
-        <result column="tradename_yw" property="tradename_yw" jdbcType="VARCHAR" />
-        <result column="tradename_jt" property="tradename_jt" jdbcType="VARCHAR" />
+        <result column="tradename" property="tradename" jdbcType="VARCHAR" />
         <result column="tradeimage" property="tradeimage" jdbcType="VARCHAR" />
         <result column="tradevideo" property="tradevideo" jdbcType="VARCHAR" />
-        <result column="introduce_zw" property="introduce_zw" jdbcType="VARCHAR" />
-        <result column="introduce_yw" property="introduce_yw" jdbcType="VARCHAR" />
-        <result column="introduce_jt" property="introduce_jt" jdbcType="VARCHAR" />
+        <result column="introduce" property="introduce" jdbcType="VARCHAR" />
         <result column="tradenum" property="tradenum" jdbcType="INTEGER" />
         <result column="salesvolume" property="salesvolume" jdbcType="INTEGER" />
-        <result column="tradebright_zw" property="tradebright_zw" jdbcType="VARCHAR" />
-        <result column="tradebright_yw" property="tradebright_yw" jdbcType="VARCHAR" />
-        <result column="tradebright_jt" property="tradebright_jt" jdbcType="VARCHAR" />
-        <result column="moreinfo_zw" property="moreinfo_zw" jdbcType="VARCHAR" />
-        <result column="moreinfo_yw" property="moreinfo_yw" jdbcType="VARCHAR" />
-        <result column="moreinfo_jt" property="moreinfo_jt" jdbcType="VARCHAR" />
+        <result column="tradebright" property="tradebright" jdbcType="VARCHAR" />
+        <result column="moreinfo" property="moreinfo" jdbcType="VARCHAR" />
         <result column="classify" property="classify" jdbcType="INTEGER" />
-        <result column="cad_price" property="cad_price" jdbcType="NUMERIC" />
-        <result column="usd_price" property="usd_price" jdbcType="NUMERIC" />
+        <result column="price" property="price" jdbcType="NUMERIC" />
         <result column="giveintegral" property="giveintegral" jdbcType="INTEGER" />
         <result column="ishome" property="ishome" jdbcType="VARCHAR" />
         <result column="brandid" property="brandid" jdbcType="INTEGER" />
@@ -32,8 +23,7 @@
         <result column="tradeclass" property="tradeclass" jdbcType="INTEGER" />
         <result column="tradecode" property="tradecode" jdbcType="VARCHAR" />
         <result column="tradeweight" property="tradeweight" jdbcType="NUMERIC" />
-        <result column="cad_promoteprice" property="cad_promoteprice" jdbcType="NUMERIC" />
-        <result column="usd_promoteprice" property="usd_promoteprice" jdbcType="NUMERIC" />
+        <result column="promoteprice" property="promoteprice" jdbcType="NUMERIC" />
         <result column="promotedate" property="promotedate" jdbcType="TIMESTAMP" />
         <result column="boutique" property="boutique" jdbcType="VARCHAR" />
         <result column="newin" property="newin" jdbcType="VARCHAR" />
@@ -45,9 +35,9 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-       id,barcode,tradename_zw,tradename_yw,tradename_jt,tradeimage,tradevideo,introduce_zw,introduce_yw,introduce_jt,tradenum,
-       salesvolume,tradebright_zw,tradebright_yw,tradebright_jt,moreinfo_zw,moreinfo_yw,moreinfo_jt,classify,cad_price,usd_price,giveintegral,ishome,brandid,invalid,createdate,
-       tradewarnnum,tradeclass,tradecode,tradeweight,cad_promoteprice,usd_promoteprice,promotedate,boutique,newin,well,coupway,fullpiece,fullprice,ratio
+       id,barcode,tradename,tradeimage,tradevideo,introduce,tradenum,
+       salesvolume,tradebright,moreinfo,classify,price,giveintegral,ishome,brandid,invalid,createdate,
+       tradewarnnum,tradeclass,tradecode,tradeweight,promoteprice,promotedate,boutique,newin,well,coupway,fullpiece,fullprice,ratio
 
     </sql>
 
@@ -55,8 +45,8 @@
         select
         <include refid="Base_Column_List" />
         from table_trade_info WHERE 1=1
-        <if test="tradename_zw != null and  tradename_zw != ''">
-            AND tradename_zw like concat('%',#{tradename_zw},'%')
+        <if test="tradename != null and  tradename != ''">
+            AND tradename like concat('%',#{tradename},'%')
         </if>
         <if test="barcode != null and  barcode != ''">
             AND barcode =#{barcode}
@@ -78,7 +68,7 @@
 
     <select id="queryAlltradelist"  parameterType="Integer" resultMap="BaseResultMap">
         SELECT
-        *
+        <include refid="Base_Column_List" />
         FROM
         table_trade_info a
         WHERE
@@ -91,13 +81,13 @@
             ORDER by salesvolume desc
         </if>
         <if test='search == "3" '>
-            ORDER by usd_price
+            ORDER by price
         </if>
     </select>
 
     <select id="queryAllisHometradelist"  parameterType="Integer" resultMap="BaseResultMap">
         SELECT
-        *
+        <include refid="Base_Column_List" />
         FROM
         table_trade_info a
         WHERE
@@ -131,7 +121,7 @@
             ORDER by salesvolume desc
         </if>
         <if test='search == "3" '>
-            ORDER by usd_price
+            ORDER by price
         </if>
     </select>
 
@@ -154,20 +144,16 @@
     <select id="QuerytradeBysearchname"  parameterType="String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from table_trade_info
+        from table_trade_info a
         <if test=" _parameter != null and   _parameter != ''">
-            WHERE tradename_zw like concat('%',#{ _parameter},'%')
-            or tradename_yw like concat('%',#{ _parameter},'%')
-            or tradename_jt like concat('%',#{ _parameter},'%')
-            or introduce_zw like concat('%',#{ _parameter},'%')
-            or introduce_yw like concat('%',#{ _parameter},'%')
-            or introduce_jt like concat('%',#{ _parameter},'%')
-            or tradebright_zw like concat('%',#{ _parameter},'%')
-            or tradebright_yw like concat('%',#{ _parameter},'%')
-            or tradebright_jt like concat('%',#{ _parameter},'%')
-            or moreinfo_zw like concat('%',#{ _parameter},'%')
-            or moreinfo_yw like concat('%',#{ _parameter},'%')
-            or moreinfo_jt like concat('%',#{ _parameter},'%')
+            WHERE tradename like concat('%',#{ _parameter},'%')
+            or (select tradename from table_trade_info_translate b where a.id=b.tradeid) like concat('%',#{ _parameter},'%')
+            or introduce like concat('%',#{ _parameter},'%')
+            or (select introduce from table_trade_info_translate b where a.id=b.tradeid) like concat('%',#{ _parameter},'%')
+            or tradebright like concat('%',#{ _parameter},'%')
+            or (select tradebright from table_trade_info_translate b where a.id=b.tradeid) like concat('%',#{ _parameter},'%')
+            or moreinfo like concat('%',#{ _parameter},'%')
+            or (select moreinfo from table_trade_info_translate b where a.id=b.tradeid) like concat('%',#{ _parameter},'%')
         </if>
     </select>
 
@@ -175,25 +161,16 @@
         insert into
         table_trade_info (
         barcode,
-        tradename_zw,
-        tradename_yw,
-        tradename_jt,
+        tradename,
         tradeimage,
         tradevideo,
-        introduce_zw,
-        introduce_yw,
-        introduce_jt,
+        introduce,
         tradenum,
         salesvolume,
-        tradebright_zw,
-        tradebright_yw,
-        tradebright_jt,
-        moreinfo_zw,
-        moreinfo_yw,
-        moreinfo_jt,
+        tradebright,
+        moreinfo,
         classify,
-        cad_price,
-        usd_price,
+        price,
         giveintegral,
         ishome,
         brandid,
@@ -203,8 +180,7 @@
         tradeclass,
         tradecode,
         tradeweight,
-        cad_promoteprice,
-        usd_promoteprice,
+        promoteprice,
         promotedate,
         boutique,
         newin,
@@ -216,25 +192,16 @@
         )
         values (
         #{barcode},
-        #{tradename_zw},
-        #{tradename_yw},
-        #{tradename_jt},
+        #{tradename},
         #{tradeimage},
         #{tradevideo},
-        #{introduce_zw},
-        #{introduce_yw},
-        #{introduce_jt},
+        #{introduce},
         #{tradenum},
         #{salesvolume},
-        #{tradebright_zw},
-        #{tradebright_yw},
-        #{tradebright_jt},
-        #{moreinfo_zw},
-        #{moreinfo_yw},
-        #{moreinfo_jt},
+        #{tradebright},
+        #{moreinfo},
         #{classify},
-        #{cad_price},
-        #{usd_price},
+        #{price},
         #{giveintegral},
         #{ishome},
         #{brandid},
@@ -244,8 +211,7 @@
         #{tradeclass},
         #{tradecode},
         #{tradeweight},
-        #{cad_promoteprice},
-        #{usd_promoteprice},
+        #{promoteprice},
         #{promotedate},
         #{boutique},
         #{newin},
@@ -262,25 +228,16 @@
         table_trade_info
         SET
         barcode=#{barcode},
-        tradename_zw=#{tradename_zw},
-        tradename_yw=#{tradename_yw},
-        tradename_jt=#{tradename_jt},
+        tradename=#{tradename},
         tradeimage=#{tradeimage},
         tradevideo=#{tradevideo},
-        introduce_zw=#{introduce_zw},
-        introduce_yw=#{introduce_yw},
-        introduce_jt=#{introduce_jt},
+        introduce=#{introduce},
         tradenum=#{tradenum},
         salesvolume=#{salesvolume},
-        tradebright_zw=#{tradebright_zw},
-        tradebright_yw=#{tradebright_yw},
-        tradebright_jt=#{tradebright_jt},
-        moreinfo_zw=#{moreinfo_zw},
-        moreinfo_yw=#{moreinfo_yw},
-        moreinfo_jt=#{moreinfo_jt},
+        tradebright=#{tradebright},
+        moreinfo=#{moreinfo},
         classify=#{classify},
-        cad_price=#{cad_price},
-        usd_price=#{usd_price},
+        price=#{price},
         giveintegral=#{giveintegral},
         ishome=#{ishome},
         brandid=#{brandid},
@@ -289,8 +246,7 @@
         tradeclass=#{tradeclass},
         tradecode=#{tradecode},
         tradeweight=#{tradeweight},
-        cad_promoteprice=#{cad_promoteprice},
-        usd_promoteprice=#{usd_promoteprice},
+        promoteprice=#{promoteprice},
         promotedate=#{promotedate},
         boutique=#{boutique},
         newin=#{newin},
@@ -313,5 +269,82 @@
         id=#{id}
     </delete>
 
+
+    <resultMap id="BaseResultMapTranslate" type="com.mall.pc.domen.TradeInfoTranslate">
+        <result column="tradeid" property="tradeid" jdbcType="INTEGER" />
+        <result column="languagetype" property="languagetype" jdbcType="VARCHAR" />
+        <result column="tradename" property="tradename" jdbcType="VARCHAR" />
+        <result column="introduce" property="introduce" jdbcType="VARCHAR" />
+        <result column="tradebright" property="tradebright" jdbcType="VARCHAR" />
+        <result column="moreinfo" property="moreinfo" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List_Translate">
+        tradeid,languagetype,tradename,introduce,tradebright,moreinfo
+    </sql>
+
+    <select id="QueryTradeTranslateBytrandid"  parameterType="Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List_Translate" />
+        FROM
+        table_trade_info_translate a
+        WHERE
+        a.tradeid=#{tradeid}
+    </select>
+
+    <select id="QueryTradeTranslateBytrandidANDType"  parameterType="String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List_Translate" />
+        FROM
+        table_trade_info_translate a
+        WHERE
+        a.tradeid=#{tradeid}
+        AND
+        languagetype=#{languagetype}
+    </select>
+
+
+    <insert id="insertTradeTranslate" parameterType="com.mall.pc.domen.TradeInfoTranslate">
+        insert into
+        table_trade_info_translate (
+        tradeid,
+        languagetype,
+        tradename,
+        introduce,
+        tradebright,
+        moreinfo
+        )
+        values (
+        #{tradeid},
+        #{languagetype},
+        #{tradename},
+        #{introduce},
+        #{tradebright}，
+        #{moreinfo}
+        )
+    </insert>
+
+    <update id="updateTradeTranslate" parameterType="com.mall.pc.domen.TradeInfoTranslate">
+        UPDATE
+        table_trade_info_translate
+        SET
+        tradename=#{tradename},
+        introduce=#{introduce},
+        tradebright=#{tradebright},
+        moreinfo=#{moreinfo}
+        where
+        tradeid=#{tradeid}
+        AND
+        languagetype=#{languagetype}
+    </update>
+
+    <delete id="delTradeTranslate" parameterType="java.lang.String">
+        Delete from
+        table_trade_info_translate
+        where
+        tradeid=#{tradeid}
+        AND
+        languagetype=#{languagetype}
+    </delete>
 
 </mapper>
