@@ -11,7 +11,7 @@
     <sql id="Base_Column_List">
        id,tradeid,givetradeid,cate
     </sql>
-    <select id="queryTradeGivelistByTradeid"  parameterType="String" resultMap="BaseResultMap">
+    <select id="queryTradeGivelistByTradeid"  parameterType="Object" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from table_trade_give

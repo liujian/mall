@@ -14,7 +14,9 @@ public class TradeInfoOut {
 
     private TradeInfo tradeInfo;
 
-    private TradeParam tradeParam;
+    private String  tradeParamName;
+
+    private String  tradeParam;
 
     public TradeInfo getTradeInfo() {
         return tradeInfo;
@@ -24,11 +26,19 @@ public class TradeInfoOut {
         this.tradeInfo = tradeInfo;
     }
 
-    public TradeParam getTradeParam() {
+    public String getTradeParamName() {
+        return tradeParamName;
+    }
+
+    public void setTradeParamName(String tradeParamName) {
+        this.tradeParamName = tradeParamName;
+    }
+
+    public String getTradeParam() {
         return tradeParam;
     }
 
-    public void setTradeParam(TradeParam tradeParam) {
+    public void setTradeParam(String tradeParam) {
         this.tradeParam = tradeParam;
     }
 }

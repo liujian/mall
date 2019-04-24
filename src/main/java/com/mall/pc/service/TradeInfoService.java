@@ -2,9 +2,7 @@ package com.mall.pc.service;
 
 import com.mall.common.param.Basic;
 import com.mall.common.param.BasicData;
-import com.mall.pc.domen.TradeGive;
-import com.mall.pc.domen.TradeInfo;
-import com.mall.pc.domen.TradeParamName;
+import com.mall.pc.domen.*;
 import com.mall.pc.in.TradeParamIn;
 
 import java.math.BigDecimal;
@@ -17,9 +15,9 @@ public interface TradeInfoService {
 
     BasicData QuerytradeById(Integer id);
 
-    BasicData insertTradeInfo(TradeParamIn tradeParamIn);
+    BasicData insertTradeInfo(TradeInfo tradeInfo);
 
-    BasicData updateTradeInfo(TradeParamIn tradeParamIn);
+    BasicData updateTradeInfo(TradeInfo tradeInfo);
 
     BasicData delTradeInfo(Integer id);
 
@@ -42,6 +40,14 @@ public interface TradeInfoService {
      * @return
      */
     BasicData updatecoupway(String coupway, Integer fullpiece, BigDecimal fullprice, Integer tradeid);
+
+    /**
+     * 查询赠送商品列表
+     * @param coupway
+     * @param tradeid
+     * @return
+     */
+    BasicData QueryTradeGiveList(String coupway,Integer tradeid);
 
     /**
      * 新增赠送商品
@@ -69,8 +75,81 @@ public interface TradeInfoService {
      */
     BasicData promote(Integer tradeid,BigDecimal promoteprice,Date promotedate);
 
-    //组合商品
+    //相册模块
 
+    /**
+     * 获取商品相册列表
+     * @param tradeid
+     * @return
+     */
+    BasicData Querytransphotos(Integer tradeid);
+
+    /**
+     * 查看商品相册详情
+     * @param id
+     * @return
+     */
+    BasicData QuerytranphotoById(Integer id);
+
+    /**
+     * 新增商品相册信息
+     * @param tradePhoto
+     * @return
+     */
+    BasicData insertTradePhoto(TradePhoto tradePhoto);
+
+    /**
+     * 修改商品相册信息
+     * @param tradePhoto
+     * @return
+     */
+    BasicData updateTradePhoto(TradePhoto tradePhoto);
+
+    /**
+     * 删除相册信息
+     * @param id
+     * @return
+     */
+    BasicData delTradePhoto(Integer id);
+
+    //翻译模块
+
+    /**
+     * 查询商品翻译列表
+     * @param tradeid
+     * @return
+     */
+    BasicData Querytranslates( Integer tradeid );
+
+    /**
+     * 查看商品翻译详情
+     * @param tradeid
+     * @param languagetype
+     * @return
+     */
+    BasicData QuerytranslateById(Integer tradeid,String languagetype);
+
+    /**
+     * 新增商品翻译
+     * @param tradeInfoTranslate
+     * @return
+     */
+    BasicData insertTradeSlate(TradeInfoTranslate tradeInfoTranslate);
+
+    /**
+     * 修改商品翻译
+     * @param tradeInfoTranslate
+     * @return
+     */
+    BasicData updateTradeSlate(TradeInfoTranslate tradeInfoTranslate);
+
+    /**
+     * 删除商品翻译
+     * @param tradeid
+     * @param languagetype
+     * @return
+     */
+    BasicData delTradeSlate(Integer tradeid,String languagetype);
 
 
 }

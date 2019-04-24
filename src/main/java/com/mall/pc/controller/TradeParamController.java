@@ -26,25 +26,25 @@ public class TradeParamController {
     private TradeParamService tradeParamService;
 
 
-    /**
-     * 获取商品参数列表
-     * @param request
-     * @return
-     */
-    @RequestMapping(value="/querytradeparam",method = RequestMethod.GET)
-    @ResponseBody
-    public BasicData querytradeparam(
-            @RequestParam(required = true) Integer tradeid,
-            HttpServletRequest request){
-        try{
-
-            return tradeParamService.querytradeparam(tradeid);
-        }catch (Exception e){
-            e.printStackTrace();
-            return BasicData.CreateErrorMsg(e.getMessage());
-        }
-
-    }
+//    /**
+//     * 获取商品参数列表
+//     * @param request
+//     * @return
+//     */
+//    @RequestMapping(value="/querytradeparam",method = RequestMethod.GET)
+//    @ResponseBody
+//    public BasicData querytradeparam(
+//            @RequestParam(required = true) Integer tradeid,
+//            HttpServletRequest request){
+//        try{
+//
+//            return tradeParamService.querytradeparam(tradeid);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return BasicData.CreateErrorMsg(e.getMessage());
+//        }
+//
+//    }
 
 //    /**
 //     * 新增商品参数

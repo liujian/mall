@@ -7,7 +7,12 @@ import com.mall.pc.domen.TradeParamName;
 
 public interface TradeParamService {
 
-
+    /**
+     * 获取商品属性名称列表
+     * @param tradeid
+     * @return
+     */
+    BasicData querytradeparmnameList(Integer tradeid);
 
     /**
      * 新增商品属性名称

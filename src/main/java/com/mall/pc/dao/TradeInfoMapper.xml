@@ -31,13 +31,14 @@
         <result column="coupway" property="coupway" jdbcType="VARCHAR" />
         <result column="fullpiece" property="fullpiece" jdbcType="INTEGER" />
         <result column="fullprice" property="fullprice" jdbcType="NUMERIC" />
-        <result column="ratio" property="ratio" jdbcType="NUMERIC" />
+        <result column="stockprice" property="stockprice" jdbcType="NUMERIC" />
+        <result column="memprice" property="memprice" jdbcType="NUMERIC" />
     </resultMap>
 
     <sql id="Base_Column_List">
        id,barcode,tradename,tradeimage,tradevideo,introduce,tradenum,
        salesvolume,tradebright,moreinfo,classify,price,giveintegral,ishome,brandid,invalid,createdate,
-       tradewarnnum,tradeclass,tradecode,tradeweight,promoteprice,promotedate,boutique,newin,well,coupway,fullpiece,fullprice,ratio
+       tradewarnnum,tradeclass,tradecode,tradeweight,promoteprice,promotedate,boutique,newin,well,coupway,fullpiece,fullprice,stockprice,memprice
 
     </sql>
 
@@ -188,7 +189,8 @@
         coupway,
         fullpiece,
         fullprice,
-        ratio
+        stockprice,
+        memprice
         )
         values (
         #{barcode},
@@ -219,7 +221,8 @@
         #{coupway},
         #{fullpiece},
         #{fullprice},
-        #{ratio}
+        #{stockprice},
+        #{memprice}
         )
     </insert>
 
@@ -254,7 +257,8 @@
         coupway= #{coupway},
         fullpiece=#{fullpiece},
         fullprice= #{fullprice},
-        ratio=#{ratio}
+        stockprice=#{stockprice},
+        memprice=#{memprice}
         where
         id=#{id}
     </update>
@@ -283,7 +287,7 @@
         tradeid,languagetype,tradename,introduce,tradebright,moreinfo
     </sql>
 
-    <select id="QueryTradeTranslateBytrandid"  parameterType="Integer" resultMap="BaseResultMap">
+    <select id="QueryTradeTranslateBytrandid"  parameterType="Integer" resultMap="BaseResultMapTranslate">
         SELECT
         <include refid="Base_Column_List_Translate" />
         FROM
@@ -292,7 +296,7 @@
         a.tradeid=#{tradeid}
     </select>
 
-    <select id="QueryTradeTranslateBytrandidANDType"  parameterType="String" resultMap="BaseResultMap">
+    <select id="QueryTradeTranslateBytrandidANDType"  parameterType="Object" resultMap="BaseResultMapTranslate">
         SELECT
         <include refid="Base_Column_List_Translate" />
         FROM
@@ -319,7 +323,7 @@
         #{languagetype},
         #{tradename},
         #{introduce},
-        #{tradebright}，
+        #{tradebright},
         #{moreinfo}
         )
     </insert>

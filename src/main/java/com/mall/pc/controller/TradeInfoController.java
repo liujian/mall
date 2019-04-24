@@ -2,10 +2,7 @@ package com.mall.pc.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.mall.common.param.BasicData;
-import com.mall.pc.domen.TradeGive;
-import com.mall.pc.domen.TradeInfo;
-import com.mall.pc.domen.TradeParam;
-import com.mall.pc.domen.TradeParamName;
+import com.mall.pc.domen.*;
 import com.mall.pc.in.TradeParamIn;
 import com.mall.pc.service.TradeInfoService;
 import com.mall.pc.service.TradeParamService;
@@ -92,15 +89,15 @@ public class TradeInfoController {
 
     /**
      * 新增商品
-     * @param tradeParamIn
+     * @param tradeInfo
      * @param request
      * @return
      */
     @RequestMapping(value="/insertTradeInfo",method = RequestMethod.POST)
     @ResponseBody
-    public BasicData TradeInfo(@RequestBody(required = false) TradeParamIn tradeParamIn, HttpServletRequest request){
+    public BasicData TradeInfo(@RequestBody(required = false) TradeInfo tradeInfo, HttpServletRequest request){
         try{
-            return tradeInfoService.insertTradeInfo(tradeParamIn);
+            return tradeInfoService.insertTradeInfo(tradeInfo);
         }catch (Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());
@@ -110,15 +107,15 @@ public class TradeInfoController {
 
     /**
      * 修改商品
-     * @param tradeParamIn
+     * @param tradeInfo
      * @param request
      * @return
      */
     @RequestMapping(value="/updateTradeInfo",method = RequestMethod.POST)
     @ResponseBody
-    public BasicData updateTradeInfo(@RequestBody(required = false) TradeParamIn tradeParamIn, HttpServletRequest request){
+    public BasicData updateTradeInfo(@RequestBody(required = false) TradeInfo tradeInfo, HttpServletRequest request){
         try{
-            return tradeInfoService.updateTradeInfo(tradeParamIn);
+            return tradeInfoService.updateTradeInfo(tradeInfo);
         }catch (Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());
@@ -171,12 +168,34 @@ public class TradeInfoController {
     }
 
     /**
+     * 查询赠送商品列表
+     * @param coupway
+     * @param tradeid
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/QueryTradeGiveList",method = RequestMethod.GET)
+    @ResponseBody
+    public BasicData QueryTradeGiveList(@RequestParam(required = false) String coupway,
+                                        @RequestParam(required = false) Integer tradeid,
+                                     HttpServletRequest request){
+        try{
+            return tradeInfoService.QueryTradeGiveList(coupway,tradeid);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+    }
+
+
+
+    /**
      * 新增赠送商品
      * @param tradeGive
      * @param request
      * @return
      */
-    @RequestMapping(value="/insertTradeGive",method = RequestMethod.GET)
+    @RequestMapping(value="/insertTradeGive",method = RequestMethod.POST)
     @ResponseBody
     public BasicData insertTradeGive(@RequestBody(required = false) TradeGive tradeGive,
                                     HttpServletRequest request){
@@ -223,6 +242,8 @@ public class TradeInfoController {
                              @RequestParam(required = false) Date promotedate,
                              HttpServletRequest request){
         try{
+
+
             return tradeInfoService.promote(tradeid,promoteprice,promotedate);
         }catch (Exception e){
             e.printStackTrace();
@@ -233,11 +254,28 @@ public class TradeInfoController {
     //商品属性模块
 
     /**
+     * 商品属性名称列表
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/querytradeparmnameList",method = RequestMethod.GET)
+    @ResponseBody
+    public BasicData querytradeparmnameList(@RequestParam(required = false) Integer tradeid,
+                                      HttpServletRequest request){
+        try{
+            return tradeParamService.querytradeparmnameList(tradeid);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+    }
+
+    /**
      * 新增商品属性名称
      * @param request
      * @return
      */
-    @RequestMapping(value="/addtradeparmname",method = RequestMethod.GET)
+    @RequestMapping(value="/addtradeparmname",method = RequestMethod.POST)
     @ResponseBody
     public BasicData addtradeparmname(@RequestBody(required = false) TradeParamName tradeParamName,
                              HttpServletRequest request){
@@ -254,7 +292,7 @@ public class TradeInfoController {
      * @param request
      * @return
      */
-    @RequestMapping(value="/updatetradeparmname",method = RequestMethod.GET)
+    @RequestMapping(value="/updatetradeparmname",method = RequestMethod.POST)
     @ResponseBody
     public BasicData updatetradeparmname(@RequestBody(required = false) TradeParamName tradeParamName,
                                       HttpServletRequest request){
@@ -342,18 +380,22 @@ public class TradeInfoController {
     }
 
 
-    //组合商品模块
+    //相册模块
     /**
-     * 新增组合商品
-     * @param tradeParamIn
+     * 获取商品相册列表
      * @param request
      * @return
      */
-    @RequestMapping(value="/insertTradeCompose",method = RequestMethod.POST)
+    @RequestMapping(value="/Querytransphotos",method = RequestMethod.GET)
     @ResponseBody
-    public BasicData insertTradeCompose(@RequestBody(required = false) TradeParamIn tradeParamIn, HttpServletRequest request){
+    public BasicData Querytransphotos(
+            @RequestParam(required = true) Integer tradeid,
+            @RequestParam(required = true) Integer pagenum,
+            @RequestParam(required = true) Integer pagesize,
+            HttpServletRequest request){
         try{
-            return tradeInfoService.insertTradeCompose(tradeParamIn);
+            PageHelper.startPage(pagenum,pagesize);
+            return tradeInfoService.Querytransphotos(tradeid);
         }catch (Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());
@@ -362,35 +404,53 @@ public class TradeInfoController {
     }
 
     /**
-     * 修改商品
-     * @param tradeParamIn
-     * @param request
-     * @return
-     */
-    @RequestMapping(value="/updateTradeCompose",method = RequestMethod.POST)
-    @ResponseBody
-    public BasicData updateTradeCompose(@RequestBody(required = false) TradeParamIn tradeParamIn, HttpServletRequest request){
-        try{
-            return tradeInfoService.updateTradeCompose(tradeParamIn);
-        }catch (Exception e){
-            e.printStackTrace();
-            return BasicData.CreateErrorMsg(e.getMessage());
-        }
-
-    }
-
-
-    /**
-     * 删除商品
+     * 查看商品相册详情
      * @param id
      * @param request
      * @return
      */
-    @RequestMapping(value="/delTradeCompose",method = RequestMethod.GET)
+    @RequestMapping(value="/QuerytranphotoById",method = RequestMethod.GET)
     @ResponseBody
-    public BasicData delTradeCompose(@RequestParam(required = true) Integer id, HttpServletRequest request){
+    public BasicData QuerytranphotoById(@RequestParam(required = true) Integer id,
+                                        HttpServletRequest request){
         try{
-            return tradeInfoService.delTradeCompose(id);
+            return tradeInfoService.QuerytranphotoById(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+
+    }
+
+    /**
+     * 新增商品相册信息
+     * @param tradePhoto
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/insertTradePhoto",method = RequestMethod.POST)
+    @ResponseBody
+    public BasicData insertTradePhoto(@RequestBody(required = false) TradePhoto tradePhoto, HttpServletRequest request){
+        try{
+            return tradeInfoService.insertTradePhoto(tradePhoto);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+
+    }
+
+    /**
+     * 修改商品相册信息
+     * @param tradePhoto
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/updateTradePhoto",method = RequestMethod.POST)
+    @ResponseBody
+    public BasicData updateTradePhoto(@RequestBody(required = false) TradePhoto tradePhoto, HttpServletRequest request){
+        try{
+            return tradeInfoService.updateTradePhoto(tradePhoto);
         }catch (Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());
@@ -399,7 +459,128 @@ public class TradeInfoController {
     }
 
 
+    /**
+     * 删除相册信息
+     * @param id
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/delTradePhoto",method = RequestMethod.GET)
+    @ResponseBody
+    public BasicData delTradePhoto(@RequestParam(required = true) Integer id,
+                                   HttpServletRequest request){
+        try{
+            return tradeInfoService.delTradePhoto(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+
+    }
 
     //商品翻译模块
+
+    /**
+     * 获取商品翻译列表
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/Querytranslates",method = RequestMethod.GET)
+    @ResponseBody
+    public BasicData Querytranslates(
+            @RequestParam(required = true) Integer tradeid,
+            @RequestParam(required = true) Integer pagenum,
+            @RequestParam(required = true) Integer pagesize,
+            HttpServletRequest request){
+        try{
+            PageHelper.startPage(pagenum,pagesize);
+            return tradeInfoService.Querytranslates(tradeid);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+
+    }
+
+    /**
+     * 查看商品翻译详情
+     * @param tradeid
+     * @param languagetype
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/QuerytranslateById",method = RequestMethod.GET)
+    @ResponseBody
+    public BasicData QuerytranslateById(@RequestParam(required = true) Integer tradeid,
+                                        @RequestParam(required = true) String  languagetype,
+                                        HttpServletRequest request){
+        try{
+            return tradeInfoService.QuerytranslateById(tradeid,languagetype);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+
+    }
+
+    /**
+     * 新增商品翻译
+     * @param tradeInfoTranslate
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/insertTradeSlate",method = RequestMethod.POST)
+    @ResponseBody
+    public BasicData insertTradeSlate(@RequestBody(required = false) TradeInfoTranslate tradeInfoTranslate, HttpServletRequest request){
+        try{
+            return tradeInfoService.insertTradeSlate(tradeInfoTranslate);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+
+    }
+
+    /**
+     * 修改商品翻译内容
+     * @param tradeInfoTranslate
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/updateTradeSlate",method = RequestMethod.POST)
+    @ResponseBody
+    public BasicData updateTradeSlate(@RequestBody(required = false) TradeInfoTranslate tradeInfoTranslate, HttpServletRequest request){
+        try{
+            return tradeInfoService.updateTradeSlate(tradeInfoTranslate);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+
+    }
+
+
+    /**
+     * 删除商品翻译
+     * @param tradeid
+     * @param languagetype
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/delTradeSlate",method = RequestMethod.GET)
+    @ResponseBody
+    public BasicData delTradeSlate(@RequestParam(required = true) Integer tradeid,
+                                   @RequestParam(required = true) String  languagetype,
+                                   HttpServletRequest request){
+        try{
+            return tradeInfoService.delTradeSlate(tradeid,languagetype);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+
+    }
+
+
 }
 

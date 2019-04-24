@@ -5,7 +5,7 @@
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="userid" jdbcType="INTEGER" property="userid" />
         <result column="tradid" property="tradid" jdbcType="INTEGER" />
-        <result column="tradparmname" property="tradparmname" jdbcType="VARCHAR" />
+        <result column="tradparmnameid" property="tradparmnameid" jdbcType="INTEGER" />
         <result column="tradparm" property="tradparm" jdbcType="VARCHAR" />
         <result column="tradenum" property="tradenum" jdbcType="INTEGER" />
         <result column="tradeclass" property="tradeclass" jdbcType="INTEGER" />
@@ -35,7 +35,7 @@
         AND
         tradid=#{tradid}
         AND
-        tradparmname=#{tradparmname}
+        tradparmnameid=#{tradparmnameid}
         AND
         tradparm=#{tradparm}
         AND
@@ -47,7 +47,7 @@
         table_shopping_cart (
         userid,
         tradid,
-        tradparmname,
+        tradparmnameid,
         tradparm,
         tradenum,
         tradeclass,
@@ -56,7 +56,7 @@
         values (
         #{userid,jdbcType=INTEGER},
         #{tradid,jdbcType=INTEGER},
-        #{tradparmname,jdbcType=VARCHAR},
+        #{tradparmnameid,jdbcType=INTEGER},
         #{tradparm,jdbcType=VARCHAR},
         #{tradenum,jdbcType=INTEGER},
         #{tradeclass,jdbcType=INTEGER},
@@ -74,7 +74,7 @@
         AND
         tradid=#{tradid}
         AND
-        tradparmname=#{tradparmname}
+        tradparmnameid=#{tradparmnameid}
          AND
         tradparm=#{tradparm}
     </update>

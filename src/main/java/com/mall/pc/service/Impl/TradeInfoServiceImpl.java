@@ -55,7 +55,7 @@ public class TradeInfoServiceImpl implements TradeInfoService {
     public BasicData QuerytradeById(Integer id) {
         TradeParamOut tradeParamOut = new TradeParamOut();
         TradeInfo tradeInfo = tradeInfoMapper.QuerytradeById(id);
-
+        if(tradeInfo!=null){
         List<TradeParamNameOut> tradeParamNameOuts = new ArrayList<>();
         List<TradeParamName> tradeParamNames= tradeParamNameMapper.querytradeparamName(id);
         for(TradeParamName tradeParamName :tradeParamNames){
@@ -75,12 +75,13 @@ public class TradeInfoServiceImpl implements TradeInfoService {
         tradeParamOut.setTradeComposes(tradeComposes);
         tradeParamOut.setTradeGives(tradeGives);
         tradeParamOut.setTradeInfoTranslates(tradeInfoTranslates);
+        }
+
         return BasicData.CreateSucess(tradeParamOut);
     }
 
     @Override
-    public BasicData insertTradeInfo(TradeParamIn tradeParamIn) {
-        TradeInfo tradeInfo = tradeParamIn.getTradeInfo();
+    public BasicData insertTradeInfo(TradeInfo tradeInfo) {
 
         TradeInfo trade = tradeInfoMapper.QuerytradeByBarcode(tradeInfo.getBarcode());
         if(trade!=null){
@@ -98,19 +99,19 @@ public class TradeInfoServiceImpl implements TradeInfoService {
 //            tradeParamMapper.insertradeparam(tradeParam);
 //        }
 
-        //新增相册信息
-        List<TradePhoto> tradePhotos = tradeParamIn.getTradePhotos();
-        for(TradePhoto tradePhoto : tradePhotos){
-            tradePhoto.setTradeid(tradeid);
-            tradePhotoMapper.insertTradePhoto(tradePhoto);
-        }
-
-        //新增组合套餐信息
-        List<TradeCompose> tradeComposes = tradeParamIn.getTradeComposes();
-        for(TradeCompose tradeCompose : tradeComposes){
-            tradeCompose.setMaintrade(tradeid);
-            tradeComposeMapper.insertTradeCompose(tradeCompose);
-        }
+//        //新增相册信息
+//        List<TradePhoto> tradePhotos = tradeParamIn.getTradePhotos();
+//        for(TradePhoto tradePhoto : tradePhotos){
+//            tradePhoto.setTradeid(tradeid);
+//            tradePhotoMapper.insertTradePhoto(tradePhoto);
+//        }
+//
+//        //新增组合套餐信息
+//        List<TradeCompose> tradeComposes = tradeParamIn.getTradeComposes();
+//        for(TradeCompose tradeCompose : tradeComposes){
+//            tradeCompose.setMaintrade(tradeid);
+//            tradeComposeMapper.insertTradeCompose(tradeCompose);
+//        }
 
 //        //新增赠送商品
 //        List<TradeGive> tradeGives = tradeParamIn.getTradeGives();
@@ -123,9 +124,9 @@ public class TradeInfoServiceImpl implements TradeInfoService {
     }
 
     @Override
-    public BasicData updateTradeInfo(TradeParamIn tradeParamIn) {
+    public BasicData updateTradeInfo(TradeInfo tradeInfo) {
         //更新商品信息
-        TradeInfo tradeInfo = tradeParamIn.getTradeInfo();
+
         tradeInfoMapper.updateTradeInfo(tradeInfo);
 //        //更新商品参数信息
 //        List<TradeParam> tradeParams =tradeParamIn.getTradeParams();
@@ -133,17 +134,17 @@ public class TradeInfoServiceImpl implements TradeInfoService {
 //            tradeParamMapper.updatetradeparam(tradeParam);
 //        }
 
-        //更新相册信息
-        List<TradePhoto> tradePhotos = tradeParamIn.getTradePhotos();
-        for(TradePhoto tradePhoto : tradePhotos){
-            tradePhotoMapper.updateTradePhoto(tradePhoto);
-        }
-
-        //更新组合套餐信息
-        List<TradeCompose> tradeComposes = tradeParamIn.getTradeComposes();
-        for(TradeCompose tradeCompose : tradeComposes){
-            tradeComposeMapper.updateTradeCompose(tradeCompose);
-        }
+//        //更新相册信息
+//        List<TradePhoto> tradePhotos = tradeParamIn.getTradePhotos();
+//        for(TradePhoto tradePhoto : tradePhotos){
+//            tradePhotoMapper.updateTradePhoto(tradePhoto);
+//        }
+//
+//        //更新组合套餐信息
+//        List<TradeCompose> tradeComposes = tradeParamIn.getTradeComposes();
+//        for(TradeCompose tradeCompose : tradeComposes){
+//            tradeComposeMapper.updateTradeCompose(tradeCompose);
+//        }
 //        //更新赠送商品
 //        List<TradeGive> tradeGives = tradeParamIn.getTradeGives();
 //        for(TradeGive tradeGive : tradeGives){
@@ -201,6 +202,13 @@ public class TradeInfoServiceImpl implements TradeInfoService {
     }
 
     @Override
+    public BasicData QueryTradeGiveList(String coupway, Integer tradeid) {
+        List<TradeGive> tradeGives = tradeGiveMapper.queryTradeGivelistByTradeid(tradeid,coupway);
+
+        return BasicData.CreateSucess(tradeGives);
+    }
+
+    @Override
     public BasicData insertTradeGive(TradeGive tradeGive) {
 
          tradeGiveMapper.insertTradeGive(tradeGive);
@@ -226,7 +234,67 @@ public class TradeInfoServiceImpl implements TradeInfoService {
         return BasicData.CreateSucess();
     }
 
+    @Override
+    public BasicData Querytransphotos(Integer tradeid) {
+        List<TradePhoto> tradePhotos = tradePhotoMapper.queryTradePhotolistByTradeid(tradeid);
+        return BasicData.CreateSucess(tradePhotos);
+    }
 
+    @Override
+    public BasicData QuerytranphotoById(Integer id) {
+        TradePhoto tradePhoto =tradePhotoMapper.queryTradePhotoById(id);
+        return BasicData.CreateSucess(tradePhoto);
+    }
+
+    @Override
+    public BasicData insertTradePhoto(TradePhoto tradePhoto) {
+        tradePhotoMapper.insertTradePhoto(tradePhoto);
+        return BasicData.CreateSucess();
+    }
+
+    @Override
+    public BasicData updateTradePhoto(TradePhoto tradePhoto) {
+        tradePhotoMapper.updateTradePhoto(tradePhoto);
+        return BasicData.CreateSucess();
+    }
+
+    @Override
+    public BasicData delTradePhoto(Integer id) {
+        tradePhotoMapper.delTradePhoto(id);
+        return BasicData.CreateSucess();
+    }
+
+    @Override
+    public BasicData Querytranslates( Integer tradeid ) {
+
+        List<TradeInfoTranslate> tradeInfoTranslates = tradeInfoMapper.QueryTradeTranslateBytrandid(tradeid);
+        return BasicData.CreateSucess(tradeInfoTranslates);
+    }
+
+    @Override
+    public BasicData QuerytranslateById(Integer tradeid,String languagetype) {
+
+        TradeInfoTranslate tradeInfoTranslate = tradeInfoMapper.QueryTradeTranslateBytrandidANDType(tradeid,languagetype);
+        return BasicData.CreateSucess(tradeInfoTranslate);
+    }
+
+    @Override
+    public BasicData insertTradeSlate(TradeInfoTranslate tradeInfoTranslate) {
+        tradeInfoMapper.insertTradeTranslate(tradeInfoTranslate);
+        return BasicData.CreateSucess();
+    }
+
+    @Override
+    public BasicData updateTradeSlate(TradeInfoTranslate tradeInfoTranslate) {
+        tradeInfoMapper.updateTradeTranslate(tradeInfoTranslate);
+        return BasicData.CreateSucess();
+    }
+
+    @Override
+    public BasicData delTradeSlate(Integer tradeid,String languagetype) {
+        tradeInfoMapper.delTradeTranslate(tradeid,languagetype);
+        return BasicData.CreateSucess();
+    }
 
 
 }

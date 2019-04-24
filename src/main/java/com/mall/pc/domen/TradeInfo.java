@@ -165,9 +165,14 @@ public class TradeInfo  implements Serializable {
     private BigDecimal fullprice;
 
     /**
-     * 折扣比
+     * 进货价格
      */
-    private BigDecimal ratio;
+    private BigDecimal stockprice;
+
+    /**
+     * 会员价格
+     */
+    private BigDecimal memprice;
 
     public Integer getId() {
         return id;
@@ -401,12 +406,20 @@ public class TradeInfo  implements Serializable {
         this.fullprice = fullprice;
     }
 
-    public BigDecimal getRatio() {
-        return ratio;
+    public BigDecimal getStockprice() {
+        return stockprice;
     }
 
-    public void setRatio(BigDecimal ratio) {
-        this.ratio = ratio;
+    public void setStockprice(BigDecimal stockprice) {
+        this.stockprice = stockprice;
+    }
+
+    public BigDecimal getMemprice() {
+        return memprice;
+    }
+
+    public void setMemprice(BigDecimal memprice) {
+        this.memprice = memprice;
     }
 }
 

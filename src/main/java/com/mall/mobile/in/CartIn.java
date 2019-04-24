@@ -25,7 +25,7 @@ public class CartIn {
     /**
      *商品参数名称
      */
-    private String tradparmname;
+    private Integer tradparmnameid;
 
 
     /**
@@ -67,12 +67,12 @@ public class CartIn {
         this.tradid = tradid;
     }
 
-    public String getTradparmname() {
-        return tradparmname;
+    public Integer getTradparmnameid() {
+        return tradparmnameid;
     }
 
-    public void setTradparmname(String tradparmname) {
-        this.tradparmname = tradparmname;
+    public void setTradparmnameid(Integer tradparmnameid) {
+        this.tradparmnameid = tradparmnameid;
     }
 
     public String getTradparm() {

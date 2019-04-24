@@ -29,6 +29,12 @@ public class TradeParamServiceImpl implements TradeParamService {
 
 
     @Override
+    public BasicData querytradeparmnameList(Integer tradeid) {
+        List<TradeParamName> tradeParamNames = tradeParamNameMapper.querytradeparamName(tradeid);
+        return BasicData.CreateSucess(tradeParamNames);
+    }
+
+    @Override
     public BasicData addtradeparmname(TradeParamName tradeParamName) {
         tradeParamNameMapper.insertradeparamName(tradeParamName);
         return BasicData.CreateSucess();
