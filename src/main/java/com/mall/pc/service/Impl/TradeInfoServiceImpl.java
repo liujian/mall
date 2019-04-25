@@ -280,6 +280,11 @@ public class TradeInfoServiceImpl implements TradeInfoService {
 
     @Override
     public BasicData insertTradeSlate(TradeInfoTranslate tradeInfoTranslate) {
+        TradeInfoTranslate translate = tradeInfoMapper.QueryTradeTranslateBytrandidANDType(tradeInfoTranslate.getTradeid(),tradeInfoTranslate.getLanguagetype());
+       if(translate!=null){
+           return BasicData.CreateErrorMsg("该翻译语言以存在！");
+       }
+
         tradeInfoMapper.insertTradeTranslate(tradeInfoTranslate);
         return BasicData.CreateSucess();
     }

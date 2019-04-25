@@ -3,6 +3,7 @@ package com.mall.pc.controller;
 import com.github.pagehelper.PageHelper;
 import com.mall.common.param.BasicData;
 import com.mall.pc.domen.TradeCategory;
+import com.mall.pc.domen.TradeCategoryTranslate;
 import com.mall.pc.service.GoodCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -125,6 +126,133 @@ public class GoodCategoryController {
         }
 
     }
+
+
+    //分类翻译模块
+
+    /**
+     * 获取分类翻译列表
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/Categorytranslates",method = RequestMethod.GET)
+    @ResponseBody
+    public BasicData Categorytranslates(
+            @RequestParam(required = true) Integer classid,
+            @RequestParam(required = true) Integer pagenum,
+            @RequestParam(required = true) Integer pagesize,
+            HttpServletRequest request){
+        try{
+            PageHelper.startPage(pagenum,pagesize);
+            return goodCategoryService.Categorytranslates(classid);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+
+    }
+
+    /**
+     * 查看分类翻译详情
+     * @param classid
+     * @param languagetype
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/QueryCategorytranslateById",method = RequestMethod.GET)
+    @ResponseBody
+    public BasicData QueryCategorytranslateById(@RequestParam(required = true) Integer classid,
+                                        @RequestParam(required = true) String  languagetype,
+                                        HttpServletRequest request){
+        try{
+            return goodCategoryService.QueryCategorytranslateByclassidAndLanguagetype(classid,languagetype);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+
+    }
+
+    /**
+     * 新增分类翻译
+     * @param tradeCategoryTranslate
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/insertCategoryTradeSlate",method = RequestMethod.POST)
+    @ResponseBody
+    public BasicData insertCategoryTradeSlate(@RequestBody(required = false) TradeCategoryTranslate tradeCategoryTranslate, HttpServletRequest request){
+        try{
+            return goodCategoryService.insertCategoryTradeSlate(tradeCategoryTranslate);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+
+    }
+
+    /**
+     * 修改分类翻译内容
+     * @param tradeCategoryTranslate
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/updateCategoryTradeSlate",method = RequestMethod.POST)
+    @ResponseBody
+    public BasicData updateCategoryTradeSlate(@RequestBody(required = false) TradeCategoryTranslate tradeCategoryTranslate, HttpServletRequest request){
+        try{
+            return goodCategoryService.updateCategoryTradeSlate(tradeCategoryTranslate);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+
+    }
+
+
+    /**
+     * 删除商品翻译
+     * @param classid
+     * @param languagetype
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/delCategoryTradeSlate",method = RequestMethod.GET)
+    @ResponseBody
+    public BasicData delCategoryTradeSlate(@RequestParam(required = true) Integer classid,
+                                   @RequestParam(required = true) String  languagetype,
+                                   HttpServletRequest request){
+        try{
+            return goodCategoryService.delCategoryTradeSlate(classid,languagetype);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @InitBinder
     public void initBinder(WebDataBinder binder, WebRequest request) {

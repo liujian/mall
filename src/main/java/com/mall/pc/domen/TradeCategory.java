@@ -17,19 +17,10 @@ public class TradeCategory implements Serializable {
     private Integer id;
 
     /**
-     *分类名称_中文
+     *分类名称
      */
-    private String classify_zw;
+    private String classify;
 
-    /**
-     *分类名称_英文
-     */
-    private String classify_yw;
-
-    /**
-     *分类名称_简体
-     */
-    private String classify_jt;
 
     /**
      * 分类图片
@@ -78,28 +69,12 @@ public class TradeCategory implements Serializable {
         this.id = id;
     }
 
-    public String getClassify_zw() {
-        return classify_zw;
+    public String getClassify() {
+        return classify;
     }
 
-    public void setClassify_zw(String classify_zw) {
-        this.classify_zw = classify_zw;
-    }
-
-    public String getClassify_yw() {
-        return classify_yw;
-    }
-
-    public void setClassify_yw(String classify_yw) {
-        this.classify_yw = classify_yw;
-    }
-
-    public String getClassify_jt() {
-        return classify_jt;
-    }
-
-    public void setClassify_jt(String classify_jt) {
-        this.classify_jt = classify_jt;
+    public void setClassify(String classify) {
+        this.classify = classify;
     }
 
     public Integer getFatherid() {

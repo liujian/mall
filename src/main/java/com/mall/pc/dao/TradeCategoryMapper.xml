@@ -3,9 +3,7 @@
 <mapper namespace="com.mall.pc.dao.TradeCategoryMapper">
     <resultMap id="BaseResultMap" type="com.mall.pc.domen.TradeCategory">
         <id column="id" property="id" jdbcType="INTEGER" />
-        <result column="classify_zw" property="classify_zw" jdbcType="VARCHAR" />
-        <result column="classify_yw" property="classify_yw" jdbcType="VARCHAR" />
-        <result column="classify_jt" property="classify_jt" jdbcType="VARCHAR" />
+        <result column="classify" property="classify" jdbcType="VARCHAR" />
         <result column="classifyimage" property="classifyimage" jdbcType="VARCHAR" />
         <result column="fatherid" property="fatherid" jdbcType="INTEGER" />
         <result column="ishomeicon" property="ishomeicon" jdbcType="VARCHAR" />
@@ -18,7 +16,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-       id,classify_zw,classify_yw,classify_jt,classifyimage,fatherid,ishomeicon,icons,ishome,homeimage,sort
+       id,classify,classifyimage,fatherid,ishomeicon,icons,ishome,homeimage,sort
     </sql>
 
     <select id="QueryGoodCategorys"  parameterType="Integer" resultMap="BaseResultMap">
@@ -61,9 +59,7 @@
     <insert id="insertcategory" parameterType="com.mall.pc.domen.TradeCategory">
         insert into
         table_trade_category (
-        classify_zw,
-        classify_yw,
-        classify_jt,
+        classify,
         classifyimage,
         fatherid,
         ishomeicon,
@@ -73,9 +69,7 @@
         sort
         )
         values (
-        #{classify_zw},
-        #{classify_yw},
-        #{classify_jt},
+        #{classify},
         #{classifyimage},
         #{fatherid},
         #{ishomeicon},
@@ -90,9 +84,7 @@
         UPDATE
         table_trade_category
         SET
-        classify_zw=#{classify_zw},
-        classify_yw=#{classify_yw},
-        classify_jt=#{classify_jt},
+        classify=#{classify},
         classifyimage=#{classifyimage},
         fatherid=#{fatherid},
         ishomeicon=#{ishomeicon},
@@ -111,5 +103,70 @@
         id=#{id}
     </delete>
 
+
+    <resultMap id="BaseResultMapTranslate" type="com.mall.pc.domen.TradeCategoryTranslate">
+        <result column="classid" property="classid" jdbcType="INTEGER" />
+        <result column="languagetype" property="languagetype" jdbcType="VARCHAR" />
+        <result column="classifyname" property="classifyname" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List_Translate">
+        classid,languagetype,classifyname
+    </sql>
+
+    <select id="Categorytranslates"  parameterType="Integer" resultMap="BaseResultMapTranslate">
+        SELECT
+        <include refid="Base_Column_List_Translate" />
+        FROM
+        table_trade_category_translate a
+        WHERE
+        a.classid=#{classid}
+    </select>
+
+    <select id="QueryCategorytranslateByclassidAndLanguagetype"  parameterType="Object" resultMap="BaseResultMapTranslate">
+        SELECT
+        <include refid="Base_Column_List_Translate" />
+        FROM
+        table_trade_category_translate a
+        WHERE
+        a.classid=#{classid}
+        AND
+        languagetype=#{languagetype}
+    </select>
+
+
+    <insert id="insertCategoryTradeSlate" parameterType="com.mall.pc.domen.TradeCategoryTranslate">
+        insert into
+        table_trade_category_translate (
+        classid,
+        languagetype,
+        classifyname
+        )
+        values (
+        #{classid},
+        #{languagetype},
+        #{classifyname}
+        )
+    </insert>
+
+    <update id="updateCategoryTradeSlate" parameterType="com.mall.pc.domen.TradeCategoryTranslate">
+        UPDATE
+        table_trade_category_translate
+        SET
+        classifyname=#{classifyname}
+        where
+        classid=#{classid}
+        AND
+        languagetype=#{languagetype}
+    </update>
+
+    <delete id="delCategoryTradeSlate" parameterType="Object">
+        Delete from
+        table_trade_category_translate
+        where
+        classid=#{classid}
+        AND
+        languagetype=#{languagetype}
+    </delete>
 
 </mapper>

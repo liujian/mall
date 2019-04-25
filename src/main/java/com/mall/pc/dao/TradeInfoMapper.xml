@@ -342,7 +342,7 @@
         languagetype=#{languagetype}
     </update>
 
-    <delete id="delTradeTranslate" parameterType="java.lang.String">
+    <delete id="delTradeTranslate" parameterType="Object">
         Delete from
         table_trade_info_translate
         where

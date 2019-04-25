@@ -32,9 +32,10 @@ public class CategoryController {
     @ResponseBody
     public BasicData QueryGoodCategorys(
             @RequestParam(required = false) Integer fatherid,
+            @RequestParam(required = false) String languagetype,
             HttpServletRequest request){
         try{
-            return goodCategoryService.QueryGoodCategorys(fatherid);
+            return goodCategoryService.QueryGoodCategorys(fatherid,languagetype);
         }catch (Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());
