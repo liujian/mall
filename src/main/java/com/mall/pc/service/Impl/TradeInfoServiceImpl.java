@@ -81,6 +81,42 @@ public class TradeInfoServiceImpl implements TradeInfoService {
     }
 
     @Override
+    public BasicData QuerytradeById(Integer id, String languagetype) {
+        TradeParamOut tradeParamOut = new TradeParamOut();
+        TradeInfo tradeInfo = tradeInfoMapper.QuerytradeById(id);
+        TradeInfoTranslate tradeInfoTranslate = tradeInfoMapper.QueryTradeTranslateBytrandidANDType(tradeInfo.getId(),languagetype);
+        if(tradeInfoTranslate!=null){
+            tradeInfo.setTradename(tradeInfoTranslate.getTradename());
+            tradeInfo.setIntroduce(tradeInfoTranslate.getIntroduce());
+            tradeInfo.setTradebright(tradeInfoTranslate.getTradebright());
+            tradeInfo.setMoreinfo(tradeInfoTranslate.getMoreinfo());
+        }
+        if(tradeInfo!=null){
+            List<TradeParamNameOut> tradeParamNameOuts = new ArrayList<>();
+            List<TradeParamName> tradeParamNames= tradeParamNameMapper.querytradeparamName(id);
+            for(TradeParamName tradeParamName :tradeParamNames){
+                TradeParamNameOut tradeParamNameOut = new TradeParamNameOut();
+                tradeParamNameOut.setTradeParamName(tradeParamName);
+                List<TradeParam> tradeParams = tradeParamMapper.querytradeparam(id,tradeParamName.getId());
+                tradeParamNameOut.setTradeParams(tradeParams);
+                tradeParamNameOuts.add(tradeParamNameOut);
+            }
+            List<TradePhoto> tradePhotos = tradePhotoMapper.queryTradePhotolistByTradeid(id);
+            List<TradeCompose> tradeComposes = tradeComposeMapper.queryTradeComposelistByMaintrade(id);
+            List<TradeGive> tradeGives = tradeGiveMapper.queryTradeGivelistByTradeid(id,tradeInfo.getCoupway());
+            List<TradeInfoTranslate> tradeInfoTranslates = tradeInfoMapper.QueryTradeTranslateBytrandid(id);
+            tradeParamOut.setTradeInfo(tradeInfo);
+            tradeParamOut.setTradeParamNameOuts(tradeParamNameOuts);
+            tradeParamOut.setTradePhotos(tradePhotos);
+            tradeParamOut.setTradeComposes(tradeComposes);
+            tradeParamOut.setTradeGives(tradeGives);
+
+        }
+
+        return BasicData.CreateSucess(tradeParamOut);
+    }
+
+    @Override
     public BasicData insertTradeInfo(TradeInfo tradeInfo) {
 
         TradeInfo trade = tradeInfoMapper.QuerytradeByBarcode(tradeInfo.getBarcode());
@@ -162,30 +198,70 @@ public class TradeInfoServiceImpl implements TradeInfoService {
     }
 
     @Override
-    public BasicData queryAlltradelist(Integer classify,String search) {
+    public BasicData queryAlltradelist(Integer classify,String search,String languagetype) {
+
+        List<TradeInfo> tradeInfos = new ArrayList<>();
         List<TradeInfo> queryAlltradelist = tradeInfoMapper.queryAlltradelist(classify,search);
-
-        return BasicData.CreateSucess(queryAlltradelist);
+        for(TradeInfo tradeInfo:queryAlltradelist){
+            TradeInfoTranslate tradeInfoTranslate = tradeInfoMapper.QueryTradeTranslateBytrandidANDType(tradeInfo.getId(),languagetype);
+            if(tradeInfoTranslate!=null){
+                tradeInfo.setTradename(tradeInfoTranslate.getTradename());
+                tradeInfo.setIntroduce(tradeInfoTranslate.getIntroduce());
+                tradeInfo.setTradebright(tradeInfoTranslate.getTradebright());
+                tradeInfo.setMoreinfo(tradeInfoTranslate.getMoreinfo());
+            }
+            tradeInfos.add(tradeInfo);
+        }
+        return BasicData.CreateSucess(tradeInfos);
     }
 
     @Override
-    public BasicData querytradelistByClassify(Integer classify,String search) {
+    public BasicData querytradelistByClassify(Integer classify,String search,String languagetype) {
+        List<TradeInfo> tradeInfos = new ArrayList<>();
         List<TradeInfo> querytradelistByClassify = tradeInfoMapper.querytradelistByClassify(classify,search);
-        return BasicData.CreateSucess(querytradelistByClassify);
-    }
-
-    @Override
-    public BasicData QuerytradeBysearchname(String searchname) {
-
-        List<TradeInfo> tradeInfos= tradeInfoMapper.QuerytradeBysearchname(searchname);
+        for(TradeInfo tradeInfo:querytradelistByClassify){
+            TradeInfoTranslate tradeInfoTranslate = tradeInfoMapper.QueryTradeTranslateBytrandidANDType(tradeInfo.getId(),languagetype);
+            if(tradeInfoTranslate!=null){
+                tradeInfo.setTradename(tradeInfoTranslate.getTradename());
+                tradeInfo.setIntroduce(tradeInfoTranslate.getIntroduce());
+                tradeInfo.setTradebright(tradeInfoTranslate.getTradebright());
+                tradeInfo.setMoreinfo(tradeInfoTranslate.getMoreinfo());
+            }
+            tradeInfos.add(tradeInfo);
+        }
 
         return BasicData.CreateSucess(tradeInfos);
     }
 
     @Override
-    public BasicData QuerytradeBybarcode(String barcode) {
+    public BasicData QuerytradeBysearchname(String searchname,String languagetype) {
+        List<TradeInfo> tradeInfos = new ArrayList<>();
+        List<TradeInfo> tradeInfoList= tradeInfoMapper.QuerytradeBysearchname(searchname);
+        for(TradeInfo tradeInfo:tradeInfoList){
+            TradeInfoTranslate tradeInfoTranslate = tradeInfoMapper.QueryTradeTranslateBytrandidANDType(tradeInfo.getId(),languagetype);
+            if(tradeInfoTranslate!=null){
+                tradeInfo.setTradename(tradeInfoTranslate.getTradename());
+                tradeInfo.setIntroduce(tradeInfoTranslate.getIntroduce());
+                tradeInfo.setTradebright(tradeInfoTranslate.getTradebright());
+                tradeInfo.setMoreinfo(tradeInfoTranslate.getMoreinfo());
+            }
+            tradeInfos.add(tradeInfo);
+        }
+
+        return BasicData.CreateSucess(tradeInfos);
+    }
+
+    @Override
+    public BasicData QuerytradeBybarcode(String barcode,String languagetype) {
 
         TradeInfo tradeInfo = tradeInfoMapper.QuerytradeByBarcode(barcode);
+        TradeInfoTranslate tradeInfoTranslate = tradeInfoMapper.QueryTradeTranslateBytrandidANDType(tradeInfo.getId(),languagetype);
+        if(tradeInfoTranslate!=null){
+            tradeInfo.setTradename(tradeInfoTranslate.getTradename());
+            tradeInfo.setIntroduce(tradeInfoTranslate.getIntroduce());
+            tradeInfo.setTradebright(tradeInfoTranslate.getTradebright());
+            tradeInfo.setMoreinfo(tradeInfoTranslate.getMoreinfo());
+        }
         return BasicData.CreateSucess(tradeInfo);
     }
 
@@ -282,7 +358,7 @@ public class TradeInfoServiceImpl implements TradeInfoService {
     public BasicData insertTradeSlate(TradeInfoTranslate tradeInfoTranslate) {
         TradeInfoTranslate translate = tradeInfoMapper.QueryTradeTranslateBytrandidANDType(tradeInfoTranslate.getTradeid(),tradeInfoTranslate.getLanguagetype());
        if(translate!=null){
-           return BasicData.CreateErrorMsg("该翻译语言以存在！");
+           return BasicData.CreateErrorMsg("该翻译");
        }
 
         tradeInfoMapper.insertTradeTranslate(tradeInfoTranslate);

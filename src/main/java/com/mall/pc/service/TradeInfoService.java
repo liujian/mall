@@ -15,19 +15,20 @@ public interface TradeInfoService {
 
     BasicData QuerytradeById(Integer id);
 
+    BasicData QuerytradeById(Integer id,String languagetype);
     BasicData insertTradeInfo(TradeInfo tradeInfo);
 
     BasicData updateTradeInfo(TradeInfo tradeInfo);
 
     BasicData delTradeInfo(Integer id);
 
-    BasicData queryAlltradelist(Integer classify,String search);
+    BasicData queryAlltradelist(Integer classify,String search,String languagetype);
 
-    BasicData querytradelistByClassify(Integer classify,String search);
+    BasicData querytradelistByClassify(Integer classify,String search,String languagetype);
 
-    BasicData QuerytradeBysearchname(String searchname);
+    BasicData QuerytradeBysearchname(String searchname,String languagetype);
 
-    BasicData QuerytradeBybarcode(String barcode);
+    BasicData QuerytradeBybarcode(String barcode,String languagetype);
 
 
 

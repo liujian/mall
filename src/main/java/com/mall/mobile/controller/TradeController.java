@@ -25,6 +25,9 @@ public class TradeController {
 
     /**
      *  查看某类型全部商品
+     * @param classify 分类id
+     * @param search 排序条件
+     * @param search 排序条件
      * @param request
      * @return
      */
@@ -33,9 +36,10 @@ public class TradeController {
     public BasicData queryAlltradelist(
             @RequestParam(required = false) Integer classify,
             @RequestParam(required = false) String search,
+            @RequestParam(required = false) String languagetype,
             HttpServletRequest request){
         try{
-            return tradeInfoService.queryAlltradelist(classify,search);
+            return tradeInfoService.queryAlltradelist(classify,search,languagetype);
         }catch (Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());
@@ -53,9 +57,10 @@ public class TradeController {
     public BasicData querytradelistByClassify(
             @RequestParam(required = false) Integer classify,
             @RequestParam(required = false) String search,
+            @RequestParam(required = false) String languagetype,
             HttpServletRequest request){
         try{
-            return tradeInfoService.querytradelistByClassify(classify,search);
+            return tradeInfoService.querytradelistByClassify(classify,search,languagetype);
         }catch (Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());
@@ -74,9 +79,10 @@ public class TradeController {
     @ResponseBody
     public BasicData QuerytradeById(
             @RequestParam(required = false) Integer id,
+            @RequestParam(required = false) String languagetype,
             HttpServletRequest request){
         try{
-            return tradeInfoService.QuerytradeById(id);
+            return tradeInfoService.QuerytradeById(id,languagetype);
         }catch (Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());
@@ -93,9 +99,10 @@ public class TradeController {
     @ResponseBody
     public BasicData QuerytradeByname(
             @RequestParam(required = false) String searchname,
+            @RequestParam(required = false) String languagetype,
             HttpServletRequest request){
         try{
-            return tradeInfoService.QuerytradeBysearchname(searchname);
+            return tradeInfoService.QuerytradeBysearchname(searchname,languagetype);
         }catch (Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());
@@ -112,9 +119,10 @@ public class TradeController {
     @ResponseBody
     public BasicData QuerytradeBybarcode(
             @RequestParam(required = false) String barcode,
+            @RequestParam(required = false) String languagetype,
             HttpServletRequest request){
         try{
-            return tradeInfoService.QuerytradeBybarcode(barcode);
+            return tradeInfoService.QuerytradeBybarcode(barcode,languagetype);
         }catch (Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());

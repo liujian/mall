@@ -32,10 +32,11 @@ public class InterestController {
     @ResponseBody
     public BasicData getInterestList(
             @RequestParam(required = true) String token,
+            @RequestParam(required = false) String languagetype,
             HttpServletRequest request){
 
         try{
-            return interestService.getInterestList(token);
+            return interestService.getInterestList(token,languagetype);
         }catch(Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());

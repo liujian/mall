@@ -8,6 +8,7 @@ import com.mall.mobile.domen.User;
 import com.mall.mobile.service.InterestService;
 import com.mall.pc.dao.TradeInfoMapper;
 import com.mall.pc.domen.TradeInfo;
+import com.mall.pc.domen.TradeInfoTranslate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,7 @@ public class InterestServiceImpl implements InterestService {
     private TradeInfoMapper tradeInfoMapper;
 
     @Override
-    public BasicData getInterestList(String token) {
+    public BasicData getInterestList(String token,String languagetype) {
         User user = userMapper.selectByToken(token);
         if(user==null){
             return BasicData.CreateErrorInvalidUser();
@@ -44,6 +45,13 @@ public class InterestServiceImpl implements InterestService {
         List<TradeInfo> tradeInfos = new ArrayList<>();
         for(Interest interest:list){
             TradeInfo tradeInfo = tradeInfoMapper.QuerytradeById(interest.getTrandid());
+            TradeInfoTranslate tradeInfoTranslate = tradeInfoMapper.QueryTradeTranslateBytrandidANDType(interest.getTrandid(),languagetype);
+            if(tradeInfoTranslate!=null){
+                tradeInfo.setTradename(tradeInfoTranslate.getTradename());
+                tradeInfo.setIntroduce(tradeInfoTranslate.getIntroduce());
+                tradeInfo.setTradebright(tradeInfoTranslate.getTradebright());
+                tradeInfo.setMoreinfo(tradeInfoTranslate.getMoreinfo());
+            }
             tradeInfos.add(tradeInfo);
         }
         return BasicData.CreateSucess(tradeInfos);
