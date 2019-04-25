@@ -4,7 +4,7 @@ import com.mall.common.param.BasicData;
 
 public interface HomeinfoService {
 
-    BasicData gethomeinfo();
+    BasicData gethomeinfo(String languagetype);
 
-    BasicData gettradeByBrand(Integer brandid);
+    BasicData gettradeByBrand(Integer brandid,String languagetype);
 }

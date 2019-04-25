@@ -14,6 +14,8 @@ public interface TradeParamMapper {
 
     TradeParam querytradeparamByparam(TradeParam tradeParam);
 
+    TradeParam querytradeparamById(Integer id);
+
     void insertradeparam(TradeParam tradeParam);
 
     void updatetradeparam(TradeParam tradeParam);

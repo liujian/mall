@@ -28,15 +28,15 @@ public class Cart implements Serializable {
 
 
     /**
-     *商品参数名称
+     *商品参数名称id
      */
     private Integer tradparmnameid;
 
 
     /**
-     *商品参数型号
+     *商品参数型号id
      */
-    private String tradparm;
+    private Integer tradparmid;
 
 
     /**
@@ -89,12 +89,12 @@ public class Cart implements Serializable {
         this.tradparmnameid = tradparmnameid;
     }
 
-    public String getTradparm() {
-        return tradparm;
+    public Integer getTradparmid() {
+        return tradparmid;
     }
 
-    public void setTradparm(String tradparm) {
-        this.tradparm = tradparm;
+    public void setTradparmid(Integer tradparmid) {
+        this.tradparmid = tradparmid;
     }
 
     public Integer getTradenum() {

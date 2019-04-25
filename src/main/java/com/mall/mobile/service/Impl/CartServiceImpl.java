@@ -10,14 +10,8 @@ import com.mall.mobile.out.CartOut;
 import com.mall.mobile.out.TradeComposeout;
 import com.mall.mobile.out.TradeInfoOut;
 import com.mall.mobile.service.CartService;
-import com.mall.pc.dao.TradeCategoryMapper;
-import com.mall.pc.dao.TradeComposeMapper;
-import com.mall.pc.dao.TradeInfoMapper;
-import com.mall.pc.dao.TradeParamMapper;
-import com.mall.pc.domen.TradeCategory;
-import com.mall.pc.domen.TradeCompose;
-import com.mall.pc.domen.TradeInfo;
-import com.mall.pc.domen.TradeParam;
+import com.mall.pc.dao.*;
+import com.mall.pc.domen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +34,9 @@ public class CartServiceImpl implements CartService {
     private TradeInfoMapper tradeInfoMapper;
 
     @Autowired
+    private TradeParamNameMapper tradeParamNameMapper;
+
+    @Autowired
     private TradeParamMapper tradeParamMapper;
 
     @Autowired
@@ -54,54 +51,57 @@ public class CartServiceImpl implements CartService {
     @Override
     public BasicData getCartList(String token) {
         User user = userMapper.selectByToken(token);
-//        if(user==null){
-//            return BasicData.CreateErrorInvalidUser();
-//        }
-//        List<Cart> cartList =cartMapper.getCartList(user.getId());
-//        List<CartOut> cartOuts = new ArrayList<CartOut>();
-//        for(Cart cart:cartList){
-//            CartOut cartOut = new CartOut();
-//            if("PT".equals(cart.getTradetype())){
-//                TradeInfoOut tradeInfoOut = new TradeInfoOut();
-//                TradeInfo tradeInfo = tradeInfoMapper.QuerytradeById(cart.getTradid());
-//                TradeParam tradeParam = new TradeParam();
-//                tradeParam.setTradeid(cart.getTradid());
-//                tradeParam.setParam(cart.getTradparmname());
-//                tradeParam.setParam(cart.getTradparm());
-//                TradeParam tradeParam1 = tradeParamMapper.querytradeparamByparam(tradeParam);
-//                tradeInfoOut.setTradeInfo(tradeInfo);
-//                tradeInfoOut.setTradeParam(tradeParam1);
-//                cartOut.setTradeInfoOut(tradeInfoOut);
-//
-//                TradeCategory tradeCategory = tradeCategoryMapper.QueryGoodCategoryById(tradeInfo.getTradeclass());
-//                cartOut.setTradeCategory(tradeCategory);
-//                cartOut.setCartid(cart.getId());
-//                cartOut.setTradetype(cart.getTradetype());
-//                cartOut.setTradenum(cart.getTradenum());
-//            }
-//            if("ZH".equals(cart.getTradetype())){
-//                TradeComposeout tradeComposeout = new TradeComposeout();
-//
-//                TradeCompose tradeCompose = tradeComposeMapper.queryTradeComposeById(cart.getTradid());
-//                tradeComposeout.setComposename(tradeCompose.getComposename());
-//                tradeComposeout.setId(tradeCompose.getId());
-//                tradeComposeout.setComposeprice(tradeCompose.getComposeprice());
-//                TradeInfo maintrade = tradeInfoMapper.QuerytradeById(tradeCompose.getMaintrade());
-//                tradeComposeout.setMaintrade(maintrade);
-//                TradeInfo subtrade = tradeInfoMapper.QuerytradeById(tradeCompose.getSubtrade());
-//                tradeComposeout.setSubtrade(subtrade);
-//                cartOut.setTradeComposeout(tradeComposeout);
-//                TradeCategory tradeCategory = tradeCategoryMapper.QueryGoodCategoryById(subtrade.getTradeclass());
-//                cartOut.setTradeCategory(tradeCategory);
-//                cartOut.setCartid(cart.getId());
-//                cartOut.setTradetype(cart.getTradetype());
-//                cartOut.setTradenum(cart.getTradenum());
-//            }
-//
-//            cartOuts.add(cartOut);
-//        }
+        if(user==null){
+            return BasicData.CreateErrorInvalidUser();
+        }
+        List<Cart> cartList =cartMapper.getCartList(user.getId());
+        List<CartOut> cartOuts = new ArrayList<CartOut>();
+        for(Cart cart:cartList){
+            CartOut cartOut = new CartOut();
+            if("PT".equals(cart.getTradetype())){
+                TradeInfoOut tradeInfoOut = new TradeInfoOut();
+                TradeInfo tradeInfo = tradeInfoMapper.QuerytradeById(cart.getTradid());
+                TradeParamName tradeParamName = tradeParamNameMapper.querytradeparamNameById(cart.getTradparmnameid());
+                TradeParam tradeParam = tradeParamMapper.querytradeparamById(cart.getTradparmid());
+                tradeInfoOut.setTradeInfo(tradeInfo);
+                if(tradeParamName!=null){
+                    tradeInfoOut.setTradeParamName(tradeParamName.getParamname());
+                }
+                if(tradeParam!=null){
+                    tradeInfoOut.setTradeParam(tradeParam.getParam());
+                }
 
-        return BasicData.CreateSucess();
+                cartOut.setTradeInfoOut(tradeInfoOut);
+
+                TradeCategory tradeCategory = tradeCategoryMapper.QueryGoodCategoryById(tradeInfo.getTradeclass());
+                cartOut.setTradeCategory(tradeCategory);
+                cartOut.setCartid(cart.getId());
+                cartOut.setTradetype(cart.getTradetype());
+                cartOut.setTradenum(cart.getTradenum());
+            }
+            if("ZH".equals(cart.getTradetype())){
+                TradeComposeout tradeComposeout = new TradeComposeout();
+
+                TradeCompose tradeCompose = tradeComposeMapper.queryTradeComposeById(cart.getTradid());
+                tradeComposeout.setComposename(tradeCompose.getComposename());
+                tradeComposeout.setId(tradeCompose.getId());
+                tradeComposeout.setComposeprice(tradeCompose.getComposeprice());
+                TradeInfo maintrade = tradeInfoMapper.QuerytradeById(tradeCompose.getMaintrade());
+                tradeComposeout.setMaintrade(maintrade);
+                TradeInfo subtrade = tradeInfoMapper.QuerytradeById(tradeCompose.getSubtrade());
+                tradeComposeout.setSubtrade(subtrade);
+                cartOut.setTradeComposeout(tradeComposeout);
+                TradeCategory tradeCategory = tradeCategoryMapper.QueryGoodCategoryById(subtrade.getTradeclass());
+                cartOut.setTradeCategory(tradeCategory);
+                cartOut.setCartid(cart.getId());
+                cartOut.setTradetype(cart.getTradetype());
+                cartOut.setTradenum(cart.getTradenum());
+            }
+
+            cartOuts.add(cartOut);
+        }
+
+        return BasicData.CreateSucess(cartOuts);
     }
 
     @Override
@@ -116,38 +116,38 @@ public class CartServiceImpl implements CartService {
         cart.setTradenum(cartIn.getTradenum());
         cart.setTradeclass(cartIn.getTradeclass());
         cart.setTradetype(cartIn.getTradetype());
-        cart.setTradparm(cartIn.getTradparm());
+        cart.setTradparmid(cartIn.getTradparmid());
         cart.setTradparmnameid(cartIn.getTradparmnameid());
 
-//        if("PT".equals(cart.getTradetype())){
-//           List<TradeParam> tradeParams = tradeParamMapper.querytradeparam(cart.getTradid());
-//           if(tradeParams.size()>0&&(cart.getTradparmnameid()==null||cart.getTradparm()==null||cart.getTradparm().isEmpty())){
-//               return BasicData.CreateErrorMsg("请选择选项");
-//            }
-//
-//            Cart cart1 = cartMapper.queryCart(cart);
-//           if(cart1==null){
-//               cartMapper.addCart(cart);
-//           }else{
-//               Integer tradenum= cart1.getTradenum();
-//               tradenum=tradenum+1;
-//               cart1.setTradenum(tradenum);
-//               cartMapper.updateCart(cart1);
-//           }
-//
-//        }
-//
-//        if("ZH".equals(cart.getTradetype())){
-//            Cart cart1 = cartMapper.queryCart(cart);
-//            if(cart1==null){
-//                cartMapper.addCart(cart);
-//            }else{
-//                Integer tradenum= cart1.getTradenum();
-//                tradenum=tradenum+1;
-//                cart1.setTradenum(tradenum);
-//                cartMapper.updateCart(cart1);
-//            }
-//        }
+        if("PT".equals(cart.getTradetype())){
+           List<TradeParam> tradeParams = tradeParamMapper.querytradeparam(cart.getTradid(),cartIn.getTradparmid());
+           if(tradeParams.size()>0&&(cart.getTradparmnameid()==null||cart.getTradparmid()==null)){
+               return BasicData.CreateErrorMsg("请选择选项");
+            }
+
+            Cart cart1 = cartMapper.queryCart(cart);
+           if(cart1==null){
+               cartMapper.addCart(cart);
+           }else{
+               Integer tradenum= cart1.getTradenum();
+               tradenum=tradenum+1;
+               cart1.setTradenum(tradenum);
+               cartMapper.updateCart(cart1);
+           }
+
+        }
+
+        if("ZH".equals(cart.getTradetype())){
+            Cart cart1 = cartMapper.queryCart(cart);
+            if(cart1==null){
+                cartMapper.addCart(cart);
+            }else{
+                Integer tradenum= cart1.getTradenum();
+                tradenum=tradenum+1;
+                cart1.setTradenum(tradenum);
+                cartMapper.updateCart(cart1);
+            }
+        }
 
         return BasicData.CreateSucess();
     }

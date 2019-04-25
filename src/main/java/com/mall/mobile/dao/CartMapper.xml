@@ -6,7 +6,7 @@
         <result column="userid" jdbcType="INTEGER" property="userid" />
         <result column="tradid" property="tradid" jdbcType="INTEGER" />
         <result column="tradparmnameid" property="tradparmnameid" jdbcType="INTEGER" />
-        <result column="tradparm" property="tradparm" jdbcType="VARCHAR" />
+        <result column="tradparmid" property="tradparmid" jdbcType="INTEGER" />
         <result column="tradenum" property="tradenum" jdbcType="INTEGER" />
         <result column="tradeclass" property="tradeclass" jdbcType="INTEGER" />
         <result column="tradetype" property="tradetype" jdbcType="VARCHAR" />
@@ -37,7 +37,7 @@
         AND
         tradparmnameid=#{tradparmnameid}
         AND
-        tradparm=#{tradparm}
+        tradparmid=#{tradparmid}
         AND
         tradetype=#{tradetype}
     </select>
@@ -48,7 +48,7 @@
         userid,
         tradid,
         tradparmnameid,
-        tradparm,
+        tradparmid,
         tradenum,
         tradeclass,
         tradetype
@@ -57,7 +57,7 @@
         #{userid,jdbcType=INTEGER},
         #{tradid,jdbcType=INTEGER},
         #{tradparmnameid,jdbcType=INTEGER},
-        #{tradparm,jdbcType=VARCHAR},
+        #{tradparmid,jdbcType=INTEGER},
         #{tradenum,jdbcType=INTEGER},
         #{tradeclass,jdbcType=INTEGER},
         #{tradetype,jdbcType=VARCHAR}
@@ -76,7 +76,7 @@
         AND
         tradparmnameid=#{tradparmnameid}
          AND
-        tradparm=#{tradparm}
+        tradparmid=#{tradparmid}
     </update>
 
     <delete id="delCart" parameterType="java.lang.Integer">

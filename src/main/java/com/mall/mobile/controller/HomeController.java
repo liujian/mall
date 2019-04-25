@@ -24,10 +24,12 @@ public class HomeController {
 
     @RequestMapping(value="/gethomeinfo",method = RequestMethod.GET)
     @ResponseBody
-    public BasicData gethomeinfo(HttpServletRequest request){
+    public BasicData gethomeinfo(
+            @RequestParam(required = false) String languagetype,
+            HttpServletRequest request){
 
         try{
-            return homeinfoService.gethomeinfo();
+            return homeinfoService.gethomeinfo(languagetype);
         }catch(Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());
@@ -42,10 +44,11 @@ public class HomeController {
     @ResponseBody
     public BasicData gettradeByBrand(
                     @RequestParam(required = false) Integer brandid,
+                    @RequestParam(required = false) String languagetype,
                                     HttpServletRequest request){
 
         try{
-            return homeinfoService.gettradeByBrand(brandid);
+            return homeinfoService.gettradeByBrand(brandid,languagetype);
         }catch(Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());

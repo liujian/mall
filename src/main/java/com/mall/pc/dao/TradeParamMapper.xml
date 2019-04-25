@@ -36,6 +36,13 @@
         param=#{param}
     </select>
 
+    <select id="querytradeparamById"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_trade_param
+        where
+        id =#{id}
+    </select>
 
     <insert id="insertradeparam" parameterType="com.mall.pc.domen.TradeParam">
         insert into

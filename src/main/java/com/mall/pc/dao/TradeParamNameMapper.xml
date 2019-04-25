@@ -20,6 +20,15 @@
         order by id
     </select>
 
+    <select id="querytradeparamNameById"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_trade_paramname
+        WHERE
+        id=#{id}
+    </select>
+
+
 
     <insert id="insertradeparamName" parameterType="com.mall.pc.domen.TradeParamName">
         insert into

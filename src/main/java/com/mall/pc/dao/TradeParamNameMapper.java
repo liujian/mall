@@ -11,6 +11,8 @@ public interface TradeParamNameMapper {
 
     List<TradeParamName> querytradeparamName(Integer tradeid);
 
+    TradeParamName querytradeparamNameById(Integer id);
+
     void insertradeparamName(TradeParamName tradeParamName);
 
     void updatetradeparamName(TradeParamName tradeParamName);
