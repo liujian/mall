@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CartService {
 
-    BasicData getCartList(String token);
+    BasicData getCartList(String token,String languagetype);
 
     BasicData addCart(CartIn cartIn);
 

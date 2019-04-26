@@ -35,9 +35,10 @@ public class CartController {
     @ResponseBody
     public BasicData getCartList(
             @RequestParam(required = false) String token,
+            @RequestParam(required = false) String languagetype,
             HttpServletRequest request){
         try{
-            return cartService.getCartList(token);
+            return cartService.getCartList(token,languagetype);
         }catch (Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());

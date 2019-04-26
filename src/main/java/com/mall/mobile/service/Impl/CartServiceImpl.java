@@ -49,7 +49,7 @@ public class CartServiceImpl implements CartService {
     private UserMapper userMapper;
 
     @Override
-    public BasicData getCartList(String token) {
+    public BasicData getCartList(String token,String languagetype) {
         User user = userMapper.selectByToken(token);
         if(user==null){
             return BasicData.CreateErrorInvalidUser();
@@ -61,6 +61,13 @@ public class CartServiceImpl implements CartService {
             if("PT".equals(cart.getTradetype())){
                 TradeInfoOut tradeInfoOut = new TradeInfoOut();
                 TradeInfo tradeInfo = tradeInfoMapper.QuerytradeById(cart.getTradid());
+                TradeInfoTranslate tradeInfoTranslate = tradeInfoMapper.QueryTradeTranslateBytrandidANDType(tradeInfo.getId(),languagetype);
+                if(tradeInfoTranslate!=null){
+                    tradeInfo.setTradename(tradeInfoTranslate.getTradename());
+                    tradeInfo.setIntroduce(tradeInfoTranslate.getIntroduce());
+                    tradeInfo.setTradebright(tradeInfoTranslate.getTradebright());
+                    tradeInfo.setMoreinfo(tradeInfoTranslate.getMoreinfo());
+                }
                 TradeParamName tradeParamName = tradeParamNameMapper.querytradeparamNameById(cart.getTradparmnameid());
                 TradeParam tradeParam = tradeParamMapper.querytradeparamById(cart.getTradparmid());
                 tradeInfoOut.setTradeInfo(tradeInfo);
