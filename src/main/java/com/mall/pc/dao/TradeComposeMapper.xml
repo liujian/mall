@@ -18,6 +18,9 @@
         from table_trade_compose
         where
         maintrade =#{maintrade}
+        OR
+        subtrade=#{maintrade}
+
     </select>
 
 

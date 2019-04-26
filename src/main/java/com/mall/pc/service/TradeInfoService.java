@@ -16,6 +16,7 @@ public interface TradeInfoService {
     BasicData QuerytradeById(Integer id);
 
     BasicData QuerytradeById(Integer id,String languagetype);
+
     BasicData insertTradeInfo(TradeInfo tradeInfo);
 
     BasicData updateTradeInfo(TradeInfo tradeInfo);

@@ -1,5 +1,6 @@
 package com.mall.pc.out;
 
+import com.mall.mobile.out.TradeComposeout;
 import com.mall.pc.domen.*;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class TradeParamOut {
 
     private List<TradePhoto> tradePhotos;
 
-    private List<TradeCompose> tradeComposes;
+    private List<TradeComposeout> tradeComposeouts;
 
     private List<TradeGive> tradeGives;
 
@@ -49,12 +50,12 @@ public class TradeParamOut {
         this.tradePhotos = tradePhotos;
     }
 
-    public List<TradeCompose> getTradeComposes() {
-        return tradeComposes;
+    public List<TradeComposeout> getTradeComposeouts() {
+        return tradeComposeouts;
     }
 
-    public void setTradeComposes(List<TradeCompose> tradeComposes) {
-        this.tradeComposes = tradeComposes;
+    public void setTradeComposeouts(List<TradeComposeout> tradeComposeouts) {
+        this.tradeComposeouts = tradeComposeouts;
     }
 
     public List<TradeGive> getTradeGives() {
