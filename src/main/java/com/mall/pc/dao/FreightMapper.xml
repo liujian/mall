@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.pc.dao.FreightMapper">
+    <resultMap id="BaseResultMap" type="com.mall.pc.domen.Freight">
+        <result column="freight" property="freight" jdbcType="NUMERIC" />
+        <result column="freeship" property="freeship" jdbcType="NUMERIC" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       freight,freeship
+    </sql>
+
+    <select id="queryFreight"   resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_freight_manage
+    </select>
+
+
+    <update id="updateFreight" parameterType="com.mall.pc.domen.Freight">
+        UPDATE
+        table_freight_manage
+        SET
+        freight=#{freight},
+        freeship=#{freeship}
+    </update>
+
+</mapper>
