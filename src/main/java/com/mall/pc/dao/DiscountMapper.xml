@@ -44,6 +44,8 @@
         from table_discount_code
         where
         discode =#{discode}
+        AND
+        invalid='0'
     </select>
 
 

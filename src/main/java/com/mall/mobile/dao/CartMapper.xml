@@ -20,6 +20,13 @@
           userid=#{userid}
     </select>
 
+    <select id="getCartListByTradeclass"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+        * from table_shopping_cart
+        where
+        tradeclass=#{tradeclass}
+    </select>
+
     <select id="queryCartByid"  parameterType="Integer" resultMap="BaseResultMap">
         select
         * from table_shopping_cart
@@ -34,13 +41,17 @@
         userid=#{userid}
         AND
         tradid=#{tradid}
-        AND
-        tradparmnameid=#{tradparmnameid}
-        AND
-        tradparmid=#{tradparmid}
+        <if test="tradparmnameid != null">
+            AND tradparmnameid =#{tradparmnameid}
+        </if>
+        <if test="tradparmid != null">
+            AND tradparmid =#{tradparmid}
+        </if>
         AND
         tradetype=#{tradetype}
     </select>
+
+
 
     <insert id="addCart" parameterType="com.mall.mobile.domen.Cart">
         insert into
@@ -73,10 +84,13 @@
         userid=#{userid}
         AND
         tradid=#{tradid}
-        AND
-        tradparmnameid=#{tradparmnameid}
-         AND
-        tradparmid=#{tradparmid}
+        <if test="tradparmnameid != null">
+            AND tradparmnameid=#{tradparmnameid}
+        </if>
+
+        <if test="tradparmnameid != null">
+         AND tradparmid=#{tradparmid}
+        </if>
     </update>
 
     <delete id="delCart" parameterType="java.lang.Integer">

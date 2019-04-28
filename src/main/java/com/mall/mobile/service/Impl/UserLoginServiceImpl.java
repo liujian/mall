@@ -111,6 +111,14 @@ public class UserLoginServiceImpl implements UserLoginService {
         userMapper.updateToken(user);
         //获取用户积分信息
         Integral integral = integralMapper.getIntegralByUserid(user.getId());
+        if(integral==null){
+            integral =new Integral();
+            integral.setUserid(user.getId());
+            integral.setExpendscore(0);
+            integral.setSurpluscore(0);
+            integral.setTotalscore(0);
+            integralMapper.addIntegral(integral);
+        }
         //获取用户喜爱信息
         List<Interest> interest = interestMapper.getInterestList(user.getId());
 

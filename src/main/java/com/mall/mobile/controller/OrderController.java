@@ -4,10 +4,7 @@ import com.mall.common.param.BasicData;
 import com.mall.mobile.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,22 +22,33 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-//    /**
-//     * 结账
-//     * @param request
-//     * @return
-//     */
-//    @RequestMapping(value="/settlement",method = RequestMethod.GET)
-//    @ResponseBody
-//    public BasicData settlement(HttpServletRequest request){
-//
-//        try{
-//            return orderService.settlement();
-//        }catch(Exception e){
-//            e.printStackTrace();
-//            return BasicData.CreateErrorMsg(e.getMessage());
-//        }
-//    }
+    /**
+     * 购物车首次结账
+     * @param token token
+     * @param tradeclass 分类id
+     * @param discode 抵扣码
+     * @param integral 兑换积分
+     * @param zipcode 邮编
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/cartorder",method = RequestMethod.GET)
+    @ResponseBody
+    public BasicData cartorder(
+            @RequestParam(required = true) String token,
+            @RequestParam(required = true) Integer tradeclass,
+            @RequestParam(required = false) String discode,
+            @RequestParam(required = false) Integer integral,
+            @RequestParam(required = false) String zipcode,
+            HttpServletRequest request){
+
+        try{
+            return orderService.cartorder(token,tradeclass,discode,integral,zipcode);
+        }catch(Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+    }
 
 }
 

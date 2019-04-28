@@ -11,7 +11,10 @@ public interface CartMapper {
 
     List<Cart> getCartList(Integer userid);
 
+    List<Cart> getCartListByTradeclass(Integer tradeclass);
+
     Cart queryCart(Cart cart);
+
     Cart queryCartByid(Integer id);
 
     void addCart(Cart cart);

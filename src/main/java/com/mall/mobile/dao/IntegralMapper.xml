@@ -20,7 +20,7 @@
     </select>
 
 
-    <insert id="addInterest" parameterType="com.mall.mobile.domen.Integral">
+    <insert id="addIntegral" parameterType="com.mall.mobile.domen.Integral">
         insert into
         table_user_integral (
         userid,
