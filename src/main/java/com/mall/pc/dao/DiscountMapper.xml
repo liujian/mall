@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.pc.dao.DiscountMapper">
+    <resultMap id="BaseResultMap" type="com.mall.pc.domen.Discount">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="disname" property="disname" jdbcType="VARCHAR" />
+        <result column="discode" property="discode" jdbcType="VARCHAR" />
+        <result column="disratio" property="disratio" jdbcType="NUMERIC" />
+        <result column="disway" property="disway" jdbcType="VARCHAR" />
+        <result column="tradeid" property="tradeid" jdbcType="INTEGER" />
+        <result column="invalid" property="invalid" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       id,disname,discode,disratio,disway,tradeid,invalid
+    </sql>
+    <select id="queryDiscountlist"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_discount_code WHERE 1=1
+        <if test="disname != null and  disname != ''">
+            AND disname like concat('%',#{disname},'%')
+        </if>
+        <if test="discode != null and  discode != ''">
+            AND discode like concat('%',#{discode},'%')
+        </if>
+        <if test="disway != null  and  disway != '' ">
+            AND disway =#{disway}
+        </if>
+    </select>
+
+
+    <select id="queryDiscountById"  parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_discount_code
+        where
+        id =#{id}
+    </select>
+
+    <select id="queryDiscountByCode"  parameterType="String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_discount_code
+        where
+        discode =#{discode}
+    </select>
+
+
+    <insert id="insertDiscount" parameterType="com.mall.pc.domen.Discount">
+        insert into
+        table_discount_code (
+        disname,
+        discode,
+        disratio,
+        disway,
+        tradeid,
+        invalid
+        )
+        values (
+        #{disname},
+        #{discode},
+        #{disratio},
+        #{disway},
+        #{tradeid},
+        #{invalid}
+        )
+    </insert>
+
+    <update id="updateDiscount" parameterType="com.mall.pc.domen.Discount">
+        UPDATE
+        table_discount_code
+        SET
+        disname=#{disname},
+        discode=#{discode},
+        disratio=#{disratio},
+        disway=#{disway},
+        tradeid=#{tradeid}
+        where
+        id=#{id}
+    </update>
+
+
+    <delete id="delDiscount" parameterType="java.lang.Integer">
+         UPDATE
+        table_discount_code
+        SET
+         invalid='1'
+        where
+        id=#{id}
+    </delete>
+
+
+</mapper>
