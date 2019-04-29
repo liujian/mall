@@ -112,6 +112,7 @@ public class OrderServiceImpl implements OrderService {
         }
         //件数
         cartOrderOut.setTradenum(tradenum);
+        cartOrderOut.setPrice(total);
 
         //折扣
         if(discodevalid){

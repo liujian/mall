@@ -17,6 +17,11 @@ public class CartOrderOut {
      private Integer tradenum;
 
     /**
+     *价格
+     */
+    private BigDecimal price;
+
+    /**
      *折扣
      */
     private BigDecimal discount;
@@ -67,6 +72,14 @@ public class CartOrderOut {
      */
     private Integer myintegral;
 
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
     public Integer getTradenum() {
         return tradenum;
