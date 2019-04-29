@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.mobile.dao.OrderInfoTradeMapper">
+    <resultMap id="BaseResultMap" type="com.mall.mobile.domen.OrderInfoTrade">
+        <result column="orderid" jdbcType="VARCHAR" property="orderid" />
+        <result column="tradetype" property="tradetype" jdbcType="VARCHAR" />
+        <result column="tradeid" property="tradeid" jdbcType="INTEGER" />
+        <result column="tradepramnameid" property="tradepramnameid" jdbcType="INTEGER" />
+        <result column="tradepramid" property="tradepramid" jdbcType="INTEGER" />
+        <result column="tradenum" property="tradenum" jdbcType="INTEGER" />
+        <result column="tradeprice" property="tradeprice" jdbcType="NUMERIC" />
+        <result column="tradetotalprice" property="tradetotalprice" jdbcType="NUMERIC" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        orderid,tradetype,tradeid,tradepramnameid,tradepramid,tradenum,tradeprice,tradetotalprice
+    </sql>
+
+
+
+    <insert id="addOrderInfoTrade" parameterType="com.mall.mobile.domen.OrderInfoTrade">
+        insert into
+        table_orderinfo_tradeinfo (
+         orderid,
+         tradetype,
+         tradeid,
+         tradepramnameid,
+         tradepramid,
+         tradenum,
+         tradeprice,
+         tradetotalprice
+        )
+        values (
+        #{orderid},
+        #{tradetype},
+        #{tradeid},
+        #{tradepramnameid},
+        #{tradepramid},
+        #{tradenum},
+        #{tradeprice},
+        #{tradetotalprice}
+        )
+    </insert>
+
+
+    <delete id="delOrderInfoTrade" parameterType="String">
+        delete from table_orderinfo_tradeinfo
+         where
+        orderid=#{orderid}
+    </delete>
+
+
+</mapper>

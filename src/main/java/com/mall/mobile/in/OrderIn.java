@@ -1,33 +1,24 @@
-package com.mall.mobile.domen;
+package com.mall.mobile.in;
 
-import java.io.Serializable;
+import com.mall.mobile.domen.Cart;
+
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.List;
 
 /**
  * @program: mall
  * @description:
  * @author: liu.j
- * @create: 2019-04-29 13:25
+ * @create: 2019-04-29 14:22
  **/
 
-public class OrderInfo implements Serializable {
+public class OrderIn {
 
 
     /**
-     *订单编号
+     * token
      */
-     private String orderid;
-
-    /**
-     *用户id
-     */
-    private Integer userid;
-
-    /**
-     *订单状态
-     */
-    private String orderstatus;
+    private String token;
 
     /**
      *件数
@@ -44,12 +35,10 @@ public class OrderInfo implements Serializable {
      */
     private String orderdiscount;
 
-
     /**
      *订单折扣金额
      */
     private BigDecimal discountprice;
-
 
     /**
      *订单积分抵扣数
@@ -80,62 +69,38 @@ public class OrderInfo implements Serializable {
      *订单总金额
      */
     private BigDecimal ordertotalprice;
-
     /**
-     *支付方式
+     * 支付方式
      */
     private String payway;
 
     /**
-     *支付流水号
-     */
-    private String payflowcode;
-
-    /**
-     *订单创建时间
-     */
-    private Date createtime;
-
-    /**
-     *快递单号
-     */
-    private String expresscode;
-
-    /**
-     *收件人姓名
+     * 收件人姓名
      */
     private String name;
 
     /**
-     *收件人手机号
+     * 收件人手机号
      */
     private String phone;
 
     /**
-     *收件人地址
+     * 收件人地址
      */
     private String address;
 
     /**
-     *订单支付状态
+     * 购物车列表
      */
-    private String paystatus;
+    private List<Cart> cartList;
 
 
-    public String getOrderid() {
-        return orderid;
+    public String getToken() {
+        return token;
     }
 
-    public void setOrderid(String orderid) {
-        this.orderid = orderid;
-    }
-
-    public String getOrderstatus() {
-        return orderstatus;
-    }
-
-    public void setOrderstatus(String orderstatus) {
-        this.orderstatus = orderstatus;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public Integer getTradenum() {
@@ -226,30 +191,6 @@ public class OrderInfo implements Serializable {
         this.payway = payway;
     }
 
-    public String getPayflowcode() {
-        return payflowcode;
-    }
-
-    public void setPayflowcode(String payflowcode) {
-        this.payflowcode = payflowcode;
-    }
-
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
-
-    public String getExpresscode() {
-        return expresscode;
-    }
-
-    public void setExpresscode(String expresscode) {
-        this.expresscode = expresscode;
-    }
-
     public String getName() {
         return name;
     }
@@ -274,20 +215,12 @@ public class OrderInfo implements Serializable {
         this.address = address;
     }
 
-    public String getPaystatus() {
-        return paystatus;
+    public List<Cart> getCartList() {
+        return cartList;
     }
 
-    public void setPaystatus(String paystatus) {
-        this.paystatus = paystatus;
-    }
-
-    public Integer getUserid() {
-        return userid;
-    }
-
-    public void setUserid(Integer userid) {
-        this.userid = userid;
+    public void setCartList(List<Cart> cartList) {
+        this.cartList = cartList;
     }
 }
 

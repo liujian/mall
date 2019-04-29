@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.mobile.dao.OrderInfoMapper">
+    <resultMap id="BaseResultMap" type="com.mall.mobile.domen.OrderInfo">
+        <result column="orderid" jdbcType="VARCHAR" property="orderid" />
+        <result column="userid" property="userid" jdbcType="INTEGER" />
+        <result column="orderstatus" property="orderstatus" jdbcType="VARCHAR" />
+        <result column="tradenum" property="tradenum" jdbcType="INTEGER" />
+        <result column="tradeprice" property="tradeprice" jdbcType="NUMERIC" />
+        <result column="orderdiscount" property="orderdiscount" jdbcType="VARCHAR" />
+        <result column="discountprice" property="discountprice" jdbcType="NUMERIC" />
+        <result column="orderintegral" property="orderintegral" jdbcType="INTEGER" />
+        <result column="integralprice" property="integralprice" jdbcType="NUMERIC" />
+        <result column="actualprice" property="actualprice" jdbcType="NUMERIC" />
+        <result column="freight" property="freight" jdbcType="NUMERIC" />
+        <result column="tax" property="tax" jdbcType="NUMERIC" />
+        <result column="ordertotalprice" property="ordertotalprice" jdbcType="NUMERIC" />
+        <result column="payway" property="payway" jdbcType="VARCHAR" />
+        <result column="payflowcode" property="payflowcode" jdbcType="VARCHAR" />
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+        <result column="expresscode" property="expresscode" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="paystatus" property="paystatus" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        orderid,userid,orderstatus,tradenum,tradeprice,orderdiscount,discountprice,orderintegral,integralprice,actualprice,freight,tax,
+        ordertotalprice,payway,payflowcode,createtime,expresscode,name,phone,address,paystatus
+
+    </sql>
+
+
+
+
+
+
+    <insert id="addOrderInfo" parameterType="com.mall.mobile.domen.Card">
+        insert into
+        table_orderinfo (
+        orderid,
+        userid,
+        orderstatus,
+        tradenum,
+        tradeprice,
+        orderdiscount,
+        discountprice,
+        orderintegral,
+        integralprice,
+        actualprice,
+        freight,
+        tax,
+        ordertotalprice,
+        payway,
+        payflowcode,
+        createtime,
+        expresscode,
+        name,
+        phone,
+        address,
+        paystatus
+        )
+        values (
+        #{orderid},
+        #{userid},
+        #{orderstatus},
+        #{tradenum},
+        #{tradeprice},
+        #{orderdiscount},
+        #{discountprice},
+        #{orderintegral},
+        #{integralprice},
+        #{actualprice},
+        #{freight},
+        #{tax},
+        #{ordertotalprice},
+        #{payway},
+        #{payflowcode},
+        #{createtime},
+        #{expresscode},
+        #{name},
+        #{phone},
+        #{address},
+        #{paystatus}
+        )
+    </insert>
+
+
+    <delete id="delOrderInfo" parameterType="String">
+        delete from table_orderinfo
+         where
+        orderid=#{orderid}
+    </delete>
+
+
+</mapper>

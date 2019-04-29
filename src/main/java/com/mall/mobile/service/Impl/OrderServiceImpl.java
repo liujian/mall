@@ -1,16 +1,17 @@
 package com.mall.mobile.service.Impl;
 
 import com.mall.common.param.BasicData;
-import com.mall.mobile.dao.CartMapper;
-import com.mall.mobile.dao.IntegralMapper;
-import com.mall.mobile.dao.UserMapper;
+import com.mall.mobile.dao.*;
 import com.mall.mobile.domen.Cart;
 import com.mall.mobile.domen.Integral;
+import com.mall.mobile.domen.OrderInfo;
 import com.mall.mobile.domen.User;
+import com.mall.mobile.in.OrderIn;
 import com.mall.mobile.out.CartOrderOut;
 import com.mall.mobile.service.OrderService;
 import com.mall.pc.dao.*;
 import com.mall.pc.domen.*;
+import com.mall.utils.CodeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +57,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private TaxRateMapper taxRateMapper;
+
+    @Autowired
+    private OrderInfoMapper orderInfoMapper;
+
+    @Autowired
+    private OrderInfoTradeMapper orderInfoTradeMapper;
 
     @Override
     public BasicData cartorder(String token,Integer tradeclass,String discode,Integer integral,String zipcode) {
@@ -161,6 +168,49 @@ public class OrderServiceImpl implements OrderService {
         cartOrderOut.setTotal(total);
 
         return BasicData.CreateSucess(cartOrderOut);
+    }
+
+    @Override
+    public BasicData payorder(OrderIn orderIn) {
+
+        User user = userMapper.selectByToken(orderIn.getToken());
+        if(user==null){
+            return BasicData.CreateErrorInvalidUser();
+        }
+       String orderid = CodeFactory.getOrderIdByUUId();
+        OrderInfo orderInfo = new OrderInfo();
+        orderInfo.setOrderid(orderid);
+        orderInfo.setUserid(user.getId());
+        orderInfo.setOrderstatus("10");
+        orderInfo.setTradenum(orderIn.getTradenum());
+        orderInfo.setTradeprice(orderIn.getTradeprice());
+        orderInfo.setOrderdiscount(orderIn.getOrderdiscount());
+        orderInfo.setDiscountprice(orderIn.getDiscountprice());
+        orderInfo.setOrderintegral(orderIn.getOrderintegral());
+        orderInfo.setIntegralprice(orderIn.getIntegralprice());
+        orderInfo.setActualprice(orderIn.getActualprice());
+        orderInfo.setFreight(orderIn.getFreight());
+        orderInfo.setTax(orderIn.getTax());
+        orderInfo.setOrdertotalprice(orderIn.getOrdertotalprice());
+        orderInfo.setPayway(null);
+        orderInfo.setPayflowcode(null);
+        orderInfo.setCreatetime(new Date());
+        orderInfo.setExpresscode(null);
+        orderInfo.setName(orderIn.getName());
+        orderInfo.setPhone(orderIn.getPhone());
+        orderInfo.setAddress(orderIn.getAddress());
+        orderInfo.setPaystatus("DZF");
+
+       orderInfoMapper.addOrderInfo(orderInfo);
+
+        List<Cart> cartList = orderIn.getCartList();
+
+
+
+
+
+
+        return BasicData.CreateSucess();
     }
 
 

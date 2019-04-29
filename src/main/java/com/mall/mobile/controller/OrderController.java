@@ -1,6 +1,7 @@
 package com.mall.mobile.controller;
 
 import com.mall.common.param.BasicData;
+import com.mall.mobile.in.OrderIn;
 import com.mall.mobile.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,6 +45,20 @@ public class OrderController {
 
         try{
             return orderService.cartorder(token,tradeclass,discode,integral,zipcode);
+        }catch(Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+    }
+
+    @RequestMapping(value="/payorder",method = RequestMethod.GET)
+    @ResponseBody
+    public BasicData payorder(
+            @RequestBody(required = true) OrderIn orderIn,
+            HttpServletRequest request){
+
+        try{
+            return orderService.payorder(orderIn);
         }catch(Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());
