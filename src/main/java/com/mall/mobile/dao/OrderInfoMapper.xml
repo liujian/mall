@@ -19,6 +19,7 @@
         <result column="payway" property="payway" jdbcType="VARCHAR" />
         <result column="payflowcode" property="payflowcode" jdbcType="VARCHAR" />
         <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+        <result column="expressway" property="expressway" jdbcType="VARCHAR" />
         <result column="expresscode" property="expresscode" jdbcType="VARCHAR" />
         <result column="name" property="name" jdbcType="VARCHAR" />
         <result column="phone" property="phone" jdbcType="VARCHAR" />
@@ -31,7 +32,7 @@
 
     <sql id="Base_Column_List">
         orderid,userid,classid,orderstatus,tradenum,tradeprice,orderdiscount,discountprice,orderintegral,integralprice,actualprice,freight,tax,
-        ordertotalprice,payway,payflowcode,createtime,expresscode,name,phone,address,paystatus,paytime,sendtime,finaltime
+        ordertotalprice,payway,payflowcode,createtime,expressway,expresscode,name,phone,address,paystatus,paytime,sendtime,finaltime
 
     </sql>
 
@@ -46,9 +47,53 @@
         </if>
     </select>
 
+    <select id="queryOrderByOrderId"  parameterType="String" resultMap="BaseResultMap">
+        select
+        * from table_orderinfo
+        where
+        orderid=#{orderid}
+
+    </select>
+
+    <select id="queryOrderInfolist"  parameterType="com.mall.mobile.domen.OrderInfo" resultMap="BaseResultMap">
+        select
+        * from table_orderinfo
+        where
+        classid not in (1,2)
+        <if test="orderid != null and  orderid != ''">
+            AND orderid =#{orderid}
+        </if>
+        <if test="orderstatus != null and  orderstatus != ''">
+            AND orderstatus =#{orderstatus}
+        </if>
+    </select>
+
+    <select id="queryRBZYOrderInfolist"  parameterType="com.mall.mobile.domen.OrderInfo" resultMap="BaseResultMap">
+        select
+        * from table_orderinfo
+        where
+        classid in (1,2)
+        <if test="orderid != null and  orderid != ''">
+            AND orderid =#{orderid}
+        </if>
+        <if test="orderstatus != null and  orderstatus != ''">
+            AND orderstatus =#{orderstatus}
+        </if>
+    </select>
+
+    <select id="queryTHOrderInfolist"  parameterType="com.mall.mobile.domen.OrderInfo" resultMap="BaseResultMap">
+        select
+        * from table_orderinfo
+        where
+        orderstatus='60'
+        <if test="orderid != null and  orderid != ''">
+            AND orderid =#{orderid}
+        </if>
+
+    </select>
 
 
-    <insert id="addOrderInfo" parameterType="com.mall.mobile.domen.Card">
+    <insert id="addOrderInfo" parameterType="com.mall.mobile.domen.OrderInfo">
         insert into
         table_orderinfo (
         orderid,
@@ -68,6 +113,7 @@
         payway,
         payflowcode,
         createtime,
+        expressway,
         expresscode,
         name,
         phone,
@@ -95,6 +141,7 @@
         #{payway},
         #{payflowcode},
         #{createtime},
+        #{expressway},
         #{expresscode},
         #{name},
         #{phone},

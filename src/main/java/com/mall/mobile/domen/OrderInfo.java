@@ -102,9 +102,15 @@ public class OrderInfo implements Serializable {
     private Date createtime;
 
     /**
+     *快递方式
+     */
+    private String expressway;
+
+    /**
      *快递单号
      */
     private String expresscode;
+
 
     /**
      *收件人姓名
@@ -142,6 +148,13 @@ public class OrderInfo implements Serializable {
      */
     private Date finaltime;
 
+    public String getExpressway() {
+        return expressway;
+    }
+
+    public void setExpressway(String expressway) {
+        this.expressway = expressway;
+    }
 
     public Integer getClassid() {
         return classid;

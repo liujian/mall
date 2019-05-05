@@ -94,5 +94,28 @@ public class OrderController {
         }
     }
 
+
+    /**
+     * 获取我的订单详情
+     * @param token
+     * @param languagetype
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/orderinfo",method = RequestMethod.GET)
+    @ResponseBody
+    public BasicData orderinfo(
+            @RequestParam(required = true) String token,
+            @RequestParam(required = true) String orderid,
+            @RequestParam(required = false) String languagetype,
+            HttpServletRequest request){
+
+        try{
+            return orderService.orderinfo(token,orderid,languagetype);
+        }catch(Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+    }
 }
 

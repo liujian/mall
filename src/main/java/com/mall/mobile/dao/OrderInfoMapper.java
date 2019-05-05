@@ -11,9 +11,19 @@ public interface OrderInfoMapper {
 
     List<OrderInfo> queryAllOrderByUserId(@Param(value = "userid") Integer userid, @Param(value = "orderstatus") String orderstatus);
 
+    OrderInfo queryOrderByOrderId(String orderid);
+
     void addOrderInfo(OrderInfo orderInfo);
 
     void delOrderInfo(String orderid);
+
+
+    //pc端
+    List<OrderInfo> queryOrderInfolist(OrderInfo orderInfo);
+
+    List<OrderInfo> queryRBZYOrderInfolist(OrderInfo orderInfo);
+
+    List<OrderInfo> queryTHOrderInfolist(OrderInfo orderInfo);
 
 
 }

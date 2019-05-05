@@ -10,4 +10,6 @@ public interface OrderService {
     BasicData payorder(OrderIn orderIn);
 
     BasicData allorder(String token,String orderstatus,String languagetype);
+
+    BasicData orderinfo(String token,String orderid,String languagetype);
 }
