@@ -94,8 +94,22 @@ public class CartServiceImpl implements CartService {
                 tradeComposeout.setId(tradeCompose.getId());
                 tradeComposeout.setComposeprice(tradeCompose.getComposeprice());
                 TradeInfo maintrade = tradeInfoMapper.QuerytradeById(tradeCompose.getMaintrade());
+                TradeInfoTranslate maintradeTranslate = tradeInfoMapper.QueryTradeTranslateBytrandidANDType(maintrade.getId(),languagetype);
+                if(maintradeTranslate!=null){
+                    maintrade.setTradename(maintradeTranslate.getTradename());
+                    maintrade.setIntroduce(maintradeTranslate.getIntroduce());
+                    maintrade.setTradebright(maintradeTranslate.getTradebright());
+                    maintrade.setMoreinfo(maintradeTranslate.getMoreinfo());
+                }
                 tradeComposeout.setMaintrade(maintrade);
                 TradeInfo subtrade = tradeInfoMapper.QuerytradeById(tradeCompose.getSubtrade());
+                TradeInfoTranslate subtradeslate = tradeInfoMapper.QueryTradeTranslateBytrandidANDType(subtrade.getId(),languagetype);
+                if(subtradeslate!=null){
+                    maintrade.setTradename(subtradeslate.getTradename());
+                    maintrade.setIntroduce(subtradeslate.getIntroduce());
+                    maintrade.setTradebright(subtradeslate.getTradebright());
+                    maintrade.setMoreinfo(subtradeslate.getMoreinfo());
+                }
                 tradeComposeout.setSubtrade(subtrade);
                 cartOut.setTradeComposeout(tradeComposeout);
                 TradeCategory tradeCategory = tradeCategoryMapper.QueryGoodCategoryById(subtrade.getTradeclass());

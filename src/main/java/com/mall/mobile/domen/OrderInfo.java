@@ -25,6 +25,11 @@ public class OrderInfo implements Serializable {
     private Integer userid;
 
     /**
+     *商品分类
+     */
+    private Integer classid;
+
+    /**
      *订单状态
      */
     private String orderstatus;
@@ -121,6 +126,30 @@ public class OrderInfo implements Serializable {
      */
     private String paystatus;
 
+    /**
+     *订单付款时间
+     */
+    private Date paytime;
+
+    /**
+     *发货时间
+     */
+    private Date sendtime;
+
+
+    /**
+     *成交时间
+     */
+    private Date finaltime;
+
+
+    public Integer getClassid() {
+        return classid;
+    }
+
+    public void setClassid(Integer classid) {
+        this.classid = classid;
+    }
 
     public String getOrderid() {
         return orderid;
@@ -288,6 +317,30 @@ public class OrderInfo implements Serializable {
 
     public void setUserid(Integer userid) {
         this.userid = userid;
+    }
+
+    public Date getPaytime() {
+        return paytime;
+    }
+
+    public void setPaytime(Date paytime) {
+        this.paytime = paytime;
+    }
+
+    public Date getSendtime() {
+        return sendtime;
+    }
+
+    public void setSendtime(Date sendtime) {
+        this.sendtime = sendtime;
+    }
+
+    public Date getFinaltime() {
+        return finaltime;
+    }
+
+    public void setFinaltime(Date finaltime) {
+        this.finaltime = finaltime;
     }
 }
 

@@ -26,6 +26,11 @@ public class OrderIn {
     private Integer tradenum;
 
     /**
+     *商品分类
+     */
+    private Integer classid;
+
+    /**
      *商品金额
      */
     private BigDecimal tradeprice;
@@ -109,6 +114,14 @@ public class OrderIn {
 
     public void setTradenum(Integer tradenum) {
         this.tradenum = tradenum;
+    }
+
+    public Integer getClassid() {
+        return classid;
+    }
+
+    public void setClassid(Integer classid) {
+        this.classid = classid;
     }
 
     public BigDecimal getTradeprice() {

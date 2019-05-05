@@ -2,12 +2,9 @@ package com.mall.mobile.service.Impl;
 
 import com.mall.common.param.BasicData;
 import com.mall.mobile.dao.*;
-import com.mall.mobile.domen.Cart;
-import com.mall.mobile.domen.Integral;
-import com.mall.mobile.domen.OrderInfo;
-import com.mall.mobile.domen.User;
+import com.mall.mobile.domen.*;
 import com.mall.mobile.in.OrderIn;
-import com.mall.mobile.out.CartOrderOut;
+import com.mall.mobile.out.*;
 import com.mall.mobile.service.OrderService;
 import com.mall.pc.dao.*;
 import com.mall.pc.domen.*;
@@ -19,6 +16,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -63,6 +61,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderInfoTradeMapper orderInfoTradeMapper;
+
+    @Autowired
+    private TradeCategoryMapper tradeCategoryMapper;
+
+    @Autowired
+    private TradeParamNameMapper tradeParamNameMapper;
+
+    @Autowired
+    private TradeParamMapper tradeParamMapper;
 
     @Override
     public BasicData cartorder(String token,Integer tradeclass,String discode,Integer integral,String zipcode) {
@@ -172,7 +179,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public BasicData payorder(OrderIn orderIn) {
-
         User user = userMapper.selectByToken(orderIn.getToken());
         if(user==null){
             return BasicData.CreateErrorInvalidUser();
@@ -181,6 +187,7 @@ public class OrderServiceImpl implements OrderService {
         OrderInfo orderInfo = new OrderInfo();
         orderInfo.setOrderid(orderid);
         orderInfo.setUserid(user.getId());
+        orderInfo.setClassid(orderIn.getClassid());
         orderInfo.setOrderstatus("10");
         orderInfo.setTradenum(orderIn.getTradenum());
         orderInfo.setTradeprice(orderIn.getTradeprice());
@@ -200,17 +207,143 @@ public class OrderServiceImpl implements OrderService {
         orderInfo.setPhone(orderIn.getPhone());
         orderInfo.setAddress(orderIn.getAddress());
         orderInfo.setPaystatus("DZF");
-
-       orderInfoMapper.addOrderInfo(orderInfo);
-
+        orderInfoMapper.addOrderInfo(orderInfo);
         List<Cart> cartList = orderIn.getCartList();
+        for(Cart cart:cartList){
+            OrderInfoTrade orderInfoTrade = new OrderInfoTrade();
+            orderInfoTrade.setOrderid(orderid);
+            if("PT".equals(cart.getTradetype())){
+                orderInfoTrade.setTradetype("PT");
+                TradeInfo tradeInfo = tradeInfoMapper.QuerytradeById(cart.getTradid());
+                if(tradeInfo.getPromotedate()!=null&&sameDate(tradeInfo.getPromotedate(),new Date())){
+                    orderInfoTrade.setTradeprice(tradeInfo.getPromoteprice());
+                    orderInfoTrade.setTradenum(cart.getTradenum());
+                    orderInfoTrade.setTradetotalprice(tradeInfo.getPromoteprice().multiply(new BigDecimal(cart.getTradenum())));
 
+                }else{
+                    orderInfoTrade.setTradeprice(tradeInfo.getPrice());
+                    orderInfoTrade.setTradenum(cart.getTradenum());
+                    orderInfoTrade.setTradetotalprice(tradeInfo.getPrice().multiply(new BigDecimal(cart.getTradenum())));
+                }
+            }
+
+            if("ZH".equals(cart.getTradetype())){
+                orderInfoTrade.setTradetype("ZH");
+                orderInfoTrade.setTradenum(cart.getTradenum());
+                TradeCompose tradeCompose = tradeComposeMapper.queryTradeComposeById(cart.getTradid());
+                orderInfoTrade.setTradeprice(tradeCompose.getComposeprice());
+                orderInfoTrade.setTradetotalprice(tradeCompose.getComposeprice().multiply(new BigDecimal(cart.getTradenum())));
+            }
+
+            orderInfoTrade.setTradeid(cart.getTradid());
+            orderInfoTrade.setTradepramid(cart.getTradparmid());
+            orderInfoTrade.setTradepramnameid(cart.getTradparmnameid());
+            orderInfoTradeMapper.addOrderInfoTrade(orderInfoTrade);
+        }
 
 
 
 
 
         return BasicData.CreateSucess();
+    }
+
+    @Override
+    public BasicData allorder(String token,String orderstatus,String languagetype) {
+        User user = userMapper.selectByToken(token);
+        if(user==null){
+            return BasicData.CreateErrorInvalidUser();
+        }
+        List<OrderOuts> outs = new ArrayList<>();
+        List<OrderInfo> orderInfos = orderInfoMapper.queryAllOrderByUserId(user.getId(),orderstatus);
+        for(OrderInfo orderInfo : orderInfos){
+            OrderOuts orderOuts = new OrderOuts();
+            orderOuts.setOrderid(orderInfo.getOrderid());
+            TradeCategory tradeCategory = tradeCategoryMapper.QueryGoodCategoryById(orderInfo.getClassid());
+            TradeCategoryTranslate tradeCategoryTranslate = tradeCategoryMapper.QueryCategorytranslateByclassidAndLanguagetype(tradeCategory.getId(),languagetype);
+            if(tradeCategoryTranslate!=null&&!tradeCategoryTranslate.getClassifyname().isEmpty()){
+                tradeCategory.setClassify(tradeCategoryTranslate.getClassifyname());
+            }
+            orderOuts.setClassname(tradeCategory.getClassify());
+            orderOuts.setOrderstatus(orderInfo.getOrderstatus());
+            orderOuts.setTradenum(orderInfo.getTradenum());
+            orderOuts.setOrdertotalprice(orderInfo.getOrdertotalprice());
+            //处理订单商品信息
+            List<OrderTradeOut> orderOutTradeList = new ArrayList<>();
+            List<OrderInfoTrade> orderInfoTrades = orderInfoTradeMapper.queryAllOrderInfoTradeByOrderid(orderInfo.getOrderid());
+             for(OrderInfoTrade orderInfoTrade : orderInfoTrades){
+                 OrderTradeOut orderTradeOut = new OrderTradeOut();
+                 //普通商品
+                  if("PT".equals(orderInfoTrade.getTradetype())){
+                      orderTradeOut.setOrderid(orderInfoTrade.getOrderid());
+                      orderTradeOut.setTradenum(orderInfoTrade.getTradenum());
+                      orderTradeOut.setTradetype(orderInfoTrade.getTradetype());
+                      orderTradeOut.setTradeprice(orderInfoTrade.getTradeprice());
+                      TradeInfoOut tradeInfoOut = new TradeInfoOut();
+
+                      TradeInfo tradeInfo = tradeInfoMapper.QuerytradeById(orderInfoTrade.getTradeid());
+                      TradeInfoTranslate tradeInfoTranslate = tradeInfoMapper.QueryTradeTranslateBytrandidANDType(tradeInfo.getId(),languagetype);
+                      if(tradeInfoTranslate!=null){
+                          tradeInfo.setTradename(tradeInfoTranslate.getTradename());
+                          tradeInfo.setIntroduce(tradeInfoTranslate.getIntroduce());
+                          tradeInfo.setTradebright(tradeInfoTranslate.getTradebright());
+                          tradeInfo.setMoreinfo(tradeInfoTranslate.getMoreinfo());
+                      }
+                      tradeInfoOut.setTradeInfo(tradeInfo);
+                      //参数名称，参数
+                      TradeParamName tradeParamName = tradeParamNameMapper.querytradeparamNameById(orderInfoTrade.getTradepramnameid());
+                      TradeParam tradeParam = tradeParamMapper.querytradeparamById(orderInfoTrade.getTradepramid());
+                      if(tradeParamName!=null){
+                          tradeInfoOut.setTradeParamName(tradeParamName.getParamname());
+                      }
+                      if(tradeParam!=null){
+                          tradeInfoOut.setTradeParam(tradeParam.getParam());
+                      }
+                      orderTradeOut.setTradeInfoOut(tradeInfoOut);
+                      orderOutTradeList.add(orderTradeOut);
+
+                  }
+                 //组合商品
+                 if("ZH".equals(orderInfoTrade.getTradetype())){
+
+                     orderTradeOut.setOrderid(orderInfoTrade.getOrderid());
+                     orderTradeOut.setTradenum(orderInfoTrade.getTradenum());
+                     orderTradeOut.setTradetype(orderInfoTrade.getTradetype());
+                     orderTradeOut.setTradeprice(orderInfoTrade.getTradeprice());
+
+                     TradeComposeout tradeComposeout = new TradeComposeout();
+                     TradeCompose tradeCompose = tradeComposeMapper.queryTradeComposeById(orderInfoTrade.getTradeid());
+                     tradeComposeout.setComposename(tradeCompose.getComposename());
+                     tradeComposeout.setId(tradeCompose.getId());
+                     tradeComposeout.setComposeprice(tradeCompose.getComposeprice());
+                     TradeInfo maintrade = tradeInfoMapper.QuerytradeById(tradeCompose.getMaintrade());
+                     TradeInfoTranslate maintradeTranslate = tradeInfoMapper.QueryTradeTranslateBytrandidANDType(maintrade.getId(),languagetype);
+                     if(maintradeTranslate!=null){
+                         maintrade.setTradename(maintradeTranslate.getTradename());
+                         maintrade.setIntroduce(maintradeTranslate.getIntroduce());
+                         maintrade.setTradebright(maintradeTranslate.getTradebright());
+                         maintrade.setMoreinfo(maintradeTranslate.getMoreinfo());
+                     }
+                     tradeComposeout.setMaintrade(maintrade);
+                     TradeInfo subtrade = tradeInfoMapper.QuerytradeById(tradeCompose.getSubtrade());
+                     TradeInfoTranslate subtradeslate = tradeInfoMapper.QueryTradeTranslateBytrandidANDType(subtrade.getId(),languagetype);
+                     if(subtradeslate!=null){
+                         maintrade.setTradename(subtradeslate.getTradename());
+                         maintrade.setIntroduce(subtradeslate.getIntroduce());
+                         maintrade.setTradebright(subtradeslate.getTradebright());
+                         maintrade.setMoreinfo(subtradeslate.getMoreinfo());
+                     }
+                     tradeComposeout.setSubtrade(subtrade);
+                     orderTradeOut.setTradeComposeout(tradeComposeout);
+                     orderOutTradeList.add(orderTradeOut);
+                 }
+             }
+
+            orderOuts.setOrderOutTradeList(orderOutTradeList);
+            outs.add(orderOuts);
+        }
+
+        return BasicData.CreateSucess(outs);
     }
 
 

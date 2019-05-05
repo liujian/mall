@@ -16,6 +16,13 @@
         orderid,tradetype,tradeid,tradepramnameid,tradepramid,tradenum,tradeprice,tradetotalprice
     </sql>
 
+    <select id="queryAllOrderInfoTradeByOrderid"  parameterType="String" resultMap="BaseResultMap">
+        select
+        * from table_orderinfo_tradeinfo
+        where
+        orderid=#{orderid}
+    </select>
+
 
 
     <insert id="addOrderInfoTrade" parameterType="com.mall.mobile.domen.OrderInfoTrade">

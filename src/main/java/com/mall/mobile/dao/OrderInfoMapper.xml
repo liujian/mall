@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" type="com.mall.mobile.domen.OrderInfo">
         <result column="orderid" jdbcType="VARCHAR" property="orderid" />
         <result column="userid" property="userid" jdbcType="INTEGER" />
+        <result column="classid" property="classid" jdbcType="INTEGER" />
         <result column="orderstatus" property="orderstatus" jdbcType="VARCHAR" />
         <result column="tradenum" property="tradenum" jdbcType="INTEGER" />
         <result column="tradeprice" property="tradeprice" jdbcType="NUMERIC" />
@@ -23,16 +24,27 @@
         <result column="phone" property="phone" jdbcType="VARCHAR" />
         <result column="address" property="address" jdbcType="VARCHAR" />
         <result column="paystatus" property="paystatus" jdbcType="VARCHAR" />
+        <result column="paytime" property="paytime" jdbcType="TIMESTAMP" />
+        <result column="sendtime" property="sendtime" jdbcType="TIMESTAMP" />
+        <result column="finaltime" property="finaltime" jdbcType="TIMESTAMP" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        orderid,userid,orderstatus,tradenum,tradeprice,orderdiscount,discountprice,orderintegral,integralprice,actualprice,freight,tax,
-        ordertotalprice,payway,payflowcode,createtime,expresscode,name,phone,address,paystatus
+        orderid,userid,classid,orderstatus,tradenum,tradeprice,orderdiscount,discountprice,orderintegral,integralprice,actualprice,freight,tax,
+        ordertotalprice,payway,payflowcode,createtime,expresscode,name,phone,address,paystatus,paytime,sendtime,finaltime
 
     </sql>
 
 
-
+    <select id="queryAllOrderByUserId"  parameterType="Object" resultMap="BaseResultMap">
+        select
+        * from table_orderinfo
+        where
+        userid=#{userid}
+        <if test="orderstatus != null and  orderstatus != ''">
+            AND orderstatus =#{orderstatus}
+        </if>
+    </select>
 
 
 
@@ -41,6 +53,7 @@
         table_orderinfo (
         orderid,
         userid,
+        classid,
         orderstatus,
         tradenum,
         tradeprice,
@@ -59,11 +72,15 @@
         name,
         phone,
         address,
-        paystatus
+        paystatus,
+        paytime,
+        sendtime,
+        finaltime
         )
         values (
         #{orderid},
         #{userid},
+        #{classid},
         #{orderstatus},
         #{tradenum},
         #{tradeprice},
@@ -82,7 +99,10 @@
         #{name},
         #{phone},
         #{address},
-        #{paystatus}
+        #{paystatus},
+        #{paytime},
+        #{sendtime},
+        #{finaltime}
         )
     </insert>
 
