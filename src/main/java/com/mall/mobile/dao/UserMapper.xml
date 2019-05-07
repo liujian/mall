@@ -133,5 +133,15 @@
         id=#{id}
   </update>
 
+    <update id="updateEmail" parameterType="com.mall.mobile.domen.User">
+        UPDATE
+        Table_login_user
+        SET
+        emailAddress=#{emailAddress},
+         password=#{password}
+        where
+        id=#{id}
+    </update>
+
 
 </mapper>

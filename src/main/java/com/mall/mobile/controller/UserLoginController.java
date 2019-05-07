@@ -1,10 +1,7 @@
 package com.mall.mobile.controller;
 
 import com.mall.common.param.BasicData;
-import com.mall.mobile.in.LoginParam;
-import com.mall.mobile.in.NewPasswordParam;
-import com.mall.mobile.in.RegistrationParam;
-import com.mall.mobile.in.TokenParam;
+import com.mall.mobile.in.*;
 import com.mall.mobile.service.UserLoginService;
 import com.mall.utils.LoginUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +60,9 @@ public class UserLoginController {
 //    }
 
 
+
+
+
     /**
      * 用户登陆
      *
@@ -76,6 +76,34 @@ public class UserLoginController {
     @ResponseBody
     public BasicData userLogin(@Valid @RequestBody LoginParam param, HttpServletRequest request) {
         return userLoginService.login(param);
+    }
+
+
+
+    /**
+     * 修改登录邮箱
+     *
+     * @param param
+     * @return
+     */
+    @RequestMapping("updateEmail")
+    @ResponseBody
+    public BasicData updateEmail(@Valid @RequestBody UpdateEmaileParam param) {
+
+        return userLoginService.updateEmail(param);
+    }
+
+    /**
+     * 修改登录密码
+     *
+     * @param param
+     * @return
+     */
+    @RequestMapping("updatePassword")
+    @ResponseBody
+    public BasicData updatePassword(@Valid @RequestBody NewPasswordParam param) {
+
+        return userLoginService.updatePassword(param);
     }
 
     /**

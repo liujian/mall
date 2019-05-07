@@ -35,6 +35,42 @@ public class BasicData<T> extends Basic {
 		BasicData basic = new BasicData(ErrorMsg.E901.getCode(),msg);
 		return basic;
 	}
+
+
+	public static BasicData CreateErrorInvalidEmail() {
+		BasicData basic = new BasicData(ErrorMsg.E906.getCode(),ErrorMsg.E906.getMsg());
+		return basic;
+	}
+	public static BasicData CreateErrorInvalidPassWord() {
+		BasicData basic = new BasicData(ErrorMsg.E907.getCode(),ErrorMsg.E907.getMsg());
+		return basic;
+	}
+
+	public static BasicData CreateErrorRegist() {
+		BasicData basic = new BasicData(ErrorMsg.E908.getCode(),ErrorMsg.E908.getMsg());
+		return basic;
+	}
+
+	public static BasicData CreateErrorEmailOrPassword() {
+		BasicData basic = new BasicData(ErrorMsg.E909.getCode(),ErrorMsg.E909.getMsg());
+		return basic;
+	}
+
+	public static BasicData CreateErrorAccount() {
+		BasicData basic = new BasicData(ErrorMsg.E910.getCode(),ErrorMsg.E910.getMsg());
+		return basic;
+	}
+
+	public static BasicData CreateErrorOption() {
+		BasicData basic = new BasicData(ErrorMsg.E911.getCode(),ErrorMsg.E911.getMsg());
+		return basic;
+	}
+
+	public static BasicData CreateErrorCardExists() {
+		BasicData basic = new BasicData(ErrorMsg.E912.getCode(),ErrorMsg.E912.getMsg());
+		return basic;
+	}
+
 	public static BasicData CreateErrorInvalidUser() {
 		BasicData basic = new BasicData(ErrorMsg.E900.getCode(),ErrorMsg.E900.getMsg());
 		return basic;

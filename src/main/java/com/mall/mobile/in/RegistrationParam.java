@@ -9,6 +9,8 @@ public class RegistrationParam {
 
 	private String fireBaseToken;
 
+	private String languagetype;
+
 	public String getEmailAddress() {
 		return emailAddress;
 	}
@@ -32,5 +34,13 @@ public class RegistrationParam {
 
 	public void setFireBaseToken(String fireBaseToken) {
 		this.fireBaseToken = fireBaseToken;
+	}
+
+	public String getLanguagetype() {
+		return languagetype;
+	}
+
+	public void setLanguagetype(String languagetype) {
+		this.languagetype = languagetype;
 	}
 }

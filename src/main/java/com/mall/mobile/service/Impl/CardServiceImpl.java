@@ -56,7 +56,7 @@ public class CardServiceImpl implements CardService {
         }
         Card card1= cardMapper.queryCardByCardNo(user.getId(),cardIn.getCardno());
         if(card1!=null){
-            return BasicData.CreateErrorMsg("该卡号已存在");
+            return BasicData.CreateErrorCardExists();
         }
 
         Card card = new Card();

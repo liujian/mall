@@ -143,7 +143,7 @@ public class CartServiceImpl implements CartService {
         if("PT".equals(cart.getTradetype())){
            List<TradeParam> tradeParams = tradeParamMapper.querytradeparam(cart.getTradid(),cartIn.getTradparmid());
            if(tradeParams.size()>0&&(cart.getTradparmnameid()==null||cart.getTradparmid()==null)){
-               return BasicData.CreateErrorMsg("请选择选项");
+               return BasicData.CreateErrorOption();
             }
 
             Cart cart1 = cartMapper.queryCart(cart);

@@ -7,10 +7,7 @@ import com.mall.mobile.dao.UserMapper;
 import com.mall.mobile.domen.Integral;
 import com.mall.mobile.domen.Interest;
 import com.mall.mobile.domen.User;
-import com.mall.mobile.in.LoginParam;
-import com.mall.mobile.in.NewPasswordParam;
-import com.mall.mobile.in.RegistrationParam;
-import com.mall.mobile.in.TokenParam;
+import com.mall.mobile.in.*;
 import com.mall.mobile.service.UserLoginService;
 import com.mall.utils.CheckUtil;
 import com.mall.utils.LoginUtil;
@@ -43,24 +40,17 @@ public class UserLoginServiceImpl implements UserLoginService {
 
     @Override
     public BasicData registration(RegistrationParam param) {
-        if (param.getEmailAddress() == null || param.getEmailAddress().isEmpty()) {
-            return BasicData.CreateErrorMsg("Email address is empty");
-        }
+
         if(!CheckUtil.isEmail(param.getEmailAddress())){
-            return BasicData.CreateErrorMsg("Illegal mailbox");
+            return BasicData.CreateErrorInvalidEmail();
         }
-
-
         if (param.getPassword() == null || param.getPassword().isEmpty()) {
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidPassWord();
         }
-
-
-
 
         User user = userMapper.selectByEmailAddress(param.getEmailAddress());
         if (user != null) {
-            return BasicData.CreateErrorMsg("User["+param.getEmailAddress()+"] Already Exist");
+            return BasicData.CreateErrorRegist();
         }
 
         String password = SafetyUtil.addMD5Salt(param.getEmailAddress(),param.getPassword());
@@ -83,26 +73,22 @@ public class UserLoginServiceImpl implements UserLoginService {
     public BasicData login(LoginParam param) {
         String EmailAddress = param.getEmailAddress();
         String password = param.getPassword();
-        if (EmailAddress == null || EmailAddress.isEmpty()) {
-            return BasicData.CreateErrorMsg("Email address is empty");
-        }
-
         if(!CheckUtil.isEmail(param.getEmailAddress())){
-            return BasicData.CreateErrorMsg("Illegal mailbox");
+            return BasicData.CreateErrorInvalidEmail();
         }
 
         if (password == null || password.isEmpty()) {
-            return BasicData.CreateErrorMsg("Password is empty");
+            return BasicData.CreateErrorInvalidPassWord();
         }
 
         User user = userMapper.selectByEmailAddress(EmailAddress);
         if (user == null) {
-            return BasicData.CreateErrorMsg("The Email or password you entered is incorrect!");
+            return BasicData.CreateErrorEmailOrPassword();
         }
 
 
         if (!(SafetyUtil.addMD5Salt(param.getEmailAddress(),param.getPassword())).equals(user.getPassword())) {
-            return BasicData.CreateErrorMsg("The Email or password you entered is incorrect!");
+            return BasicData.CreateErrorEmailOrPassword();
         }
         Map map = new HashMap<>();
         String token = LoginUtil.getToken();
@@ -133,7 +119,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 
         User user = userMapper.selectByToken(param.getToken());
         if(user==null){
-            return BasicData.CreateErrorMsg("This account not exists!");
+            return BasicData.CreateErrorAccount();
         }else{
             user.setFireBaseToken("");
             user.setToken("");
@@ -148,15 +134,15 @@ public class UserLoginServiceImpl implements UserLoginService {
     public BasicData forgetPassword(NewPasswordParam param) {
 
         if (param.getEmailAddress() == null || param.getEmailAddress().isEmpty()) {
-            return BasicData.CreateErrorMsg("Email address is empty");
+            return BasicData.CreateErrorInvalidEmail();
         }
         if (param.getNewPassword() == null || param.getNewPassword().isEmpty()) {
-            return BasicData.CreateErrorMsg("NewPassword is empty");
+            return BasicData.CreateErrorInvalidPassWord();
         }
 
         User user = userMapper.selectByEmailAddress(param.getEmailAddress());
         if (user == null) {
-            return BasicData.CreateErrorMsg("This account does not exist!");
+            return BasicData.CreateErrorAccount();
         }
 
         String password = SafetyUtil.addMD5Salt(param.getEmailAddress(),param.getNewPassword());
@@ -165,6 +151,70 @@ public class UserLoginServiceImpl implements UserLoginService {
         userMapper.updatePassword(user);
 
         return BasicData.CreateSucess(user);
+    }
+
+    @Override
+    public BasicData updateEmail(UpdateEmaileParam param) {
+        String EmailAddress = param.getEmailAddress();
+        String password = param.getPassword();
+
+
+        if(!CheckUtil.isEmail(param.getEmailAddress())){
+            return BasicData.CreateErrorInvalidEmail();
+        }
+        if(!CheckUtil.isEmail(param.getNewEmailAddress())){
+            return BasicData.CreateErrorInvalidEmail();
+        }
+
+        if (password == null || password.isEmpty()) {
+            return BasicData.CreateErrorInvalidPassWord();
+        }
+        User user = userMapper.selectByEmailAddress(param.getNewEmailAddress());
+        if (user != null) {
+            return BasicData.CreateErrorRegist();
+        }
+
+
+        User user1 = userMapper.selectByEmailAddress(EmailAddress);
+        if (user1 == null) {
+            return BasicData.CreateErrorEmailOrPassword();
+        }
+
+
+        if (!(SafetyUtil.addMD5Salt(param.getEmailAddress(),param.getPassword())).equals(user1.getPassword())) {
+            return BasicData.CreateErrorEmailOrPassword();
+        }
+        String newpassword = SafetyUtil.addMD5Salt(param.getNewEmailAddress(),param.getPassword());
+
+        user1.setEmailAddress(param.getNewEmailAddress());
+        user1.setPassword(newpassword);
+        userMapper.updateEmail(user1);
+        String token = LoginUtil.getToken();
+        user1.setToken(token);
+        userMapper.updateToken(user1);
+        return BasicData.CreateSucess(user1);
+    }
+
+    @Override
+    public BasicData updatePassword(NewPasswordParam param) {
+        User user = userMapper.selectByToken(param.getToken());
+        if(user==null){
+            return BasicData.CreateErrorInvalidUser();
+        }
+        if (param.getPassword() == null || param.getPassword().isEmpty()) {
+            return BasicData.CreateErrorInvalidPassWord();
+        }
+        if (!(SafetyUtil.addMD5Salt(user.getEmailAddress(),param.getPassword())).equals(user.getPassword())) {
+            return BasicData.CreateErrorEmailOrPassword();
+        }
+        String newpassword = SafetyUtil.addMD5Salt(user.getEmailAddress(),param.getNewPassword());
+
+        user.setPassword(newpassword);
+        userMapper.updateEmail(user);
+        String token = LoginUtil.getToken();
+        user.setToken(token);
+        userMapper.updateToken(user);
+        return  BasicData.CreateSucess(user);
     }
 
 

@@ -1,10 +1,7 @@
 package com.mall.mobile.service;
 
 import com.mall.common.param.BasicData;
-import com.mall.mobile.in.LoginParam;
-import com.mall.mobile.in.NewPasswordParam;
-import com.mall.mobile.in.RegistrationParam;
-import com.mall.mobile.in.TokenParam;
+import com.mall.mobile.in.*;
 
 public interface UserLoginService {
 
@@ -15,4 +12,8 @@ public interface UserLoginService {
     BasicData logout(TokenParam param);
 
     BasicData forgetPassword(NewPasswordParam param);
+
+    BasicData updateEmail(UpdateEmaileParam param);
+
+    BasicData updatePassword(NewPasswordParam param);
 }

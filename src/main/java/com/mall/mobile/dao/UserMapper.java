@@ -17,4 +17,5 @@ public interface UserMapper {
     void updatePassword(User user);
     void updateUserInfo(User user);
     void updateFireBaseToken(User user);
+    void updateEmail(User user);
 }
