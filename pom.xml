@@ -115,6 +115,23 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
+		<!-- 支付宝支付 -->
+		<dependency>
+			<groupId>alipay-sdk-java</groupId>
+			<artifactId>alipay</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.38</version>
+		</dependency>
+		<!-- stripe支付官方包 -->
+		<dependency>
+			<groupId>com.stripe</groupId>
+			<artifactId>stripe-java</artifactId>
+			<version>9.6.0</version>
+		</dependency>
 
 	</dependencies>
 

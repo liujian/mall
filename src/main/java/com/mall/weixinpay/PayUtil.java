@@ -2,6 +2,7 @@ package com.mall.weixinpay;
 
 
 import com.mall.common.param.BasicData;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.math.BigDecimal;
 import java.net.InetAddress;
@@ -24,8 +25,8 @@ public class PayUtil {
 
     /**
      * 微信统一下单接口
-     * @param appid 小程序唯一标识
-     * @param openid 用户唯一标识
+     * @param appid 微信开放平台审核通过的应用APPID
+     * @param fee_type 货币类型
      * @param mch_id 调用接口提交的商户号
      * @param notify_url 异步接收微信支付结果通知的回调地址，通知url必须为外网可访问的url，不能携带参数。
      * @param key 秘钥
@@ -34,7 +35,7 @@ public class PayUtil {
      * @param out_trade_no 商户订单号
      * @return
      */
-    public static BasicData doUnifiedOrder(String appid, String openid, String mch_id, String notify_url, String key, String body, BigDecimal total_fee, String out_trade_no) {
+    public static BasicData doUnifiedOrder(String appid, String fee_type, String mch_id, String notify_url, String key, String body, BigDecimal total_fee, String out_trade_no) {
 //        BaseResponse<Map> response = new BaseResponse<>();
         Map resultMap=new HashMap();
 //        String openid = baseRequest.getRequestData().getOpenId();
@@ -70,11 +71,12 @@ public class PayUtil {
         data.put("nonce_str", nonce_str);
         data.put("body", body);
         data.put("out_trade_no",out_trade_no);
+        data.put("fee_type", fee_type);
         data.put("total_fee", String.valueOf(money));
         data.put("spbill_create_ip", spbill_create_ip);
         data.put("notify_url", notify_url);
-        data.put("trade_type","JSAPI");
-        data.put("openid", openid);
+        data.put("trade_type","APP");
+
         try {
             Map<String, String> rMap = wxpay.unifiedOrder(data);
             System.out.println("统一下单接口返回: " + rMap);
@@ -104,5 +106,6 @@ public class PayUtil {
             return  BasicData.CreateErrorMsg(e.getMessage());
         }
     }
+
 }
 
