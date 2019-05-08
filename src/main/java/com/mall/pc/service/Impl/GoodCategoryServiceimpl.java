@@ -1,6 +1,7 @@
 package com.mall.pc.service.Impl;
 
 import com.mall.common.param.BasicData;
+import com.mall.mobile.out.TradeCategoryOut;
 import com.mall.pc.dao.TradeCategoryMapper;
 import com.mall.pc.domen.TradeCategory;
 import com.mall.pc.domen.TradeCategoryTranslate;
@@ -22,6 +23,34 @@ public class GoodCategoryServiceimpl implements GoodCategoryService {
 
     @Autowired
     private TradeCategoryMapper categoryMapper;
+
+    @Override
+    public BasicData QueryAllCategorys(String languagetype) {
+        List<TradeCategoryOut> tradeCategoryOuts = new ArrayList<>();
+        List<TradeCategory> tradeCategories =categoryMapper.QueryGoodCategorys(null);
+        for(TradeCategory tradeCategory : tradeCategories){
+            TradeCategoryOut tradeCategoryOut = new TradeCategoryOut();
+            TradeCategoryTranslate tradeCategoryTranslate = categoryMapper.QueryCategorytranslateByclassidAndLanguagetype(tradeCategory.getId(),languagetype);
+            if(tradeCategoryTranslate!=null&&!tradeCategoryTranslate.getClassifyname().isEmpty()){
+                tradeCategory.setClassify(tradeCategoryTranslate.getClassifyname());
+            }
+            tradeCategoryOut.setTradeCategory(tradeCategory);
+            List<TradeCategory> tradeCategoryList =new ArrayList<>();
+            List<TradeCategory> tradeCategoryList1 = categoryMapper.QueryGoodCategorys(tradeCategory.getId());
+            for(TradeCategory tradeCategory1:tradeCategoryList1){
+                TradeCategoryTranslate tradeCategoryTranslate1 = categoryMapper.QueryCategorytranslateByclassidAndLanguagetype(tradeCategory.getId(),languagetype);
+                if(tradeCategoryTranslate1!=null&&!tradeCategoryTranslate1.getClassifyname().isEmpty()){
+                    tradeCategory1.setClassify(tradeCategoryTranslate1.getClassifyname());
+                }
+                tradeCategoryList.add(tradeCategory1);
+            }
+
+            tradeCategoryOut.setTradeCategoryList(tradeCategoryList);
+            tradeCategoryOuts.add(tradeCategoryOut);
+
+        }
+        return BasicData.CreateSucess(tradeCategoryOuts);
+    }
 
     @Override
     public BasicData QueryGoodCategorys(Integer fatherid) {

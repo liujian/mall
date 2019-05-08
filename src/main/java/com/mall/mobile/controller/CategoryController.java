@@ -24,6 +24,26 @@ public class CategoryController {
     private GoodCategoryService goodCategoryService;
 
     /**
+     * 获取分类
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/QueryAllCategorys",method = RequestMethod.GET)
+    @ResponseBody
+    public BasicData QueryAllCategorys(
+            @RequestParam(required = false) String languagetype,
+            HttpServletRequest request){
+        try{
+            return goodCategoryService.QueryAllCategorys(languagetype);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+
+    }
+
+
+    /**
      * 获取分类列表
      * @param request
      * @return

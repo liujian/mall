@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface GoodCategoryService {
 
+    BasicData QueryAllCategorys(String languagetype);
 
     BasicData QueryGoodCategorys(Integer fatherid);
 
