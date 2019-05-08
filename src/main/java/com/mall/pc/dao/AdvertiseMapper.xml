@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.pc.dao.AdvertiseMapper">
+    <resultMap id="BaseResultMap" type="com.mall.pc.domen.Advertise">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="image" property="image" jdbcType="VARCHAR" />
+        <result column="addway" property="addway" jdbcType="VARCHAR" />
+        <result column="addid" property="addid" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       id,image,addway,addid
+    </sql>
+
+
+    <select id="queryAdvertise" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_advertising_management
+    </select>
+
+    <select id="queryAdvertiseById" parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_advertising_management
+        WHERE
+        id=#{id}
+    </select>
+
+
+    <update id="updateAdvertise" parameterType="com.mall.pc.domen.Advertise">
+        UPDATE
+        table_advertising_management
+        SET
+        image=#{image},
+        addway=#{addway},
+        addid=#{addid}
+        where
+        id=#{id}
+    </update>
+
+</mapper>

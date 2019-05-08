@@ -4,10 +4,7 @@ import com.mall.common.param.BasicData;
 import com.mall.mobile.out.CateParm;
 import com.mall.mobile.out.HomeParmOut;
 import com.mall.mobile.service.HomeinfoService;
-import com.mall.pc.dao.BannerMapper;
-import com.mall.pc.dao.BrandMapper;
-import com.mall.pc.dao.TradeCategoryMapper;
-import com.mall.pc.dao.TradeInfoMapper;
+import com.mall.pc.dao.*;
 import com.mall.pc.domen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +32,9 @@ public class HomeinfoServiceImpl implements HomeinfoService {
 
     @Autowired
     private BrandMapper brandMapper;
+
+    @Autowired
+    private AdvertiseMapper advertiseMapper;
 
     @Override
     public BasicData gethomeinfo(String languagetype) {
@@ -78,11 +78,12 @@ public class HomeinfoServiceImpl implements HomeinfoService {
         }
 
         List<Brand> brands =brandMapper.queryisHomeBrandlist();
-
+        List<Advertise> advertises = advertiseMapper.queryAdvertise();
         homeParmOut.setBanners(banners);
         homeParmOut.setTradeCategories(tradeCategories);
         homeParmOut.setCateParms(cateParms);
         homeParmOut.setBrands(brands);
+        homeParmOut.setAdvertises(advertises);
 
         return BasicData.CreateSucess(homeParmOut);
     }

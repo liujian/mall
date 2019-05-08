@@ -50,9 +50,21 @@ public class TradeCategory implements Serializable {
     private String ishome;
 
     /**
-     *分类图片
+     *首页展示图片
      */
     private String homeimage;
+
+
+    /**
+     *首页展示图片跳转方式
+     */
+    private String homeimageaddway;
+
+
+    /**
+     *首页图片跳转id
+     */
+    private String homeimageaddid;
 
     /**
      *排序
@@ -125,6 +137,21 @@ public class TradeCategory implements Serializable {
         this.sort = sort;
     }
 
+    public String getHomeimageaddway() {
+        return homeimageaddway;
+    }
+
+    public void setHomeimageaddway(String homeimageaddway) {
+        this.homeimageaddway = homeimageaddway;
+    }
+
+    public String getHomeimageaddid() {
+        return homeimageaddid;
+    }
+
+    public void setHomeimageaddid(String homeimageaddid) {
+        this.homeimageaddid = homeimageaddid;
+    }
 
     public String getClassifyimage() {
         return classifyimage;
