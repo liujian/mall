@@ -1,6 +1,7 @@
 package com.mall.mobile.service.Impl;
 
 import com.mall.common.param.BasicData;
+import com.mall.common.service.MailService;
 import com.mall.mobile.dao.IntegralMapper;
 import com.mall.mobile.dao.InterestMapper;
 import com.mall.mobile.dao.UserMapper;
@@ -13,8 +14,13 @@ import com.mall.utils.CheckUtil;
 import com.mall.utils.LoginUtil;
 import com.mall.utils.SafetyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
+import javax.annotation.Resource;
+import javax.mail.MessagingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +43,14 @@ public class UserLoginServiceImpl implements UserLoginService {
 
     @Autowired
     private InterestMapper interestMapper;
+
+    @Autowired
+    private MailService mailService;
+    @Value("${server.port}")
+    protected String port;
+
+    @Resource
+    TemplateEngine templateEngine;
 
     @Override
     public BasicData registration(RegistrationParam param) {
@@ -63,8 +77,45 @@ public class UserLoginServiceImpl implements UserLoginService {
   //      user.setFireBaseToken(param.getFireBaseToken());
 
         userMapper.insertUser(user);
+        user = userMapper.selectByEmailAddress(user.getEmailAddress());
+        Map map = new HashMap<>();
+        String token = LoginUtil.getToken();
+        user.setToken(token);
+        user.setFireBaseToken(param.getFireBaseToken());
+        userMapper.updateToken(user);
+        //获取用户积分信息
+        Integral integral = integralMapper.getIntegralByUserid(user.getId());
+        if(integral==null){
+            integral =new Integral();
+            integral.setUserid(user.getId());
+            integral.setExpendscore(0);
+            integral.setSurpluscore(0);
+            integral.setTotalscore(0);
+            integralMapper.addIntegral(integral);
+        }
+        //获取用户喜爱信息
+        List<Interest> interest = interestMapper.getInterestList(user.getId());
 
-        return BasicData.CreateSucess(user);
+        map.put("user",user);
+        map.put("integral",integral);
+        map.put("interestsize",interest.size());
+
+		String to = user.getEmailAddress();
+		String subject = "小口袋: Please verify your email account";
+
+        Context context = new Context();
+        context.setVariable("emailadress", user.getEmailAddress());
+        String tempContext = templateEngine.process("/registration", context);
+		try {
+			mailService.sendHtmlMail(to, subject, tempContext);
+			System.out.println("成功了");
+		} catch (MessagingException e) {
+			System.out.println("失败了");
+			e.printStackTrace();
+		}
+
+        return BasicData.CreateSucess(map);
+
     }
 
 

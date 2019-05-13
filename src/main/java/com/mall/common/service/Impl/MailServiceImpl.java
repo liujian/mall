@@ -8,6 +8,7 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
@@ -21,6 +22,7 @@ import java.io.File;
  * @create: 2019-04-12 16:17
  **/
 @Component
+@Async
 public class MailServiceImpl implements MailService {
 
     @Autowired
@@ -66,6 +68,7 @@ public class MailServiceImpl implements MailService {
         helper.setSubject(subject);
         helper.setText(content, true);
         mailSender.send(message);
+        System.out.println("邮件发送成功！");
     }
 
 

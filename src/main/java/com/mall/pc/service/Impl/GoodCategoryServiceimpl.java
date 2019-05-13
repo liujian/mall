@@ -38,7 +38,7 @@ public class GoodCategoryServiceimpl implements GoodCategoryService {
             List<TradeCategory> tradeCategoryList =new ArrayList<>();
             List<TradeCategory> tradeCategoryList1 = categoryMapper.QueryGoodCategorys(tradeCategory.getId());
             for(TradeCategory tradeCategory1:tradeCategoryList1){
-                TradeCategoryTranslate tradeCategoryTranslate1 = categoryMapper.QueryCategorytranslateByclassidAndLanguagetype(tradeCategory.getId(),languagetype);
+                TradeCategoryTranslate tradeCategoryTranslate1 = categoryMapper.QueryCategorytranslateByclassidAndLanguagetype(tradeCategory1.getId(),languagetype);
                 if(tradeCategoryTranslate1!=null&&!tradeCategoryTranslate1.getClassifyname().isEmpty()){
                     tradeCategory1.setClassify(tradeCategoryTranslate1.getClassifyname());
                 }

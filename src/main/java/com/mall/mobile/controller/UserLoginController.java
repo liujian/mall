@@ -35,11 +35,16 @@ public class UserLoginController {
      * @author liujian
      * @Date 2018-09-25
      */
-    @RequestMapping("registration")
+    @RequestMapping(value="/registration",method = RequestMethod.POST)
     @ResponseBody
-    public BasicData registration(@Valid @RequestBody RegistrationParam param, HttpServletRequest request) {
+    public BasicData registration(@RequestBody RegistrationParam param, HttpServletRequest request) {
+        try{
+            return userLoginService.registration(param);
+        }catch (Exception e){
+          e.printStackTrace();
+           return BasicData.CreateErrorMsg(e.getMessage());
+        }
 
-        return userLoginService.registration(param);
     }
 
 //    /**
@@ -72,10 +77,18 @@ public class UserLoginController {
      * @author liujian
      * @Date 2018-09-25
      */
-    @RequestMapping("userLogin")
+    @RequestMapping(value="/userLogin",method = RequestMethod.POST)
     @ResponseBody
-    public BasicData userLogin(@Valid @RequestBody LoginParam param, HttpServletRequest request) {
-        return userLoginService.login(param);
+    public BasicData userLogin(@RequestBody LoginParam param, HttpServletRequest request) {
+
+        try{
+            return userLoginService.login(param);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+
+
     }
 
 
@@ -86,11 +99,18 @@ public class UserLoginController {
      * @param param
      * @return
      */
-    @RequestMapping("updateEmail")
+    @RequestMapping(value="/updateEmail",method = RequestMethod.POST)
     @ResponseBody
-    public BasicData updateEmail(@Valid @RequestBody UpdateEmaileParam param) {
+    public BasicData updateEmail(@RequestBody UpdateEmaileParam param) {
 
-        return userLoginService.updateEmail(param);
+
+        try{
+            return userLoginService.updateEmail(param);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+
     }
 
     /**
@@ -99,11 +119,16 @@ public class UserLoginController {
      * @param param
      * @return
      */
-    @RequestMapping("updatePassword")
+    @RequestMapping(value="/updatePassword",method = RequestMethod.POST)
     @ResponseBody
-    public BasicData updatePassword(@Valid @RequestBody NewPasswordParam param) {
+    public BasicData updatePassword(@RequestBody NewPasswordParam param) {
+        try{
+            return userLoginService.updatePassword(param);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
 
-        return userLoginService.updatePassword(param);
     }
 
     /**
@@ -115,10 +140,16 @@ public class UserLoginController {
      * @author liujian
      * @Date 2018-09-25
      */
-    @RequestMapping("userLogout")
+    @RequestMapping(value="/userLogout",method = RequestMethod.POST)
     @ResponseBody
-    public BasicData userLogout(@Valid @RequestBody TokenParam param, HttpServletRequest request) {
-        return userLoginService.logout(param);
+    public BasicData userLogout(@RequestBody TokenParam param, HttpServletRequest request) {
+
+        try{
+            return userLoginService.logout(param);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
     }
 
 
@@ -131,11 +162,16 @@ public class UserLoginController {
           * @author liujian
           * @Date 2018-11-05
           */
-    @RequestMapping("forgetPassword")
+    @RequestMapping(value="/forgetPassword",method = RequestMethod.POST)
     @ResponseBody
-    public BasicData forgetPassword(@Valid @RequestBody NewPasswordParam param, HttpServletRequest request) {
+    public BasicData forgetPassword(@RequestBody NewPasswordParam param, HttpServletRequest request) {
+        try{
+            return userLoginService.forgetPassword(param);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
 
-        return userLoginService.forgetPassword(param);
     }
 
 
