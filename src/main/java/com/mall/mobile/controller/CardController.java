@@ -36,10 +36,11 @@ public class CardController {
     @ResponseBody
     public BasicData getCardList(
             @RequestParam(required = false) String token,
+            @RequestParam(required = false) String languagetype,
             HttpServletRequest request){
 
         try{
-            return cardService.getCardList(token);
+            return cardService.getCardList(token,languagetype);
         }catch(Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());
@@ -58,10 +59,11 @@ public class CardController {
     public BasicData queryCardByCardNo(
             @RequestParam(required = false) String token,
             @RequestParam(required = false) String cardno,
+            @RequestParam(required = false) String languagetype,
             HttpServletRequest request){
 
         try{
-            return cardService.queryCardByCardNo(token,cardno);
+            return cardService.queryCardByCardNo(token,cardno,languagetype);
         }catch(Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());
@@ -102,10 +104,11 @@ public class CardController {
     public BasicData delCard(
             @RequestParam(required = false) String token,
             @RequestParam(required = false) String cardno,
+            @RequestParam(required = false) String languagetype,
             HttpServletRequest request){
 
         try{
-            return cardService.delCard(token,cardno);
+            return cardService.delCard(token,cardno,languagetype);
         }catch(Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());

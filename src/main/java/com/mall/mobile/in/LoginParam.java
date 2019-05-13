@@ -5,6 +5,17 @@ public class LoginParam {
 	private String password;
 	private String emailAddress;
 	private String fireBaseToken;
+
+	private String languagetype;
+
+	public String getLanguagetype() {
+		return languagetype;
+	}
+
+	public void setLanguagetype(String languagetype) {
+		this.languagetype = languagetype;
+	}
+
 	public String getPassword() {
 		return password;
 	}

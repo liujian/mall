@@ -9,6 +9,15 @@ public class NewPasswordParam {
 	private String password;
 
 	private String newPassword;
+	private String languagetype;
+
+	public String getLanguagetype() {
+		return languagetype;
+	}
+
+	public void setLanguagetype(String languagetype) {
+		this.languagetype = languagetype;
+	}
 
 	public String getEmailAddress() {
 		return emailAddress;

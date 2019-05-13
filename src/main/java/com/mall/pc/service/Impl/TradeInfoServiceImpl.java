@@ -134,7 +134,6 @@ public class TradeInfoServiceImpl implements TradeInfoService {
 
 
             List<TradeGive> tradeGives = tradeGiveMapper.queryTradeGivelistByTradeid(id,tradeInfo.getCoupway());
-            List<TradeInfoTranslate> tradeInfoTranslates = tradeInfoMapper.QueryTradeTranslateBytrandid(id);
             tradeParamOut.setTradeInfo(tradeInfo);
             tradeParamOut.setTradeParamNameOuts(tradeParamNameOuts);
             tradeParamOut.setTradePhotos(tradePhotos);

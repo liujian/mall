@@ -29,20 +29,20 @@ public class CardServiceImpl implements CardService {
 
 
     @Override
-    public BasicData getCardList(String token) {
+    public BasicData getCardList(String token,String languagetype) {
         User user = userMapper.selectByToken(token);
         if(user==null){
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidUser(languagetype);
         }
         List<Card> cardList = cardMapper.getCardList(user.getId());
         return BasicData.CreateSucess(cardList);
     }
 
     @Override
-    public BasicData queryCardByCardNo(String token, String cardno) {
+    public BasicData queryCardByCardNo(String token, String cardno,String languagetype) {
         User user = userMapper.selectByToken(token);
         if(user==null){
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidUser(languagetype);
         }
         Card card = cardMapper.queryCardByCardNo(user.getId(),cardno);
         return BasicData.CreateSucess(card);
@@ -52,11 +52,11 @@ public class CardServiceImpl implements CardService {
     public BasicData addCard(CardIn cardIn) {
         User user = userMapper.selectByToken(cardIn.getToken());
         if(user==null){
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidUser(cardIn.getLanguagetype());
         }
         Card card1= cardMapper.queryCardByCardNo(user.getId(),cardIn.getCardno());
         if(card1!=null){
-            return BasicData.CreateErrorCardExists();
+            return BasicData.CreateErrorCardExists(cardIn.getLanguagetype());
         }
 
         Card card = new Card();
@@ -70,10 +70,10 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public BasicData delCard(String token, String cardno) {
+    public BasicData delCard(String token, String cardno,String languagetype) {
         User user = userMapper.selectByToken(token);
         if(user==null){
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidUser(languagetype);
         }
         cardMapper.delCard(user.getId(),cardno);
         return BasicData.CreateSucess();

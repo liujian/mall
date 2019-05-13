@@ -7,7 +7,7 @@ import com.mall.mobile.domen.CustAdress;
 public interface CustAdressService {
 
 
-    BasicData getcustadress(String token);
+    BasicData getcustadress(String token,String languagetype);
 
     BasicData getcustadressByid(Integer id);
 

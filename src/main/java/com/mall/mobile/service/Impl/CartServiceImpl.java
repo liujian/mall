@@ -52,7 +52,7 @@ public class CartServiceImpl implements CartService {
     public BasicData getCartList(String token,String languagetype) {
         User user = userMapper.selectByToken(token);
         if(user==null){
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidUser(languagetype);
         }
         List<Cart> cartList =cartMapper.getCartList(user.getId());
         List<CartOut> cartOuts = new ArrayList<CartOut>();
@@ -127,9 +127,10 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public BasicData addCart(CartIn cartIn) {
+        String languagetype = cartIn.getLanguagetype();
         User user = userMapper.selectByToken(cartIn.getToken());
         if(user==null){
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidUser(languagetype);
         }
         Cart cart =new Cart();
         cart.setUserid(user.getId());
@@ -143,7 +144,7 @@ public class CartServiceImpl implements CartService {
         if("PT".equals(cart.getTradetype())){
            List<TradeParam> tradeParams = tradeParamMapper.querytradeparam(cart.getTradid(),cartIn.getTradparmid());
            if(tradeParams.size()>0&&(cart.getTradparmnameid()==null||cart.getTradparmid()==null)){
-               return BasicData.CreateErrorOption();
+               return BasicData.CreateErrorOption(languagetype);
             }
 
             Cart cart1 = cartMapper.queryCart(cart);
@@ -174,14 +175,14 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public BasicData adddelCart(String token,Integer id, String type) {
+    public BasicData adddelCart(String token,Integer id, String type,String languagetype) {
         User user = userMapper.selectByToken(token);
         if(user==null){
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidUser(languagetype);
         }
         Cart cart =cartMapper.queryCartByid(id);
         if(cart.getUserid()!=user.getId()){
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidUser(languagetype);
         }
 
         if("JIA".equals(type)){
@@ -196,15 +197,15 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public BasicData delCart(String token,Integer id) {
+    public BasicData delCart(String token,Integer id,String languagetype) {
         User user = userMapper.selectByToken(token);
         if(user==null){
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidUser(languagetype);
         }
         Cart cart =cartMapper.queryCartByid(id);
 
         if(cart!=null&&cart.getUserid()!=user.getId()){
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidUser(languagetype);
         }
 
         cartMapper.delCart(id);

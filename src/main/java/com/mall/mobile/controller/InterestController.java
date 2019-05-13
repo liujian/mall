@@ -55,10 +55,11 @@ public class InterestController {
     public BasicData getInterestList(
             @RequestParam(required = true) String token,
             @RequestParam(required = true) Integer trandid,
+            @RequestParam(required = false) String languagetype,
             HttpServletRequest request){
 
         try{
-            return interestService.lovetrade(token,trandid);
+            return interestService.lovetrade(token,trandid,languagetype);
         }catch(Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());

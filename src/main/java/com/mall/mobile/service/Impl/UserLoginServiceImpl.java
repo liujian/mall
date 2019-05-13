@@ -56,15 +56,15 @@ public class UserLoginServiceImpl implements UserLoginService {
     public BasicData registration(RegistrationParam param) {
 
         if(!CheckUtil.isEmail(param.getEmailAddress())){
-            return BasicData.CreateErrorInvalidEmail();
+            return BasicData.CreateErrorInvalidEmail(param.getLanguagetype());
         }
         if (param.getPassword() == null || param.getPassword().isEmpty()) {
-            return BasicData.CreateErrorInvalidPassWord();
+            return BasicData.CreateErrorInvalidPassWord(param.getLanguagetype());
         }
 
         User user = userMapper.selectByEmailAddress(param.getEmailAddress());
         if (user != null) {
-            return BasicData.CreateErrorRegist();
+            return BasicData.CreateErrorRegist(param.getLanguagetype());
         }
 
         String password = SafetyUtil.addMD5Salt(param.getEmailAddress(),param.getPassword());
@@ -125,21 +125,21 @@ public class UserLoginServiceImpl implements UserLoginService {
         String EmailAddress = param.getEmailAddress();
         String password = param.getPassword();
         if(!CheckUtil.isEmail(param.getEmailAddress())){
-            return BasicData.CreateErrorInvalidEmail();
+            return BasicData.CreateErrorInvalidEmail(param.getLanguagetype());
         }
 
         if (password == null || password.isEmpty()) {
-            return BasicData.CreateErrorInvalidPassWord();
+            return BasicData.CreateErrorInvalidPassWord(param.getLanguagetype());
         }
 
         User user = userMapper.selectByEmailAddress(EmailAddress);
         if (user == null) {
-            return BasicData.CreateErrorEmailOrPassword();
+            return BasicData.CreateErrorEmailOrPassword(param.getLanguagetype());
         }
 
 
         if (!(SafetyUtil.addMD5Salt(param.getEmailAddress(),param.getPassword())).equals(user.getPassword())) {
-            return BasicData.CreateErrorEmailOrPassword();
+            return BasicData.CreateErrorEmailOrPassword(param.getLanguagetype());
         }
         Map map = new HashMap<>();
         String token = LoginUtil.getToken();
@@ -170,7 +170,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 
         User user = userMapper.selectByToken(param.getToken());
         if(user==null){
-            return BasicData.CreateErrorAccount();
+            return BasicData.CreateErrorAccount(param.getLanguagetype());
         }else{
             user.setFireBaseToken("");
             user.setToken("");
@@ -185,15 +185,15 @@ public class UserLoginServiceImpl implements UserLoginService {
     public BasicData forgetPassword(NewPasswordParam param) {
 
         if (param.getEmailAddress() == null || param.getEmailAddress().isEmpty()) {
-            return BasicData.CreateErrorInvalidEmail();
+            return BasicData.CreateErrorInvalidEmail(param.getLanguagetype());
         }
         if (param.getNewPassword() == null || param.getNewPassword().isEmpty()) {
-            return BasicData.CreateErrorInvalidPassWord();
+            return BasicData.CreateErrorInvalidPassWord(param.getLanguagetype());
         }
 
         User user = userMapper.selectByEmailAddress(param.getEmailAddress());
         if (user == null) {
-            return BasicData.CreateErrorAccount();
+            return BasicData.CreateErrorAccount(param.getLanguagetype());
         }
 
         String password = SafetyUtil.addMD5Salt(param.getEmailAddress(),param.getNewPassword());
@@ -211,29 +211,29 @@ public class UserLoginServiceImpl implements UserLoginService {
 
 
         if(!CheckUtil.isEmail(param.getEmailAddress())){
-            return BasicData.CreateErrorInvalidEmail();
+            return BasicData.CreateErrorInvalidEmail(param.getLanguagetype());
         }
         if(!CheckUtil.isEmail(param.getNewEmailAddress())){
-            return BasicData.CreateErrorInvalidEmail();
+            return BasicData.CreateErrorInvalidEmail(param.getLanguagetype());
         }
 
         if (password == null || password.isEmpty()) {
-            return BasicData.CreateErrorInvalidPassWord();
+            return BasicData.CreateErrorInvalidPassWord(param.getLanguagetype());
         }
         User user = userMapper.selectByEmailAddress(param.getNewEmailAddress());
         if (user != null) {
-            return BasicData.CreateErrorRegist();
+            return BasicData.CreateErrorRegist(param.getLanguagetype());
         }
 
 
         User user1 = userMapper.selectByEmailAddress(EmailAddress);
         if (user1 == null) {
-            return BasicData.CreateErrorEmailOrPassword();
+            return BasicData.CreateErrorEmailOrPassword(param.getLanguagetype());
         }
 
 
         if (!(SafetyUtil.addMD5Salt(param.getEmailAddress(),param.getPassword())).equals(user1.getPassword())) {
-            return BasicData.CreateErrorEmailOrPassword();
+            return BasicData.CreateErrorEmailOrPassword(param.getLanguagetype());
         }
         String newpassword = SafetyUtil.addMD5Salt(param.getNewEmailAddress(),param.getPassword());
 
@@ -250,13 +250,13 @@ public class UserLoginServiceImpl implements UserLoginService {
     public BasicData updatePassword(NewPasswordParam param) {
         User user = userMapper.selectByToken(param.getToken());
         if(user==null){
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidUser(param.getLanguagetype());
         }
         if (param.getPassword() == null || param.getPassword().isEmpty()) {
-            return BasicData.CreateErrorInvalidPassWord();
+            return BasicData.CreateErrorInvalidPassWord(param.getLanguagetype());
         }
         if (!(SafetyUtil.addMD5Salt(user.getEmailAddress(),param.getPassword())).equals(user.getPassword())) {
-            return BasicData.CreateErrorEmailOrPassword();
+            return BasicData.CreateErrorEmailOrPassword(param.getLanguagetype());
         }
         String newpassword = SafetyUtil.addMD5Salt(user.getEmailAddress(),param.getNewPassword());
 

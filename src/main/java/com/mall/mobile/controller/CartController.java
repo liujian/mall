@@ -76,9 +76,10 @@ public class CartController {
     public BasicData delMyCart(
             @RequestParam(required = false)Integer id,
             @RequestParam(required = false)String token,
+            @RequestParam(required = false) String languagetype,
             HttpServletRequest request){
         try{
-            return cartService.delCart(token,id);
+            return cartService.delCart(token,id,languagetype);
         }catch (Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());
@@ -97,9 +98,10 @@ public class CartController {
             @RequestParam(required = false) Integer id,
             @RequestParam(required = false) String type,
             @RequestParam(required = false) String token,
+            @RequestParam(required = false) String languagetype,
             HttpServletRequest request){
         try{
-            return cartService.adddelCart(token,id,type);
+            return cartService.adddelCart(token,id,type,languagetype);
         }catch (Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());

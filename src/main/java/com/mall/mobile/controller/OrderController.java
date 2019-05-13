@@ -41,10 +41,11 @@ public class OrderController {
             @RequestParam(required = false) String discode,
             @RequestParam(required = false) Integer integral,
             @RequestParam(required = false) String zipcode,
+            @RequestParam(required = false) String languagetype,
             HttpServletRequest request){
 
         try{
-            return orderService.cartorder(token,tradeclass,discode,integral,zipcode);
+            return orderService.cartorder(token,tradeclass,discode,integral,zipcode,languagetype);
         }catch(Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());

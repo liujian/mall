@@ -6,11 +6,11 @@ import com.mall.mobile.in.CardIn;
 public interface CardService {
 
 
-    BasicData getCardList(String token);
+    BasicData getCardList(String token,String languagetype);
 
-    BasicData queryCardByCardNo(String token,String cardno);
+    BasicData queryCardByCardNo(String token,String cardno,String languagetype);
 
     BasicData addCard(CardIn cardIn);
 
-    BasicData delCard(String token,String cardno);
+    BasicData delCard(String token,String cardno,String languagetype);
 }

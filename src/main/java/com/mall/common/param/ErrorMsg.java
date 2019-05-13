@@ -1,32 +1,32 @@
 package com.mall.common.param;
 
 public enum ErrorMsg {
-	E200("Success", 200),
-	E400("服务器不理解请求的语法。", 400), 
-	E401("请求要求进行身份验证。", 401), 
-	E403("服务器拒绝请求。",403), 
-	E404("服务器找不到请求的接口。", 404), 
-	E900("当前账户异常，请重新登录！", 900),
-	E901("操作失败", 901),
-	E902("系统错误", 902),
-	E903("没有权限", 903),
-	E904("调用核心系统失败",904),
-	E905("访问缓存失败!",905),
-	E906("无效邮箱!",906),
-	E907("无效密码!",907),
-	E908("该邮箱以存在!",908),
-	E909("邮箱或密码不正确!",909),
-	E910("此帐户不存在!",910),
-	E911("请选择选项!",911),
-	E912("该卡号已存在!",912),
-	E913("邮箱或密码不正确!",913);
+
+	E200("成功!","成功!", "Success!",200),
+	E900("当前账户异常，请重新登录!","當前帳戶异常，請重新登入!","Current account is abnormal, please log in again!", 900),
+	E901("操作失败!","操作失敗!","operation failed!", 901),
+	E906("无效邮箱!","無效郵箱!","Invalid mailbox!",906),
+	E907("无效密码!","無效密碼!","Invalid password!",907),
+	E908("该邮箱以存在!","該郵箱以存在!","The mailbox exists!",908),
+	E909("邮箱或密码不正确!","郵箱或密碼不正確!","The mailbox or password is incorrect!",909),
+	E910("此帐户不存在!","此帳戶不存在!","This account does not exist!",910),
+	E911("请选择选项!","請選擇選項!","Please choose the option!",911),
+	E912("该卡号已存在!","該卡號已存在!","The card number already exists!",912),
+	E913("邮箱或密码不正确!","郵箱或密碼不正確!","The mailbox or password is incorrect!",913);
 	// 成员变量
 	private String msg;
+	private String msg_jt;
+	private String msg_yw;
 	private int code;
 
+
 	// 构造方法
-	private ErrorMsg(String msg, int code) {
+
+
+	private ErrorMsg(String msg,String msg_jt,String msg_yw, int code) {
 		this.msg = msg;
+		this.msg_jt = msg_jt;
+		this.msg_yw = msg_yw;
 		this.code = code;
 	}
 
@@ -46,4 +46,19 @@ public enum ErrorMsg {
 		this.code = code;
 	}
 
+	public String getMsg_jt() {
+		return msg_jt;
+	}
+
+	public void setMsg_jt(String msg_jt) {
+		this.msg_jt = msg_jt;
+	}
+
+	public String getMsg_yw() {
+		return msg_yw;
+	}
+
+	public void setMsg_yw(String msg_yw) {
+		this.msg_yw = msg_yw;
+	}
 }

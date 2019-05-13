@@ -39,7 +39,7 @@ public class InterestServiceImpl implements InterestService {
     public BasicData getInterestList(String token,String languagetype) {
         User user = userMapper.selectByToken(token);
         if(user==null){
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidUser(languagetype);
         }
         List<Interest> list = interestMapper.getInterestList(user.getId());
         List<TradeInfo> tradeInfos = new ArrayList<>();
@@ -58,10 +58,10 @@ public class InterestServiceImpl implements InterestService {
     }
 
     @Override
-    public BasicData lovetrade(String token, Integer trandid) {
+    public BasicData lovetrade(String token, Integer trandid,String languagetype) {
         User user = userMapper.selectByToken(token);
         if(user==null){
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidUser(languagetype);
         }
         Interest interest =new Interest();
         interest.setCustid(user.getId());

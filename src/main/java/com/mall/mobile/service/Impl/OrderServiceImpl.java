@@ -70,10 +70,10 @@ public class OrderServiceImpl implements OrderService {
     private TradeParamMapper tradeParamMapper;
 
     @Override
-    public BasicData cartorder(String token,Integer tradeclass,String discode,Integer integral,String zipcode) {
+    public BasicData cartorder(String token,Integer tradeclass,String discode,Integer integral,String zipcode,String languagetype) {
         User user = userMapper.selectByToken(token);
         if(user==null){
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidUser(languagetype);
         }
 
         CartOrderOut cartOrderOut = new CartOrderOut();
@@ -179,7 +179,7 @@ public class OrderServiceImpl implements OrderService {
     public BasicData payorder(OrderIn orderIn) {
         User user = userMapper.selectByToken(orderIn.getToken());
         if(user==null){
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidUser(orderIn.getLanguagetype());
         }
        String orderid = CodeFactory.getOrderIdByUUId();
         OrderInfo orderInfo = new OrderInfo();
@@ -250,7 +250,7 @@ public class OrderServiceImpl implements OrderService {
     public BasicData allorder(String token,String orderstatus,String languagetype) {
         User user = userMapper.selectByToken(token);
         if(user==null){
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidUser(languagetype);
         }
         List<OrderOuts> outs = new ArrayList<>();
         List<OrderInfo> orderInfos = orderInfoMapper.queryAllOrderByUserId(user.getId(),orderstatus);
@@ -348,7 +348,7 @@ public class OrderServiceImpl implements OrderService {
     public BasicData orderinfo(String token, String orderid, String languagetype) {
         User user = userMapper.selectByToken(token);
         if(user==null){
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidUser(languagetype);
         }
         Map map = new HashMap<>();
         OrderInfo orderInfo = orderInfoMapper.queryOrderByOrderId(orderid);

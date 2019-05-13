@@ -13,7 +13,18 @@ import java.util.List;
  **/
 
 public class OrderIn {
+    /**
+     * languagetype
+     */
+    private String languagetype;
 
+    public String getLanguagetype() {
+        return languagetype;
+    }
+
+    public void setLanguagetype(String languagetype) {
+        this.languagetype = languagetype;
+    }
 
     /**
      * token

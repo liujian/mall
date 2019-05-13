@@ -12,8 +12,8 @@ public interface CartService {
 
     BasicData addCart(CartIn cartIn);
 
-    BasicData adddelCart(String token,Integer id,String type);
+    BasicData adddelCart(String token,Integer id,String type,String languagetype);
 
-    BasicData delCart(String token,Integer id);
+    BasicData delCart(String token,Integer id,String languagetype);
 
 }

@@ -10,6 +10,10 @@ package com.mall.mobile.in;
 public class CartIn {
 
 
+    /**
+     * 语言种类
+     */
+    private String languagetype;
 
     /**
      *用户token
@@ -105,6 +109,14 @@ public class CartIn {
 
     public void setTradetype(String tradetype) {
         this.tradetype = tradetype;
+    }
+
+    public String getLanguagetype() {
+        return languagetype;
+    }
+
+    public void setLanguagetype(String languagetype) {
+        this.languagetype = languagetype;
     }
 }
 

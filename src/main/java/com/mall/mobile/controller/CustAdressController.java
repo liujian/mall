@@ -34,10 +34,11 @@ public class CustAdressController {
     @ResponseBody
     public BasicData getcustadress(
             @RequestParam(required = false) String token,
+            @RequestParam(required = false) String languagetype,
             HttpServletRequest request){
 
         try{
-            return custAdressService.getcustadress(token);
+            return custAdressService.getcustadress(token,languagetype);
         }catch(Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());

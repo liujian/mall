@@ -9,6 +9,15 @@ package com.mall.mobile.in;
 
 public class CardIn {
 
+    private String languagetype;
+
+    public String getLanguagetype() {
+        return languagetype;
+    }
+
+    public void setLanguagetype(String languagetype) {
+        this.languagetype = languagetype;
+    }
 
     /**
      *用户token

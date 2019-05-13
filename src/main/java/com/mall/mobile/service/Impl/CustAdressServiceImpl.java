@@ -28,10 +28,10 @@ public class CustAdressServiceImpl implements CustAdressService {
     private UserMapper userMapper;
 
     @Override
-    public BasicData getcustadress(String token) {
+    public BasicData getcustadress(String token,String languagetype) {
         User user = userMapper.selectByToken(token);
         if (user == null) {
-            return BasicData.CreateErrorInvalidUser();
+            return BasicData.CreateErrorInvalidUser(languagetype);
         }
 
         List<CustAdress> list =custAdressMapper.getCustAddressList(user.getId());

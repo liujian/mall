@@ -6,7 +6,7 @@ public interface InterestService {
 
     BasicData getInterestList(String token,String languagetype);
 
-    BasicData lovetrade(String token,Integer trandid);
+    BasicData lovetrade(String token,Integer trandid,String languagetype);
 
 
 }
