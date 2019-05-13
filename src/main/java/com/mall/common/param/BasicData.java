@@ -27,6 +27,22 @@ public class BasicData<T> extends Basic {
 		basicData.setData(data);
 		return basicData;
 	}
+
+	public static<T> BasicData<T> CreateSucess(T data,String languagetype) {
+		BasicData basic=null;
+		if("JT".equals(languagetype)){
+			basic = new BasicData(ErrorMsg.E200.getCode(),ErrorMsg.E200.getMsg());
+		}else if("FT".equals(languagetype)){
+			basic = new BasicData(ErrorMsg.E200.getCode(),ErrorMsg.E200.getMsg_ft());
+		}else if("YW".equals(languagetype)){
+			basic = new BasicData(ErrorMsg.E200.getCode(),ErrorMsg.E200.getMsg_yw());
+		}else{
+			basic = new BasicData(ErrorMsg.E200.getCode(),ErrorMsg.E200.getMsg());
+		}
+		basic.setData(data);
+		return basic;
+	}
+
 	public static BasicData CreateError() {
 		BasicData basic = new BasicData(ErrorMsg.E901.getCode(),ErrorMsg.E901.getMsg());
 		return basic;
@@ -39,10 +55,10 @@ public class BasicData<T> extends Basic {
 
 	public static BasicData CreateErrorInvalidEmail(String languagetype) {
 		BasicData basic=null;
-		if("ZW".equals(languagetype)){
+		if("JT".equals(languagetype)){
 			basic = new BasicData(ErrorMsg.E906.getCode(),ErrorMsg.E906.getMsg());
-		}else if("JT".equals(languagetype)){
-			basic = new BasicData(ErrorMsg.E906.getCode(),ErrorMsg.E906.getMsg_jt());
+		}else if("FT".equals(languagetype)){
+			basic = new BasicData(ErrorMsg.E906.getCode(),ErrorMsg.E906.getMsg_ft());
 		}else if("YW".equals(languagetype)){
 			basic = new BasicData(ErrorMsg.E906.getCode(),ErrorMsg.E906.getMsg_yw());
 		}else{
@@ -53,10 +69,10 @@ public class BasicData<T> extends Basic {
 	}
 	public static BasicData CreateErrorInvalidPassWord(String languagetype) {
 		BasicData basic=null;
-		if("ZW".equals(languagetype)){
+		if("JT".equals(languagetype)){
 			basic = new BasicData(ErrorMsg.E907.getCode(),ErrorMsg.E907.getMsg());
-		}else if("JT".equals(languagetype)){
-			basic = new BasicData(ErrorMsg.E907.getCode(),ErrorMsg.E907.getMsg_jt());
+		}else if("FT".equals(languagetype)){
+			basic = new BasicData(ErrorMsg.E907.getCode(),ErrorMsg.E907.getMsg_ft());
 		}else if("YW".equals(languagetype)){
 			basic = new BasicData(ErrorMsg.E907.getCode(),ErrorMsg.E907.getMsg_yw());
 		}else{
@@ -67,10 +83,10 @@ public class BasicData<T> extends Basic {
 
 	public static BasicData CreateErrorRegist(String languagetype) {
 		BasicData basic=null;
-		if("ZW".equals(languagetype)){
+		if("JT".equals(languagetype)){
 			basic = new BasicData(ErrorMsg.E908.getCode(),ErrorMsg.E908.getMsg());
-		}else if("JT".equals(languagetype)){
-			basic = new BasicData(ErrorMsg.E908.getCode(),ErrorMsg.E908.getMsg_jt());
+		}else if("FT".equals(languagetype)){
+			basic = new BasicData(ErrorMsg.E908.getCode(),ErrorMsg.E908.getMsg_ft());
 		}else if("YW".equals(languagetype)){
 			basic = new BasicData(ErrorMsg.E908.getCode(),ErrorMsg.E908.getMsg_yw());
 		}else{
@@ -81,10 +97,10 @@ public class BasicData<T> extends Basic {
 
 	public static BasicData CreateErrorEmailOrPassword(String languagetype) {
 		BasicData basic=null;
-		if("ZW".equals(languagetype)){
+		if("JT".equals(languagetype)){
 			basic = new BasicData(ErrorMsg.E909.getCode(),ErrorMsg.E909.getMsg());
-		}else if("JT".equals(languagetype)){
-			basic = new BasicData(ErrorMsg.E909.getCode(),ErrorMsg.E909.getMsg_jt());
+		}else if("FT".equals(languagetype)){
+			basic = new BasicData(ErrorMsg.E909.getCode(),ErrorMsg.E909.getMsg_ft());
 		}else if("YW".equals(languagetype)){
 			basic = new BasicData(ErrorMsg.E909.getCode(),ErrorMsg.E909.getMsg_yw());
 		}else{
@@ -95,10 +111,10 @@ public class BasicData<T> extends Basic {
 
 	public static BasicData CreateErrorAccount(String languagetype) {
 		BasicData basic=null;
-		if("ZW".equals(languagetype)){
+		if("JT".equals(languagetype)){
 			basic = new BasicData(ErrorMsg.E910.getCode(),ErrorMsg.E910.getMsg());
-		}else if("JT".equals(languagetype)){
-			basic = new BasicData(ErrorMsg.E910.getCode(),ErrorMsg.E910.getMsg_jt());
+		}else if("FT".equals(languagetype)){
+			basic = new BasicData(ErrorMsg.E910.getCode(),ErrorMsg.E910.getMsg_ft());
 		}else if("YW".equals(languagetype)){
 			basic = new BasicData(ErrorMsg.E910.getCode(),ErrorMsg.E910.getMsg_yw());
 		}else{
@@ -109,10 +125,10 @@ public class BasicData<T> extends Basic {
 
 	public static BasicData CreateErrorOption(String languagetype) {
 		BasicData basic=null;
-		if("ZW".equals(languagetype)){
+		if("JT".equals(languagetype)){
 			basic = new BasicData(ErrorMsg.E911.getCode(),ErrorMsg.E911.getMsg());
-		}else if("JT".equals(languagetype)){
-			basic = new BasicData(ErrorMsg.E911.getCode(),ErrorMsg.E911.getMsg_jt());
+		}else if("FT".equals(languagetype)){
+			basic = new BasicData(ErrorMsg.E911.getCode(),ErrorMsg.E911.getMsg_ft());
 		}else if("YW".equals(languagetype)){
 			basic = new BasicData(ErrorMsg.E911.getCode(),ErrorMsg.E911.getMsg_yw());
 		}else{
@@ -123,10 +139,10 @@ public class BasicData<T> extends Basic {
 
 	public static BasicData CreateErrorCardExists(String languagetype) {
 		BasicData basic=null;
-		if("ZW".equals(languagetype)){
+		if("JT".equals(languagetype)){
 			basic = new BasicData(ErrorMsg.E912.getCode(),ErrorMsg.E912.getMsg());
-		}else if("JT".equals(languagetype)){
-			basic = new BasicData(ErrorMsg.E912.getCode(),ErrorMsg.E912.getMsg_jt());
+		}else if("FT".equals(languagetype)){
+			basic = new BasicData(ErrorMsg.E912.getCode(),ErrorMsg.E912.getMsg_ft());
 		}else if("YW".equals(languagetype)){
 			basic = new BasicData(ErrorMsg.E912.getCode(),ErrorMsg.E912.getMsg_yw());
 		}else{
@@ -137,10 +153,10 @@ public class BasicData<T> extends Basic {
 
 	public static BasicData CreateErrorInvalidUser(String languagetype) {
 		BasicData basic=null;
-		if("ZW".equals(languagetype)){
+		if("JT".equals(languagetype)){
 			basic = new BasicData(ErrorMsg.E900.getCode(),ErrorMsg.E900.getMsg());
-		}else if("JT".equals(languagetype)){
-			basic = new BasicData(ErrorMsg.E900.getCode(),ErrorMsg.E900.getMsg_jt());
+		}else if("FT".equals(languagetype)){
+			basic = new BasicData(ErrorMsg.E900.getCode(),ErrorMsg.E900.getMsg_ft());
 		}else if("YW".equals(languagetype)){
 			basic = new BasicData(ErrorMsg.E900.getCode(),ErrorMsg.E900.getMsg_yw());
 		}else{

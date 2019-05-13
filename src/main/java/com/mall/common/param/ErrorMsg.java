@@ -15,7 +15,7 @@ public enum ErrorMsg {
 	E913("邮箱或密码不正确!","郵箱或密碼不正確!","The mailbox or password is incorrect!",913);
 	// 成员变量
 	private String msg;
-	private String msg_jt;
+	private String msg_ft;
 	private String msg_yw;
 	private int code;
 
@@ -23,9 +23,9 @@ public enum ErrorMsg {
 	// 构造方法
 
 
-	private ErrorMsg(String msg,String msg_jt,String msg_yw, int code) {
+	private ErrorMsg(String msg,String msg_ft,String msg_yw, int code) {
 		this.msg = msg;
-		this.msg_jt = msg_jt;
+		this.msg_ft = msg_ft;
 		this.msg_yw = msg_yw;
 		this.code = code;
 	}
@@ -46,12 +46,12 @@ public enum ErrorMsg {
 		this.code = code;
 	}
 
-	public String getMsg_jt() {
-		return msg_jt;
+	public String getMsg_ft() {
+		return msg_ft;
 	}
 
-	public void setMsg_jt(String msg_jt) {
-		this.msg_jt = msg_jt;
+	public void setMsg_ft(String msg_ft) {
+		this.msg_ft = msg_ft;
 	}
 
 	public String getMsg_yw() {
