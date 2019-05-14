@@ -79,10 +79,11 @@ public class TradeController {
     @ResponseBody
     public BasicData QuerytradeById(
             @RequestParam(required = false) Integer id,
+            @RequestParam(required = false) String  token,
             @RequestParam(required = false) String languagetype,
             HttpServletRequest request){
         try{
-            return tradeInfoService.QuerytradeById(id,languagetype);
+            return tradeInfoService.QuerytradeById(id,token,languagetype);
         }catch (Exception e){
             e.printStackTrace();
             return BasicData.CreateErrorMsg(e.getMessage());

@@ -1,6 +1,10 @@
 package com.mall.pc.service.Impl;
 
 import com.mall.common.param.BasicData;
+import com.mall.mobile.dao.InterestMapper;
+import com.mall.mobile.dao.UserMapper;
+import com.mall.mobile.domen.Interest;
+import com.mall.mobile.domen.User;
 import com.mall.mobile.out.TradeComposeout;
 import com.mall.pc.dao.*;
 import com.mall.pc.domen.*;
@@ -42,6 +46,12 @@ public class TradeInfoServiceImpl implements TradeInfoService {
 
     @Autowired
     private TradeParamNameMapper tradeParamNameMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private InterestMapper interestMapper;
 
 
     @Override
@@ -95,7 +105,7 @@ public class TradeInfoServiceImpl implements TradeInfoService {
     }
 
     @Override
-    public BasicData QuerytradeById(Integer id, String languagetype) {
+    public BasicData QuerytradeById(Integer id, String  token,String languagetype) {
         TradeParamOut tradeParamOut = new TradeParamOut();
         TradeInfo tradeInfo = tradeInfoMapper.QuerytradeById(id);
         TradeInfoTranslate tradeInfoTranslate = tradeInfoMapper.QueryTradeTranslateBytrandidANDType(tradeInfo.getId(),languagetype);
@@ -135,6 +145,22 @@ public class TradeInfoServiceImpl implements TradeInfoService {
 
             List<TradeGive> tradeGives = tradeGiveMapper.queryTradeGivelistByTradeid(id,tradeInfo.getCoupway());
             tradeParamOut.setTradeInfo(tradeInfo);
+            //判断是否关注商品
+            User user = userMapper.selectByToken(token);
+            if(user!=null){
+                Interest interest=new Interest();
+                interest.setCustid(user.getId());
+                interest.setTrandid(id);
+                Interest interest1 = interestMapper.getInterest(interest);
+                if(interest1!=null){
+                    tradeParamOut.setInterest("0");
+                }else{
+                    tradeParamOut.setInterest("1");
+                }
+            }else{
+                tradeParamOut.setInterest("1");
+            }
+
             tradeParamOut.setTradeParamNameOuts(tradeParamNameOuts);
             tradeParamOut.setTradePhotos(tradePhotos);
             tradeParamOut.setTradeComposeouts(tradeComposeouts);

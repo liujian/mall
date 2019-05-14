@@ -15,6 +15,8 @@ import java.util.List;
 public class TradeParamOut {
 
     private TradeInfo tradeInfo;
+    //是否关注商品
+    private String interest;
 
     private List<TradeParamNameOut> tradeParamNameOuts;
 
@@ -72,6 +74,14 @@ public class TradeParamOut {
 
     public void setTradeInfoTranslates(List<TradeInfoTranslate> tradeInfoTranslates) {
         this.tradeInfoTranslates = tradeInfoTranslates;
+    }
+
+    public String getInterest() {
+        return interest;
+    }
+
+    public void setInterest(String interest) {
+        this.interest = interest;
     }
 }
 
