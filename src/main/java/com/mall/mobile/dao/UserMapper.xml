@@ -19,9 +19,10 @@
         <result column="hairstyle" jdbcType="VARCHAR" property="hairstyle"/>
         <result column="hairquality" jdbcType="VARCHAR" property="hairquality"/>
         <result column="eyecolor" jdbcType="VARCHAR" property="eyecolor"/>
+        <result column="languagetype" jdbcType="VARCHAR" property="languagetype"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id,emailAddress, password, firstName, lastName, phone,birthday,token,createDate, updateDate,fireBaseToken,verified,skincolour,skintexture,hairstyle,hairquality,eyecolor
+    id,emailAddress, password, firstName, lastName, phone,birthday,token,createDate, updateDate,fireBaseToken,verified,skincolour,skintexture,hairstyle,hairquality,eyecolor,languagetype
   </sql>
 
     <select id="selectByEmailAddress" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -57,7 +58,8 @@
           skintexture,
           hairstyle,
           hairquality,
-          eyecolor
+          eyecolor,
+          languagetype
           )
       values (
       #{emailAddress,jdbcType=VARCHAR},
@@ -75,7 +77,8 @@
       #{skintexture,jdbcType=VARCHAR},
       #{hairstyle,jdbcType=VARCHAR},
       #{hairquality,jdbcType=VARCHAR},
-      #{eyecolor,jdbcType=VARCHAR}
+      #{eyecolor,jdbcType=VARCHAR},
+      #{languagetype,jdbcType=VARCHAR}
       )
   </insert>
 
@@ -117,7 +120,8 @@
         skintexture=#{skintexture,jdbcType=VARCHAR},
         hairstyle=#{hairstyle,jdbcType=VARCHAR},
         hairquality=#{hairquality,jdbcType=VARCHAR},
-        eyecolor=#{eyecolor,jdbcType=VARCHAR}
+        eyecolor=#{eyecolor,jdbcType=VARCHAR},
+        languagetype=#{languagetype,jdbcType=VARCHAR}
         where
         id=#{id}
   </update>

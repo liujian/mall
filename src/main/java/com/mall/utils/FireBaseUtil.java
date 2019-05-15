@@ -3,14 +3,21 @@ package com.mall.utils;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * fireBase消息推送
@@ -32,15 +39,20 @@ public class FireBaseUtil {
     private String[] SCOPES = new String[1];
     @Value("${fireBase.title}")
     private String TITLE;
+    @Value("${fireBase.key}")
+    private String key;
     public String MESSAGE_KEY = "message";
 
-    public static void main(String[] args) {
+
+
+//    public static void main(String[] args) {
 //        try {
-//            pushFCMNotification("hello camile", "eQSkd0dzAEU:APA91bFgSEM_AkiVl3RPS9Trv-g34ed5R5aX-Rp055uESgbXhSDgrI1hi687sQ8UdM2IfezTDeT1aVQH2ylH5pgnKpTHspxoP0mste4r039R-3xf3WDNW2eWoM8u2Z6Sbpo-B4gDOL05");
+//            FireBaseUtil fireBaseUtil = new FireBaseUtil();
+//            fireBaseUtil.pushFCMNotification(null,null,"hello camile", "eQSkd0dzAEU:APA91bFgSEM_AkiVl3RPS9Trv-g34ed5R5aX-Rp055uESgbXhSDgrI1hi687sQ8UdM2IfezTDeT1aVQH2ylH5pgnKpTHspxoP0mste4r039R-3xf3WDNW2eWoM8u2Z6Sbpo-B4gDOL05");
 //        } catch (IOException e) {
 //            System.out.println("e = " + e);
 //        }
-    }
+//    }
 
     /**
      * Pretty print a JsonObject.
@@ -57,7 +69,7 @@ public class FireBaseUtil {
      *
      * @return JSON of notification message.
      */
-    private JsonObject buildNotificationMessage(String type, String json, String body, String fireBaseToken) {
+    private  JsonObject buildNotificationMessage(String type, String json, String body, String fireBaseToken) {
         JsonObject jNotification = new JsonObject();
         jNotification.addProperty("title", TITLE);
         jNotification.addProperty("body", body);
@@ -90,7 +102,7 @@ public class FireBaseUtil {
     private String getAccessToken() throws IOException {
         SCOPES[0] = MESSAGING_SCOPE;
         GoogleCredential googleCredential = GoogleCredential
-                .fromStream(new FileInputStream("D:\\file\\resolute-return-220406-firebase-adminsdk-afhi5-f2bcbfcfd5.json"))
+                .fromStream(new FileInputStream(key))
                 .createScoped(Arrays.asList(SCOPES));
         googleCredential.refreshToken();
         return googleCredential.getAccessToken();
@@ -152,5 +164,6 @@ public class FireBaseUtil {
         }
         return stringBuilder.toString();
     }
+
 
 }

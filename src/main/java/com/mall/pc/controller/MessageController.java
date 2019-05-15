@@ -1,4 +1,4 @@
-package com.mall.mobile.controller;
+package com.mall.pc.controller;
 
 import com.mall.common.param.BasicData;
 import com.mall.mobile.service.MessageService;
@@ -15,13 +15,21 @@ import javax.servlet.http.HttpServletRequest;
  * @create: 2019-04-16 15:05
  **/
 @Controller
-@RequestMapping(value = "/mobile/message")
+@RequestMapping(value = "/message")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class MessageController {
 
     @Autowired
     private MessageService messageService;
 
+    /**
+     *
+     * @param type
+     * @param json
+     * @param body
+     * @param request
+     * @return
+     */
     @RequestMapping(value="/sendmessage",method = RequestMethod.GET)
     @ResponseBody
     public BasicData sendmessage(

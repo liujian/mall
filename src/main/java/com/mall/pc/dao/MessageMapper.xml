@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.pc.dao.MessageMapper">
+    <resultMap id="BaseResultMap" type="com.mall.pc.domen.Message">
+        <result column="messageid" property="messageid" jdbcType="VARCHAR" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="releasetime" property="releasetime" jdbcType="TIMESTAMP" />
+        <result column="publishers" property="publishers" jdbcType="VARCHAR" />
+        <result column="recipients" property="recipients" jdbcType="INTEGER" />
+        <result column="languagetype" property="languagetype" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       messageid,title,content,releasetime,publishers,recipients,languagetype
+    </sql>
+
+
+    <select id="queryMessages" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_Message_Publishing
+        ORDER BY  releasetime DESC
+    </select>
+
+    <select id="queryMessageById" parameterType="String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from table_Message_Publishing
+        WHERE
+        messageid=#{messageid}
+    </select>
+
+
+    <insert id="addMessage" parameterType="com.mall.pc.domen.Message">
+        insert into
+        table_Message_Publishing (
+         messageid,
+         title,
+         content,
+         releasetime,
+         publishers,
+         recipients,
+         languagetype
+        )
+        values (
+        #{messageid},
+        #{title},
+        #{content},
+        #{releasetime},
+        #{publishers},
+        #{recipients},
+        #{languagetype}
+        )
+    </insert>
+
+</mapper>

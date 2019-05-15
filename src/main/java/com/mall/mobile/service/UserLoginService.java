@@ -9,6 +9,8 @@ public interface UserLoginService {
 
     BasicData login(LoginParam param);
 
+    BasicData subTopic(TokenParam param);
+
     BasicData logout(TokenParam param);
 
     BasicData forgetPassword(NewPasswordParam param);

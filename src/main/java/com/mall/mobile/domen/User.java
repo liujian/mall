@@ -94,6 +94,11 @@ public class User implements Serializable{
 	 */
 	private String eyecolor;
 
+	/**
+	 * 所选语言种类
+	 */
+	private String languagetype;
+
 	
 	public String getToken() {
 		return token;
@@ -229,5 +234,13 @@ public class User implements Serializable{
 
 	public void setEyecolor(String eyecolor) {
 		this.eyecolor = eyecolor;
+	}
+
+	public String getLanguagetype() {
+		return languagetype;
+	}
+
+	public void setLanguagetype(String languagetype) {
+		this.languagetype = languagetype;
 	}
 }

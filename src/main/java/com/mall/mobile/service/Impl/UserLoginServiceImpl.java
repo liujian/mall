@@ -11,6 +11,7 @@ import com.mall.mobile.domen.User;
 import com.mall.mobile.in.*;
 import com.mall.mobile.service.UserLoginService;
 import com.mall.utils.CheckUtil;
+import com.mall.utils.FireBaseUtils;
 import com.mall.utils.LoginUtil;
 import com.mall.utils.SafetyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,9 @@ public class UserLoginServiceImpl implements UserLoginService {
     private InterestMapper interestMapper;
 
     @Autowired
+    private FireBaseUtils fireBaseUtils;
+
+    @Autowired
     private MailService mailService;
     @Value("${server.port}")
     protected String port;
@@ -72,6 +76,7 @@ public class UserLoginServiceImpl implements UserLoginService {
         user = new User();
         user.setEmailAddress(param.getEmailAddress());
         user.setPassword(password);
+        user.setLanguagetype(param.getLanguagetype());
         //邮箱未验证
         user.setVerified("1");
   //      user.setFireBaseToken(param.getFireBaseToken());
@@ -83,6 +88,9 @@ public class UserLoginServiceImpl implements UserLoginService {
         user.setToken(token);
         user.setFireBaseToken(param.getFireBaseToken());
         userMapper.updateToken(user);
+        //增加用户语言主题订阅
+        fireBaseUtils.subTopic(param.getFireBaseToken(),param.getLanguagetype());
+
         //获取用户积分信息
         Integral integral = integralMapper.getIntegralByUserid(user.getId());
         if(integral==null){
@@ -141,11 +149,18 @@ public class UserLoginServiceImpl implements UserLoginService {
         if (!(SafetyUtil.addMD5Salt(param.getEmailAddress(),param.getPassword())).equals(user.getPassword())) {
             return BasicData.CreateErrorEmailOrPassword(param.getLanguagetype());
         }
+        //取消用户原来语言主题订阅
+        fireBaseUtils.subTopic(user.getFireBaseToken(),user.getLanguagetype());
+
         Map map = new HashMap<>();
         String token = LoginUtil.getToken();
         user.setToken(token);
         user.setFireBaseToken(param.getFireBaseToken());
+        user.setLanguagetype(param.getLanguagetype());
         userMapper.updateToken(user);
+        //增加用户新语言主题订阅
+        fireBaseUtils.subTopic(param.getFireBaseToken(),param.getLanguagetype());
+
         //获取用户积分信息
         Integral integral = integralMapper.getIntegralByUserid(user.getId());
         if(integral==null){
@@ -162,7 +177,24 @@ public class UserLoginServiceImpl implements UserLoginService {
         map.put("user",user);
         map.put("integral",integral);
         map.put("interestsize",interest.size());
-        return BasicData.CreateSucess(map);
+        return BasicData.CreateSucess(map,param.getLanguagetype());
+    }
+
+    @Override
+    public BasicData subTopic(TokenParam param) {
+        User user = userMapper.selectByToken(param.getToken());
+        if(user==null){
+            return BasicData.CreateErrorInvalidUser(param.getLanguagetype());
+        }
+        //取消用户原来语言主题订阅
+        fireBaseUtils.subTopic(user.getFireBaseToken(),user.getLanguagetype());
+
+        user.setLanguagetype(param.getLanguagetype());
+        userMapper.updateToken(user);
+        //增加用户新语言主题订阅
+        fireBaseUtils.subTopic(user.getFireBaseToken(),param.getLanguagetype());
+
+        return BasicData.CreateSucess(null,param.getLanguagetype());
     }
 
     @Override

@@ -92,6 +92,29 @@ public class UserLoginController {
     }
 
 
+    /**
+     * 切换登录语言主题订阅
+     *
+     * @param param
+     * @return
+     * @throws Exception
+     * @author liujian
+     * @Date 2018-09-25
+     */
+    @RequestMapping(value="/subTopic",method = RequestMethod.POST)
+    @ResponseBody
+    public BasicData subTopic(@RequestBody TokenParam param, HttpServletRequest request) {
+
+        try{
+            return userLoginService.subTopic(param);
+        }catch (Exception e){
+            e.printStackTrace();
+            return BasicData.CreateErrorMsg(e.getMessage());
+        }
+
+
+    }
+
 
     /**
      * 修改登录邮箱
